@@ -1,0 +1,19 @@
+{
+  "summary": "Verified image-quality fix for FOXY cinematic hero. All 7 desktop panels (/hero/panels/*.jpg) now load high-resolution 1264x848 sharp assets (170KB-340KB range; 07-foxy 94KB) and 7 mobile variants (/hero/panels/mobile/*.jpg) load at 900x604. All served 200 OK. Hero timeline behavior fully preserved: at top hero-layer-london opacity ~1 and hero-scroll-hint visible; scrolling the 720vh sticky section crossfades captions in correct order (london@10%, property@40%, view@71%) and reveals hero-final @97% with headline 'YOUR NEXT PROPERTY DECISION STARTS HERE.' plus hero-explore-cta (href=/properties) and hero-journey-cta (href=/calculators/mortgage). Mobile 390x844: mobile variants load, no horizontal overflow (docW==vw==390), final panel reaches opacity 1. prefers-reduced-motion emulation: first layer + hero-final both opacity 1 and explore CTA visible (static hero as spec'd). Zero uncaught console errors across all three runs.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Cinematic hero image-quality fix verified at iteration_4. Panel natural dimensions: desktop 1264x848, mobile 900x604. To drive the scroll animation programmatically use window.scrollTo across document.body.scrollHeight (desktop ~8440px) with ~1.2s dwell for scrub to settle. Reduced motion: page.emulate_media(reduced_motion='reduce') before goto. No frontend/.env with REACT_APP_BACKEND_URL exists — this is a Next.js app served on :3000 directly; use http://localhost:3000 for browser tests.",
+  "rca of the issue": "N/A - verification pass, no bug found."
+}

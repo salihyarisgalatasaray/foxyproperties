@@ -58,6 +58,9 @@ Mapbox GL (optional); Zod validation; bcryptjs; HttpOnly signed session cookie +
 - Verified (testing agent iteration_3, frontend 100%, 9/9): scroll journey + caption order, storyboard assets actually used,
   final CTA hrefs/navigation, reduced-motion fallback, mobile responsive (no overflow), zero console errors. Type-check 0
   errors, production build green. Compliance copy unchanged/clean.
+- **Sharpness upgrade:** the original storyboard crops were low-resolution (~375–500px wide), so full-bleed they looked soft.
+  Replaced all 7 panels with **high-resolution 1264×848 sharp cinematic renders** (faithful to the approved storyboard scenes,
+  generated using the storyboard panels as reference) at the same filenames + lighter mobile variants. Verified iteration_4 (100%).
 
 ## Not yet configured (optional integrations — degrade gracefully, no crash)
 - **Sanity**: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`,
