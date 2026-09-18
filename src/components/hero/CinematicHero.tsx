@@ -66,17 +66,21 @@ export function CinematicHero({
 
     const cfg = { scaleTo: 1.22 };
     let lastStage = -1;
+    const HOLD = 0.1; // dramatic static hold on the London opening before the first move
 
     const render = (p: number) => {
+      // Remap scroll so the first HOLD of travel keeps London perfectly still, then run the journey.
+      const ep = p <= HOLD ? 0 : (p - HOLD) / (1 - HOLD);
+
       // Image layers: crossfade (each reveals on top) + continuous push-in + focus-pull blur.
       for (let i = 0; i < STAGES.length; i++) {
         const layer = layersRef.current[i];
         if (!layer) continue;
         const s = STAGES[i];
         const w = s.b - s.a || 1;
-        const local = clamp01((p - s.a) / w);
+        const local = clamp01((ep - s.a) / w);
         const CF = 0.05;
-        const op = i === 0 ? 1 : clamp01((p - (s.a - CF)) / CF);
+        const op = i === 0 ? 1 : clamp01((ep - (s.a - CF)) / CF);
         const scale = 1.06 + (cfg.scaleTo - 1.06) * local;
         const blur = (1 - op) * 6;
         layer.style.opacity = String(op);
@@ -90,26 +94,37 @@ export function CinematicHero({
         if (!cap) continue;
         const s = STAGES[i];
         const w = s.b - s.a;
-        const inP = clamp01((p - s.a) / (w * 0.34));
-        const outP = clamp01((p - (s.b - w * 0.22)) / (w * 0.22));
-        const op = inP * (1 - outP);
-        const ty = (1 - inP) * 30 - outP * 22;
+        let op: number;
+        let ty: number;
+        if (i === 0) {
+          // London caption appears immediately and holds through the opening beat.
+          const inP = clamp01(p / 0.05);
+          const outP = clamp01((ep - (s.b - w * 0.22)) / (w * 0.22));
+          op = inP * (1 - outP);
+          ty = -outP * 22;
+        } else {
+          const inP = clamp01((ep - s.a) / (w * 0.34));
+          const outP = clamp01((ep - (s.b - w * 0.22)) / (w * 0.22));
+          op = inP * (1 - outP);
+          ty = (1 - inP) * 30 - outP * 22;
+        }
         cap.style.opacity = String(op);
         cap.style.transform = `translateY(calc(-50% + ${ty.toFixed(1)}px))`;
       }
 
       // Final FOXY editorial + CTA transitions in for the last leg.
-      const fp = clamp01((p - 0.905) / 0.06);
+      const fp = clamp01((ep - 0.905) / 0.06);
       if (finalRef.current) {
         finalRef.current.style.opacity = String(fp);
         finalRef.current.style.transform = `translateY(calc(-50% + ${((1 - fp) * 30).toFixed(1)}px))`;
       }
 
-      if (hintRef.current) hintRef.current.style.opacity = String(1 - clamp01(p / 0.05));
+      // Scroll hint lingers through the opening hold, then fades.
+      if (hintRef.current) hintRef.current.style.opacity = String(1 - clamp01(p / (HOLD + 0.04)));
 
       // Storyboard-style stage rail.
       let cur = 0;
-      for (let i = 0; i < STAGES.length; i++) if (p >= STAGES[i].a - 0.02) cur = i;
+      for (let i = 0; i < STAGES.length; i++) if (ep >= STAGES[i].a - 0.02) cur = i;
       if (railBarRef.current) railBarRef.current.style.transform = `scaleY(${p.toFixed(3)})`;
       if (cur !== lastStage) {
         lastStage = cur;
