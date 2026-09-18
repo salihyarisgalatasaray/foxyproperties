@@ -1,0 +1,37 @@
+{
+  "summary": "Focused frontend test of the new scroll-driven CINEMATIC HERO on the homepage (iteration_3). Ran on the preview URL (production next start bundle). Verified every acceptance criterion from the review request: initial London panel + SCROLL TO EXPLORE hint, 7 storyboard panels loading from /hero/panels/*.jpg on desktop and /hero/panels/mobile/*.jpg on mobile, per-caption opacity crossfades in the correct scroll order, final CTA section with correct hrefs and working navigation, reduced-motion collapse to a static 100vh hero, mobile responsive layout with no horizontal overflow, and zero console errors during scroll. All 9 primary test items PASS.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "primary_test_results": {
+    "hero_top_state": "PASS — [data-testid=cinematic-hero] present. hero-layer-london opacity=1 at scroll top. hero-scroll-hint visible with text 'SCROLL TO EXPLORE ↓'.",
+    "scroll_driven_captions_in_order": "PASS — Captured 7 scroll steps (10/25/40/56/71/85/97%). Peak-opacity caption at each step matched the specified timeline windows: hero-caption-london peaks ~10%, hero-caption-west ~25%, hero-caption-chelsea ~40%, hero-caption-property ~56%, hero-caption-interior ~71%, hero-caption-view fades in around 85% before yielding to the final panel. Corresponding hero-layer-* crossfades stack in order (each subsequent layer opacity rises from 0→1 while previous stays 1 underneath) — image content visibly changes between stages (London skyline → West London aerial → Chelsea → SW3 door → interior → view → foxy).",
+    "final_stage_and_ctas": "PASS — [data-testid=hero-final] opacity=1 at ~97% scroll. Headline 'YOUR NEXT PROPERTY DECISION STARTS HERE.' and intro line 'London property. Strategic investment. Long-term thinking.' rendered. hero-explore-cta href=/properties (gold button), hero-journey-cta href=/calculators/mortgage. Clicking hero-explore-cta navigated to /properties successfully.",
+    "transition_to_next_section": "PASS — After the sticky hero unpins, the 'A PROPERTY IS MORE THAN A NUMBER.' decision section renders normally, no overlap or broken layout.",
+    "storyboard_assets_used": "PASS — Network trace captured 200 OK responses for all 7 desktop panels: /hero/panels/01-london.jpg, 02-westlondon.jpg, 03-chelsea.jpg, 04-property.jpg, 05-interior.jpg, 06-theview.jpg, 07-foxy.jpg. Mobile served /hero/panels/mobile/01-london.jpg (confirmed via currentSrc on hero-layer-london). No use of the full contact-sheet or stock images.",
+    "prefers_reduced_motion": "PASS — With emulate_media(reduced_motion='reduce'), [data-testid=cinematic-hero] collapses to 900px height (100vh). hero-layer-london opacity=1 AND hero-final opacity=1 both visible simultaneously (static). hero-explore-cta visible without scrolling. Scrolling does not change any layer/final opacity — motion disabled as required.",
+    "mobile_responsive": "PASS — 390x844 viewport: no horizontal overflow (scrollWidth <= innerWidth). Hero section height 4726px ≈ 560vh (per spec). Mobile panel variants served from /hero/panels/mobile/. Final CTAs visible and clickable near end-of-hero. Page remains scrollable.",
+    "no_console_errors": "PASS — No error-level console messages captured across desktop scroll, reduced-motion, and mobile runs.",
+    "regression_previous_flows": "NOT RE-TESTED in this iteration (out of scope per review request note: 'Backend was NOT changed this iteration'). Iteration_2 verified admin-login POST → /backoffice, properties search reactivity, and 32/32 pytest. No frontend code paths that would affect those flows were touched in this hero-only change (CinematicHero.tsx is isolated)."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_foxy_api.py (unchanged from iteration_2)"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "CinematicHero.tsx (305 lines) is a clean, self-contained module using gsap.matchMedia to gate desktop/mobile/reduced-motion behaviour — correct approach. Consider extracting the panel manifest (keys, captions, image paths, timeline windows) into a typed constant at the top for easier tuning; currently inline arrays are fine for a single-instance component.",
+    "hero-caption-view peak opacity at ~82-88% window is short before hero-layer-foxy takes over — visually acceptable and covered by the storyboard timeline, but if editorial want the 'A DIFFERENT PERSPECTIVE ON LONDON.' caption to linger, widen its window slightly (e.g. 78→90% peak) since foxy layer already reaches 0.93 opacity by 85%.",
+    "All 7 hero panel <img> tags load eagerly on first paint (network trace shows all 7 fetched before any scroll). For LCP on slow connections consider loading='eager' only for 01-london and letting 02-07 be loading='lazy' with decoding='async' — the crossfade tolerates late arrivals since each layer sits at opacity 0 until its window."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (9/9 primary hero test items)"},
+  "test_credentials": "admin@foxyproperty.co.uk / FoxyAdmin2026!Demo (from /app/memory/test_credentials.md — not exercised this iteration).",
+  "seed_data_creation": "None.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Cinematic hero is production-ready. All 7 cropped storyboard panels load from /hero/panels/{01-london…07-foxy}.jpg on desktop and the /mobile subfolder on ≤~768px viewports. Timeline windows match spec. To exercise scroll animation programmatically, use window.scrollTo across the tall sticky section (720vh desktop / 560vh mobile) with ~1s dwell between steps for the ScrollTrigger scrub to settle; captions/layers are position:absolute with inline opacity updated on scroll. Reduced-motion emulate: page.emulate_media(reduced_motion='reduce') NOT context.emulate_media (that API doesn't exist on BrowserContext in current Playwright Python).",
+  "rca of the issue": "No bugs found in this iteration. The scroll-driven hero, per-panel network loading, editorial caption crossfades, final CTA visibility/navigation, reduced-motion fallback, and mobile variants all behave per specification."
+}

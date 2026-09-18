@@ -44,6 +44,21 @@ Mapbox GL (optional); Zod validation; bcryptjs; HttpOnly signed session cookie +
   property/area detail + PROTOTYPE labels; lead enquiry → POST /api/leads → success + persisted; Back Office
   unauth→redirect, login→dashboard, leads list + detail + activity, logout clears session; no creds-in-URL.
 
+## Phase 2 — Cinematic Visual Hero (storyboard-driven)
+- Pulled the approved asset from GitHub: `public/hero/desktop/London Luxury Property Storyboard.png` (7-panel contact sheet).
+- Programmatically detected the grid geometry and cropped **7 clean photographic panels** (baked storyboard text trimmed),
+  exported to `public/hero/panels/{01-london,02-westlondon,03-chelsea,04-property,05-interior,06-theview,07-foxy}.jpg`
+  (+ lighter `public/hero/panels/mobile/*.jpg`). ~1 MB total.
+- Rebuilt `src/components/hero/CinematicHero.tsx` into a **tall sticky, scroll-driven journey** (GSAP ScrollTrigger scrub):
+  per-stage image crossfade (reveal-on-top) + continuous camera push-in (scale) + focus-pull blur + synchronized editorial
+  captions, atmospheric scrims + film grain, a storyboard-style 01–07 rail, and a final FOXY stage carrying the CTA that
+  transitions into the next homepage section. Timeline windows per brief (London 0–16% … FOXY 91–100%).
+- Mouse = extremely subtle atmospheric parallax only (never drives the journey). `gsap.matchMedia` gates desktop (richer,
+  720vh) / mobile (lighter, 560vh) / `prefers-reduced-motion` (static 100vh hero with CTA visible).
+- Verified (testing agent iteration_3, frontend 100%, 9/9): scroll journey + caption order, storyboard assets actually used,
+  final CTA hrefs/navigation, reduced-motion fallback, mobile responsive (no overflow), zero console errors. Type-check 0
+  errors, production build green. Compliance copy unchanged/clean.
+
 ## Not yet configured (optional integrations — degrade gracefully, no crash)
 - **Sanity**: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`,
   `SANITY_API_READ_TOKEN` → homepage falls back to approved FOXY copy.
