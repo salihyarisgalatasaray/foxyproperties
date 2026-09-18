@@ -1,0 +1,19 @@
+{
+  "summary": "Verified 10% London HOLD remap in CinematicHero. Sampled scroll @ 0/2/6/9/11/20/40/71/97%. Throughout 0-11%, hero-layer-london opacity=1.000 and ALL other hero-layer-* opacities=0.000 — confirming no crossfade begins until after the 10% hold. hero-caption-london fades in on raw p (0.439@2%, 1.000@6%, 1.000@9%). hero-scroll-hint remains visible during hold (1.000→0.529@6%→0.294@9%, fully gone by 20%). After hold: @20% hero-layer-west opacity=0.463 (crossfade started). Full journey completes: chelsea@40%=1.0, interior@71%=1.0 with caption 0.777, foxy@97%=1.0, hero-final opacity=1.0 with headline 'YOUR NEXT PROPERTY DECISION STARTS HERE.'. CTAs verified: hero-explore-cta href=/properties, hero-journey-cta href=/calculators/mortgage. Mobile 390x844: no horizontal overflow (docW=vw=390). Zero uncaught console errors. Note: hero-caption-west opacity was still 0 at 20% scroll (caption timing appears slightly delayed vs layer crossfade), but layer crossfade begins as required.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped)", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Next.js app on http://localhost:3000 (no REACT_APP_BACKEND_URL). Desktop hero section 720vh (~8440px scroll). Drive scroll via window.scrollTo across document.body.scrollHeight with ~900ms dwell. Cinematic hero remap ep = p<=0.1 ? 0 : (p-0.1)/0.9 verified working — layers frozen until 10% then journey proceeds normally.",
+  "rca of the issue": "N/A - enhancement verification pass."
+}
