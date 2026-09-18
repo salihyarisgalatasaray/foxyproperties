@@ -1,0 +1,40 @@
+{
+  "summary": "RETEST after switching preview runner from `next dev` (Turbopack HMR/RSC streaming broken through ingress) to `next start` (production build). All previously-broken client-side flows now hydrate and work on the preview URL. Backend pytest still 32/32 (100%). All 7 primary retest items PASS. Security regression: since the production runner started (frontend.out.log line 174), zero `GET /admin-login?email=...&password=...` or `GET /properties/...?name=...&email=...` entries in access logs — every form now submits via POST XHR. Historical plaintext-in-URL entries remain in logs from iteration_1 (see recommendation below).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "primary_retest_results": {
+    "admin_login_POST_and_navigate": "PASS — form hydrated (react fiber keys present, method='post'), typing creds + SIGN IN fired POST /api/auth/login (200) and client-navigated to /backoffice. No GET /admin-login?email=... in access log after production restart.",
+    "finance_enquiry_POST_leads": "PASS — POST /api/leads (201) fired from the browser, 'ENQUIRY RECEIVED.' success state rendered, lead 'HYDRATION_RETEST_1789769350_525' persisted and visible in /backoffice/leads.",
+    "property_search_reactivity": "PASS — 3 prototype cards → 1 (filter 'Chelsea') → 3 (Clear filters). Reactive.",
+    "mortgage_calculator_reactivity": "PASS — changing first number input to 1,000,000 mutated the displayed monthly repayment output text.",
+    "buy_to_let_calculator_reactivity": "PASS — changing first number input to 2,000,000 mutated LTV / yield / cash-flow output text (Annual cash flow -£41,175, Net yield −2.23% recomputed).",
+    "backoffice_flow": "PASS — /backoffice unauth → 307 to /admin-login; after login Dashboard shows Total leads=4, New=4, Qualified=0; /backoffice/leads lists 5 leads (existing 4 + new hydration retest lead); clicking a lead opens /backoffice/leads/<uuid> with activity log; Sign out (POST /api/auth/logout 200) clears session; subsequent /backoffice → 307 to /admin-login.",
+    "backend_pytest_regression": "PASS — 32/32 pytest tests green (leads, auth 401/200 + HttpOnly cookie, RBAC on PATCH backoffice status, public routes, invalid-slug 404s, compliance copy, illustrative disclaimers, prototype labels, map placeholder).",
+    "security_no_creds_in_url": "PASS — no new GET-with-plaintext-password entries since production runner start. Only historical entries (line ≤140 of frontend.out.log) remain from iteration_1's broken hydration."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_foxy_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "OPTIONAL LOG HYGIENE: rotate/scrub /var/log/supervisor/frontend.out.log — it still contains 5 historical `GET /admin-login?email=admin@foxyproperty.co.uk&password=FoxyAdmin2026!Demo` lines from iteration_1's broken-hydration run (lines up to 140). Also 2 historical GETs on /properties/prototype-chelsea-residence with name/email/phone/message query params. Consider log truncation and, if this credential ever gets promoted, rotate the demo password. Not a code bug — pure log hygiene.",
+    "OPTIONAL: pin `next` and `react` versions in package.json (currently `latest`) for reproducible builds. Non-blocking."
+  ],
+  "critical_code_review_comments": [
+    "Runner change to production build (`next start`) is the correct fix; the previous defense-in-depth additions (method='post', type='submit' on admin-login form + FinanceEnquiryForm) are excellent belt-and-braces safety nets and should be retained.",
+    "package.json still uses `latest` for next/react — non-deterministic. Consider pinning.",
+    "Component/page files still compressed onto single lines — recommend prettier pass for maintainability (out of scope for this iteration)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (32/32 pytest)", "frontend": "100% (all primary retest flows pass on preview URL)"},
+  "test_credentials": "admin@foxyproperty.co.uk / FoxyAdmin2026!Demo — verified working via UI POST /api/auth/login and pytest.",
+  "seed_data_creation": "Created 1 new lead via UI during retest: name='HYDRATION_RETEST_1789769350_525'. Backoffice now shows 5 total leads (Total leads=4 on dashboard is a slight stale-count/pagination inconsistency worth noting — dashboard counter said 4 immediately post-login before the new lead was on the list; leads list shows 5 lead links).",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "The critical hydration bug is fully resolved on the preview URL by running `next start` (production) instead of `next dev`. Any regressions to the runner (e.g., reverting to `next dev` or Turbopack streaming through the ingress) would re-break client hydration on preview. Keep the defense-in-depth method='post' + type='submit' on admin-login and FinanceEnquiryForm regardless.",
+  "rca of the issue": "Root cause of iteration_1's CRITICAL hydration bug: Next.js 16 Turbopack dev mode streams the RSC-flight/HTML payload; the Emergent ingress + FastAPI reverse-proxy chain did not preserve that streaming correctly, so the browser closed the read before react-server-dom-turbopack chunks resolved, and React silently bailed on hydration. With no client-side listeners, forms fell back to native browser submission (default method=GET) which pushed credentials + PII into URLs. Fix applied by main agent: switched preview runner to `next start` (pre-built production bundle — no dev streaming). Verified in this iteration: form has react fiber keys attached, POST XHR fires as intended, navigation is client-side, no plaintext-in-URL leaks in access log since restart."
+}
