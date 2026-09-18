@@ -1,0 +1,9 @@
+"use client";
+import { useMemo, useState } from "react";
+import { prototypeProperties } from "@/lib/properties";
+import { PropertyCard } from "./PropertyCard";
+export function PropertySearch(){
+ const [area,setArea]=useState(""); const [beds,setBeds]=useState(0); const [type,setType]=useState("");
+ const items=useMemo(()=>prototypeProperties.filter(p=>(!area||p.area.toLowerCase().includes(area.toLowerCase()))&&(!beds||p.bedrooms>=beds)&&(!type||p.type===type)),[area,beds,type]);
+ return <><div className="mt-10 grid gap-3 border-y border-white/10 py-5 md:grid-cols-4"><input value={area} onChange={e=>setArea(e.target.value)} aria-label="Location" placeholder="LOCATION" className="bg-[#141413] px-4 py-4 text-xs tracking-[.12em] outline-none focus:ring-1 focus:ring-[#D4AF37]"/><select value={beds} onChange={e=>setBeds(Number(e.target.value))} aria-label="Bedrooms" className="bg-[#141413] px-4 py-4 text-xs tracking-[.12em]"><option value="0">BEDROOMS</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select><select value={type} onChange={e=>setType(e.target.value)} aria-label="Property type" className="bg-[#141413] px-4 py-4 text-xs tracking-[.12em]"><option value="">PROPERTY TYPE</option><option>Apartment</option><option>House</option></select><button onClick={()=>{setArea("");setBeds(0);setType("")}} className="border border-[#D4AF37]/60 px-4 py-4 text-xs tracking-[.15em] text-[#D4AF37]">CLEAR FILTERS</button></div><p className="mt-5 text-xs tracking-[.15em] text-white/45">{items.length} PROTOTYPE RESULT{items.length===1?"":"S"}</p>{items.length?<div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{items.map(p=><PropertyCard key={p.id} property={p}/>)}</div>:<div className="mt-8 border border-white/10 p-10"><h2 className="display text-3xl">No matching properties.</h2><p className="mt-3 text-[#A7A29A]">Try clearing one or more filters.</p></div>}</>
+}

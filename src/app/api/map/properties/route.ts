@@ -1,0 +1,3 @@
+import {NextResponse} from "next/server";import {prototypeProperties} from "@/lib/properties";
+const coords:Record<string,[number,number]>={Chelsea:[-0.1687,51.4875],Kensington:[-0.1938,51.5009],Fulham:[-0.2090,51.4749]};
+export async function GET(){return NextResponse.json({type:"FeatureCollection",features:prototypeProperties.flatMap(p=>{const c=coords[p.area];return c?[{type:"Feature",geometry:{type:"Point",coordinates:c},properties:{id:p.id,slug:p.slug,title:p.title,area:p.area,price:p.price,prototype:true}}]:[]})},{headers:{"Cache-Control":"public, max-age=60, stale-while-revalidate=300"}})}
