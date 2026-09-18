@@ -19,8 +19,7 @@ type Stage = {
   index: string;
   place: string;
   line: string;
-  img: string;
-  mob: string;
+  slug: string;
   pos: string;
   a: number;
   b: number;
@@ -29,13 +28,13 @@ type Stage = {
 // Seven stages cropped from the approved storyboard asset.
 // Windows follow the requested scroll timeline (0–100%).
 const STAGES: Stage[] = [
-  { key: "london", index: "01", place: "LONDON", line: "A GLOBAL CITY. A CITY OF OPPORTUNITY.", img: "/hero/panels/01-london.jpg", mob: "/hero/panels/mobile/01-london.jpg", pos: "50% 52%", a: 0.0, b: 0.16 },
-  { key: "west", index: "02", place: "WEST LONDON", line: "CHARACTER. CONNECTIVITY. ESTABLISHED DEMAND.", img: "/hero/panels/02-westlondon.jpg", mob: "/hero/panels/mobile/02-westlondon.jpg", pos: "50% 50%", a: 0.16, b: 0.32 },
-  { key: "chelsea", index: "03", place: "CHELSEA", line: "PRIME LONDON, CONSIDERED DIFFERENTLY.", img: "/hero/panels/03-chelsea.jpg", mob: "/hero/panels/mobile/03-chelsea.jpg", pos: "50% 50%", a: 0.32, b: 0.48 },
-  { key: "property", index: "04", place: "PROPERTY", line: "A PROPERTY IS MORE THAN A NUMBER.", img: "/hero/panels/04-property.jpg", mob: "/hero/panels/mobile/04-property.jpg", pos: "50% 42%", a: 0.48, b: 0.64 },
-  { key: "interior", index: "05", place: "INTERIOR", line: "DESIGNED FOR THE WAY YOU WANT TO LIVE.", img: "/hero/panels/05-interior.jpg", mob: "/hero/panels/mobile/05-interior.jpg", pos: "50% 50%", a: 0.64, b: 0.78 },
-  { key: "view", index: "06", place: "THE VIEW", line: "A DIFFERENT PERSPECTIVE ON LONDON.", img: "/hero/panels/06-theview.jpg", mob: "/hero/panels/mobile/06-theview.jpg", pos: "50% 48%", a: 0.78, b: 0.91 },
-  { key: "foxy", index: "07", place: "FOXY", line: "", img: "/hero/panels/07-foxy.jpg", mob: "/hero/panels/mobile/07-foxy.jpg", pos: "50% 50%", a: 0.91, b: 1.0 },
+  { key: "london", index: "01", place: "LONDON", line: "A GLOBAL CITY. A CITY OF OPPORTUNITY.", slug: "01-london", pos: "50% 52%", a: 0.0, b: 0.16 },
+  { key: "west", index: "02", place: "WEST LONDON", line: "CHARACTER. CONNECTIVITY. ESTABLISHED DEMAND.", slug: "02-westlondon", pos: "50% 50%", a: 0.16, b: 0.32 },
+  { key: "chelsea", index: "03", place: "CHELSEA", line: "PRIME LONDON, CONSIDERED DIFFERENTLY.", slug: "03-chelsea", pos: "50% 50%", a: 0.32, b: 0.48 },
+  { key: "property", index: "04", place: "PROPERTY", line: "A PROPERTY IS MORE THAN A NUMBER.", slug: "04-property", pos: "50% 45%", a: 0.48, b: 0.64 },
+  { key: "interior", index: "05", place: "INTERIOR", line: "DESIGNED FOR THE WAY YOU WANT TO LIVE.", slug: "05-interior", pos: "50% 50%", a: 0.64, b: 0.78 },
+  { key: "view", index: "06", place: "THE VIEW", line: "A DIFFERENT PERSPECTIVE ON LONDON.", slug: "06-theview", pos: "50% 48%", a: 0.78, b: 0.91 },
+  { key: "foxy", index: "07", place: "FOXY", line: "", slug: "07-foxy", pos: "50% 50%", a: 0.91, b: 1.0 },
 ];
 
 const GRAIN =
@@ -222,18 +221,17 @@ export function CinematicHero({
               className="absolute inset-0 will-change-transform"
               style={{ opacity: i === 0 ? 1 : 0, transform: "scale(1.06)" }}
             >
-              <picture>
-                <source media="(max-width: 767px)" srcSet={s.mob} />
-                <img
-                  src={s.img}
-                  alt=""
-                  aria-hidden="true"
-                  draggable={false}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  style={{ objectPosition: s.pos }}
-                  fetchPriority={i === 0 ? "high" : "auto"}
-                />
-              </picture>
+              <img
+                src={`/hero/panels/${s.slug}-1920.jpg`}
+                srcSet={`/hero/panels/${s.slug}-1280.jpg 1280w, /hero/panels/${s.slug}-1920.jpg 1920w, /hero/panels/${s.slug}-3840.jpg 3840w`}
+                sizes="100vw"
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{ objectPosition: s.pos }}
+                fetchPriority={i === 0 ? "high" : "auto"}
+              />
             </div>
           ))}
         </div>
