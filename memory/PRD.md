@@ -62,6 +62,14 @@ Mapbox GL (optional); Zod validation; bcryptjs; HttpOnly signed session cookie +
   Replaced all 7 panels with **high-resolution 1264×848 sharp cinematic renders** (faithful to the approved storyboard scenes,
   generated using the storyboard panels as reference) at the same filenames + lighter mobile variants. Verified iteration_4 (100%).
 
+## Phase 3 — Homepage enhancements (on top of the cinematic hero)
+- **Animated opening overlay** on the London stage: eyebrow + headline "FIND YOUR PLACE IN LONDON." + subheadline + a **property search bar** (Location, Property Type = Buy/Rent/Invest, Min £, Max £), fading out as the journey begins. On-load fade/slide entrance via `gsap.from` (respects reduced-motion).
+- **Hero search** submits to `/properties?location=&intent=&min=&max=`; `PropertySearch` now pre-fills the Location filter from `?location`.
+- **Navbar**: gold underline hover animation (`.nav-underline`) + gold hover colour on each link and the consultation button.
+- **Scroll cue**: "SCROLL TO EXPLORE" made brighter + a bouncing gold arrow (`.foxy-bounce`, reduced-motion safe).
+- **Featured Properties** section below the hero: 3 cards reusing the clearly-labelled PROTOTYPE properties (self-hosted images under `/public/properties/`, area, title, £ price, Bed/Bath, PROTOTYPE label, gold "VIEW PROPERTY" → `/properties/<slug>`).
+- Verified (testing agent iteration_6, frontend 100%, 9/9): entrance, search + handoff, journey preserved, nav hover, scroll cue, featured cards + navigation, reduced-motion, mobile, zero console errors. Type-check 0 errors, production build green.
+
 ## Not yet configured (optional integrations — degrade gracefully, no crash)
 - **Sanity**: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`,
   `SANITY_API_READ_TOKEN` → homepage falls back to approved FOXY copy.

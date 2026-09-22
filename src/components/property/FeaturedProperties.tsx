@@ -3,11 +3,11 @@ import { prototypeProperties } from "@/lib/properties";
 
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 
-// Stock imagery used purely to illustrate the prototype cards (clearly labelled).
+// Local self-hosted imagery used purely to illustrate the prototype cards (clearly labelled).
 const IMAGES: Record<string, string> = {
-  "prototype-chelsea-residence": "https://images.unsplash.com/photo-1632743441209-8a09b8a37e25?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=1200",
-  "prototype-kensington-residence": "https://images.unsplash.com/photo-1777845971347-3da76973f765?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=1200",
-  "prototype-fulham-residence": "https://images.unsplash.com/photo-1633694705199-bc1e0a87c97a?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=1200",
+  "prototype-chelsea-residence": "/properties/chelsea.jpg",
+  "prototype-kensington-residence": "/properties/kensington.jpg",
+  "prototype-fulham-residence": "/properties/fulham.jpg",
 };
 
 export function FeaturedProperties() {
