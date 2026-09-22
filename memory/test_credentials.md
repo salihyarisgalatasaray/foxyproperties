@@ -3,8 +3,9 @@
 ## Back Office admin (seeded via scripts-seed-user.mjs)
 - URL: `/admin-login`
 - Email: `admin@foxyproperty.co.uk`
-- Password: `FoxyAdmin2026!Demo`
-- Role: `ADMIN` (full RBAC matrix)
+- Password: `Sa281616@`
+- Role: `ADMIN` (full RBAC matrix, includes properties:edit)
+- Admin panel: `/admin` (login) → `/admin/properties` (property management)
 
 > Demo/local credential for the Emergent Preview only. Not a production account.
 > Re-seed with: `DATABASE_URL="$DATABASE_URL" node scripts-seed-user.mjs <email> <password> "<name>" <ROLE>`
