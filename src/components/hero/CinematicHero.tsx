@@ -1,6 +1,7 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -25,8 +26,7 @@ type Stage = {
   b: number;
 };
 
-// Seven stages cropped from the approved storyboard asset.
-// Windows follow the requested scroll timeline (0–100%).
+// Seven stages cropped from the approved storyboard asset. Windows follow the requested scroll timeline (0–100%).
 const STAGES: Stage[] = [
   { key: "london", index: "01", place: "LONDON", line: "A GLOBAL CITY. A CITY OF OPPORTUNITY.", slug: "01-london", pos: "50% 52%", a: 0.0, b: 0.16 },
   { key: "west", index: "02", place: "WEST LONDON", line: "CHARACTER. CONNECTIVITY. ESTABLISHED DEMAND.", slug: "02-westlondon", pos: "50% 50%", a: 0.16, b: 0.32 },
@@ -49,15 +49,33 @@ export function CinematicHero({
   ctaLabel = "EXPLORE PROPERTIES",
   ctaHref = "/properties",
 }: Props) {
+  const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const layersRef = useRef<Array<HTMLDivElement | null>>([]);
   const capsRef = useRef<Array<HTMLDivElement | null>>([]);
+  const openingRef = useRef<HTMLDivElement>(null);
   const finalRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const railNumRef = useRef<HTMLSpanElement>(null);
   const railLabelRef = useRef<HTMLSpanElement>(null);
   const railBarRef = useRef<HTMLSpanElement>(null);
+
+  const onSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const params = new URLSearchParams();
+    const loc = String(f.get("location") || "").trim();
+    const intent = String(f.get("intent") || "");
+    const min = String(f.get("min") || "").trim();
+    const max = String(f.get("max") || "").trim();
+    if (loc) params.set("location", loc);
+    if (intent) params.set("intent", intent);
+    if (min) params.set("min", min);
+    if (max) params.set("max", max);
+    const qs = params.toString();
+    router.push(`/properties${qs ? `?${qs}` : ""}`);
+  };
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -68,7 +86,6 @@ export function CinematicHero({
     const HOLD = 0.1; // dramatic static hold on the London opening before the first move
 
     const render = (p: number) => {
-      // Remap scroll so the first HOLD of travel keeps London perfectly still, then run the journey.
       const ep = p <= HOLD ? 0 : (p - HOLD) / (1 - HOLD);
 
       // Image layers: crossfade (each reveals on top) + continuous push-in + focus-pull blur.
@@ -87,26 +104,27 @@ export function CinematicHero({
         layer.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : "none";
       }
 
-      // Editorial captions (stages 01–06) synchronized with the imagery.
-      for (let i = 0; i < 6; i++) {
+      // Opening block (headline + subheadline + search) holds through the beat, then fades as the journey begins.
+      const s0 = STAGES[0];
+      const w0 = s0.b - s0.a;
+      const out0 = clamp01((ep - (s0.b - w0 * 0.3)) / (w0 * 0.3));
+      if (openingRef.current) {
+        const o = 1 - out0;
+        openingRef.current.style.opacity = String(o);
+        openingRef.current.style.transform = `translateY(calc(-50% + ${(-out0 * 18).toFixed(1)}px))`;
+        openingRef.current.style.pointerEvents = o < 0.5 ? "none" : "auto";
+      }
+
+      // Editorial captions (stages 02–06) synchronized with the imagery.
+      for (let i = 1; i < 6; i++) {
         const cap = capsRef.current[i];
         if (!cap) continue;
         const s = STAGES[i];
         const w = s.b - s.a;
-        let op: number;
-        let ty: number;
-        if (i === 0) {
-          // London caption appears immediately and holds through the opening beat.
-          const inP = clamp01(p / 0.05);
-          const outP = clamp01((ep - (s.b - w * 0.22)) / (w * 0.22));
-          op = inP * (1 - outP);
-          ty = -outP * 22;
-        } else {
-          const inP = clamp01((ep - s.a) / (w * 0.34));
-          const outP = clamp01((ep - (s.b - w * 0.22)) / (w * 0.22));
-          op = inP * (1 - outP);
-          ty = (1 - inP) * 30 - outP * 22;
-        }
+        const inP = clamp01((ep - s.a) / (w * 0.34));
+        const outP = clamp01((ep - (s.b - w * 0.22)) / (w * 0.22));
+        const op = inP * (1 - outP);
+        const ty = (1 - inP) * 30 - outP * 22;
         cap.style.opacity = String(op);
         cap.style.transform = `translateY(calc(-50% + ${ty.toFixed(1)}px))`;
       }
@@ -135,7 +153,13 @@ export function CinematicHero({
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Reduced motion: static, usable hero — first frame + final CTA visible, no pinning.
+      // Animated on-load entrance for the opening headline / subheadline / search bar.
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tw = gsap.from(".hero-opening-item", { y: 28, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.15 });
+        return () => tw.kill();
+      });
+
+      // Reduced motion: static, usable hero — first frame + opening + final CTA visible, no pinning.
       mm.add("(prefers-reduced-motion: reduce)", () => {
         section.style.height = "100vh";
         layersRef.current.forEach((l, i) => {
@@ -145,10 +169,8 @@ export function CinematicHero({
           l.style.filter = "none";
         });
         capsRef.current.forEach((c) => c && (c.style.opacity = "0"));
-        if (finalRef.current) {
-          finalRef.current.style.opacity = "1";
-          finalRef.current.style.transform = "translateY(-50%)";
-        }
+        if (openingRef.current) openingRef.current.style.opacity = "1";
+        if (finalRef.current) finalRef.current.style.opacity = "0";
         if (hintRef.current) hintRef.current.style.opacity = "0";
       });
 
@@ -211,7 +233,7 @@ export function CinematicHero({
       <h1 className="sr-only">{title}</h1>
 
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Image layers (cropped storyboard panels) */}
+        {/* Image layers (cropped storyboard panels, responsive up to 4K) */}
         <div ref={parallaxRef} className="absolute inset-0">
           {STAGES.map((s, i) => (
             <div
@@ -244,24 +266,93 @@ export function CinematicHero({
 
         {/* Editorial layer */}
         <div className="absolute inset-0 z-10">
-          {eyebrow ? (
-            <p className="absolute left-6 top-24 text-[10px] tracking-[.32em] text-white/45 md:left-16">{eyebrow}</p>
-          ) : null}
+          {/* Opening: animated headline + subheadline + search bar */}
+          <div
+            ref={openingRef}
+            data-testid="hero-opening"
+            className="absolute left-6 top-1/2 z-20 w-[min(92vw,44rem)] -translate-y-1/2 md:left-16"
+          >
+            <p className="hero-opening-item mb-4 text-[11px] tracking-[.42em] text-[#D4AF37]">
+              {eyebrow || "LONDON PROPERTY · DIFFERENTLY"}
+            </p>
+            <h2 className="hero-opening-item display text-[2.7rem] leading-[1.02] md:text-[4.4rem]">FIND YOUR PLACE IN LONDON.</h2>
+            <p className="hero-opening-item mt-5 max-w-xl text-base leading-8 text-[#C9C4BB] md:text-lg">
+              Explore exceptional homes across prime London — buy, rent or invest, considered differently.
+            </p>
 
-          {STAGES.slice(0, 6).map((s, i) => (
-            <div
-              key={s.key}
-              ref={(el) => { capsRef.current[i] = el; }}
-              data-testid={`hero-caption-${s.key}`}
-              className="absolute left-6 top-1/2 max-w-3xl md:left-16"
-              style={{ opacity: 0, transform: "translateY(-50%)" }}
+            <form
+              onSubmit={onSearch}
+              method="get"
+              data-testid="hero-search"
+              className="hero-opening-item mt-8 grid grid-cols-1 gap-2 border border-[#D4AF37]/30 bg-black/55 p-3 backdrop-blur-md sm:grid-cols-[1.5fr_1fr_0.9fr_0.9fr_auto]"
             >
-              <p className="mb-4 text-[11px] tracking-[.42em] text-[#D4AF37]">
-                {s.index} <span className="text-white/30">—</span> {s.place}
-              </p>
-              <p className="display text-[2.6rem] leading-[1.04] text-white md:text-[4.4rem]">{s.line}</p>
-            </div>
-          ))}
+              <input
+                name="location"
+                data-testid="hero-search-location"
+                aria-label="Location"
+                placeholder="Location"
+                className="bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:bg-white/10 focus:ring-1 focus:ring-[#D4AF37]"
+              />
+              <select
+                name="intent"
+                data-testid="hero-search-type"
+                aria-label="Property type"
+                defaultValue="Buy"
+                className="cursor-pointer bg-white/5 px-3 py-3 text-sm text-white outline-none transition focus:ring-1 focus:ring-[#D4AF37]"
+              >
+                <option className="bg-[#141413] text-white">Buy</option>
+                <option className="bg-[#141413] text-white">Rent</option>
+                <option className="bg-[#141413] text-white">Invest</option>
+              </select>
+              <input
+                name="min"
+                type="number"
+                min="0"
+                inputMode="numeric"
+                data-testid="hero-search-min"
+                aria-label="Minimum price"
+                placeholder="Min £"
+                className="bg-white/5 px-3 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:bg-white/10 focus:ring-1 focus:ring-[#D4AF37]"
+              />
+              <input
+                name="max"
+                type="number"
+                min="0"
+                inputMode="numeric"
+                data-testid="hero-search-max"
+                aria-label="Maximum price"
+                placeholder="Max £"
+                className="bg-white/5 px-3 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:bg-white/10 focus:ring-1 focus:ring-[#D4AF37]"
+              />
+              <button
+                type="submit"
+                data-testid="hero-search-submit"
+                className="group inline-flex items-center justify-center gap-2 bg-[#D4AF37] px-6 py-3 text-xs font-semibold tracking-[.16em] text-black transition-colors duration-300 hover:bg-[#e6c84f]"
+              >
+                SEARCH
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </button>
+            </form>
+          </div>
+
+          {/* Stage captions 02–06 */}
+          {STAGES.slice(1, 6).map((s, idx) => {
+            const i = idx + 1;
+            return (
+              <div
+                key={s.key}
+                ref={(el) => { capsRef.current[i] = el; }}
+                data-testid={`hero-caption-${s.key}`}
+                className="absolute left-6 top-1/2 max-w-3xl md:left-16"
+                style={{ opacity: 0, transform: "translateY(-50%)" }}
+              >
+                <p className="mb-4 text-[11px] tracking-[.42em] text-[#D4AF37]">
+                  {s.index} <span className="text-white/30">—</span> {s.place}
+                </p>
+                <p className="display text-[2.6rem] leading-[1.04] text-white md:text-[4.4rem]">{s.line}</p>
+              </div>
+            );
+          })}
 
           {/* Final FOXY stage → transitions into the next homepage section */}
           <div
@@ -308,9 +399,12 @@ export function CinematicHero({
           <span className="text-[10px] tracking-[.26em] text-white/30">07</span>
         </div>
 
-        {/* Scroll hint */}
-        <div ref={hintRef} data-testid="hero-scroll-hint" className="absolute bottom-8 left-6 z-10 text-[10px] tracking-[.34em] text-white/60 md:left-16">
-          SCROLL TO EXPLORE ↓
+        {/* Scroll hint with bouncing arrow */}
+        <div ref={hintRef} data-testid="hero-scroll-hint" className="absolute bottom-8 left-6 z-20 flex flex-col items-start gap-2 md:left-16">
+          <span className="text-[10px] font-medium tracking-[.34em] text-white/85" style={{ textShadow: "0 1px 12px rgba(0,0,0,.65)" }}>
+            SCROLL TO EXPLORE
+          </span>
+          <span className="foxy-bounce text-lg leading-none text-[#D4AF37]" aria-hidden="true">↓</span>
         </div>
       </div>
     </section>
