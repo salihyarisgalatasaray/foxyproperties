@@ -1,0 +1,22 @@
+{
+  "summary": "Frontend-only verification of Homepage Journey (LifecycleJourney + PropertyLifecycle) on production preview. All required data-testids present. CinematicHero regression clean (no console errors). LifecycleJourney: 8 caption stages each independently scrub-scale to opacity 1.0 at distinct scroll fractions (value~0.42, investment~0.46, finance~0.52, letting~0.56, tenant~0.60, rent~0.66, management~0.70, dashboard~0.74) — far exceeds the 3-captions/3-depths requirement. Journey CTAs journey-cta-investment -> /investment, journey-cta-finance -> /mortgages, journey-cta-dashboard -> /landlords#portfolio all correct. Dashboard caption shows the 'CONCEPT' label. PropertyLifecycle: hovering each of the 6 stage chips (buy, finance, let, manage, review, sell) updates lifecycle-detail text and lifecycle-detail-cta href to the correct destination (/properties, /mortgages, /lettings, /property-management, /landlords, /sell). Reduced-motion: pinned sticky container is hidden, staticRef stacked fallback renders with H2 'FROM PROPERTY TO PORTFOLIO.' and 8 anchor tiles (hrefs all correct), section height collapses (docH 4939 vs 16225) — no giant empty gap. Mobile 390px: no horizontal overflow (sw=cw=390). All 8 /journey/*.jpg assets return 200. Zero console errors and zero page errors across all runs.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "LifecycleJourney.tsx: the reduced-motion fallback stacked tiles do NOT carry data-testid=journey-caption-* / journey-cta-* attributes; instead the hidden pinned container keeps those testids at 0x0. This is fine functionally but complicates future automated assertions of the fallback specifically. Consider adding testid attributes (e.g. journey-fallback-caption-<key>) or moving the testids onto the visible element per matchMedia branch.",
+    "Static fallback tiles are anchor <a> without any 'aria-label' distinguishing them from the pinned CTAs — screen readers will encounter duplicate 'EXPLORE PROPERTIES' etc from both the hidden pinned block and the fallback since only display:none toggling is done via JS after mount (SSR renders both). Consider aria-hidden on the branch that's not active or SSR-safe rendering to avoid duplicate a11y tree entries."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Journey scrub is very sensitive — capture caption opacity across many fine scroll fractions (0.38..0.78, step 0.02) rather than 3-4 jumps. Use page.emulate_media(reduced_motion='reduce') then reload to trigger the matchMedia fallback branch; the fallback content lives inside a separate div (staticRef) at the bottom of the section, not on the pinned testid nodes.",
+  "rca of the issue": "No issues found."
+}

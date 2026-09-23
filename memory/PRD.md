@@ -49,6 +49,19 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ V2 PHASE F (partial) — Homepage Journey (2026-06, VERIFIED, iteration_10, frontend 100%)
+- `components/hero/LifecycleJourney.tsx` (NEW): cinematic GSAP ScrollTrigger scrub section placed right
+  after the hero, continuing the story through 8 stages (PROPERTY VALUE → INVESTMENT → FINANCE → LETTING
+  → TENANT → RENT → MANAGEMENT → LANDLORD DASHBOARD), each with crossfading full-bleed visual + editorial
+  caption + CTA into the matching page; right-side progress rail; reduced-motion stacked fallback; mobile lighter.
+- `components/property/PropertyLifecycle.tsx` (NEW): interactive "ONE PROPERTY. EVERY STAGE." selector
+  (BUY→FINANCE→LET→MANAGE→REVIEW→SELL) with hover/focus detail panel + click-through to each journey.
+- 8 cohesive AI CONCEPT images generated (Gemini nano-banana) in the FOXY dark/gold aesthetic, stored at
+  `/public/journey/*.jpg`, dashboard stage labelled CONCEPT.
+- Wired into `src/app/page.tsx`: Hero → LifecycleJourney → decision → PropertyLifecycle → Featured → Footer.
+- Verified: 8 captions scrub to full opacity at distinct depths, all CTAs correct, interactive panel updates,
+  reduced-motion fallback readable, mobile no overflow, all assets 200, zero console errors. Type-check 0, build green.
+
 ## ✅ V2 PHASE A — Navigation + Core Service Pages (2026-06, VERIFIED, iteration_9, 92%→fixed)
 New/changed files:
 - `components/navigation/SiteHeader.tsx` — rebuilt premium MEGA-MENU (PROPERTIES, SELL, LETTINGS,
