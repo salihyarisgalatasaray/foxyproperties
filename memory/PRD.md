@@ -1,100 +1,88 @@
-# FOXY Property MVP V7 — PRD & Working Notes
+# FOXY Property MASTER PLATFORM V2 — PRD & Working Notes
 
-## Original problem statement
-Continue development of the existing **FOXY Property MVP V7** codebase (imported from GitHub:
-`salihyaris05-ai/foxy-property-platform`, branch `main`). **Phase 1 = Codebase Audit & Stabilisation.**
-Make the existing app install, type-check, build and RUN in Emergent Preview while preserving its
-architecture, routes, features and premium dark-charcoal/gold brand direction. Do NOT redesign, do NOT
-replace with a generic template, do NOT deploy/publish or connect a custom domain yet.
+## Original problem statement (V2)
+Transform the existing FOXY Property app into a premium end-to-end London property platform:
+DISCOVER → BUY → INVEST → FINANCE → LET → MANAGE → MONITOR → SELL. Serve buyers, sellers,
+investors, landlords, portfolio landlords, tenants, overseas buyers and management clients.
+Preserve ALL existing working architecture (routes, calculators, DB, auth, RBAC, Back Office,
+cinematic hero, brand). NOT a generic estate-agent template. **HMO is OUT OF SCOPE.**
+DO NOT DEPLOY/PUBLISH — build + test in preview and stop for approval.
 
 ## Brand / compliance rules (must hold)
-- Brand: **FOXY PROPERTY INVESTORS LTD** — premium London property, investment & property-finance platform.
-- NOT FCA authorised; NO FCA number; NO "Independent Mortgage Adviser"; NO "Whole of Market".
-- Mortgage/investment figures are **illustrative/estimated**, not guaranteed.
-- Demo properties are **clearly labelled "PROTOTYPE · NOT A LIVE PROPERTY"**. No invented clients/yields/partners.
+- Colours: bg #0B0B0A/#0E0E0E, gold #D4AF37, soft-gold #B9953E, ivory #F4F0E8, muted #A7A29A.
+- Serif (Playfair) headlines; Inter for UI/data. Premium British, architectural, cinematic.
+- NOT FCA authorised; NO FCA number; NOT "Independent Mortgage Adviser"/"Whole of Market".
+- All investment/rental/finance figures = ILLUSTRATIVE, never guaranteed. No "GUARANTEED RENT".
+- No invented properties/prices/yields/testimonials/clients/awards/memberships/fees.
+- Prototype/concept imagery clearly labelled ("CONCEPT IMAGERY · NOT A LIVE LISTING").
+- Regulatory memberships, protection products & fees = configurable, shown only when verified.
 
-## Tech stack (source of truth = the repo)
-Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind CSS v4 (`@tailwindcss/postcss`);
-GSAP + ScrollTrigger cinematic hero; Sanity CMS (optional); PostgreSQL (`pg`) for CRM/Back Office;
-Mapbox GL (optional); Zod validation; bcryptjs; HttpOnly signed session cookie + RBAC.
+## Tech stack
+Next.js 16 (App Router) + React 19 + TS (strict) + Tailwind v4; GSAP/ScrollTrigger cinematic hero;
+PostgreSQL (`pg`) for CRM/auth/properties; Emergent Object Storage for images; Sanity + Mapbox
+optional (graceful fallback). bcryptjs + HttpOnly signed session cookie + RBAC.
 
-## Runtime topology in Emergent (preview run-glue — NOT app source, git-ignored)
-- Next.js app lives at `/app`, served on **:3000** by `/app/frontend/package.json` runner (`next start`, production build).
-- Ingress routes `/api/*` → **:8001**, where `/app/backend/server.py` (FastAPI) **reverse-proxies to Next.js :3000**,
-  preserving all App Router API routes (incl. Set-Cookie forwarding).
-- Server secrets in `/app/.env.local` (git-ignored). `.yarnrc` sets `--ignore-engines` (Node 20 vs a Sanity peer dep).
-- Local PostgreSQL 15 (auto-started by the runner); migrations applied; admin user seeded.
+## Runtime topology (preview run-glue, git-ignored)
+- Next.js on :3000 via `/app/frontend/package.json` runner (`next start`, PRODUCTION build).
+- **Changes require `yarn build` + `supervisorctl restart frontend`** (no hot reload in prod mode).
+- Ingress: `/api/*` → :8001 (FastAPI reverse proxy `/app/backend/server.py`) → Next.js :3000.
+- Secrets in `/app/.env.local`. Local PostgreSQL 15.
+- **DB bootstrap:** `/app/scripts/db-setup.sh` (idempotent: role+db+migrations+admin seed) is now
+  invoked by the runner before `next start`. `/app/scripts/seed-admin.js` seeds the ADMIN user.
+- Preview URL: https://dev-foxy-pull.preview.emergentagent.com
 
-## Phase 1 — what was done (2026-06 / imported build dated 2026-09-18)
-- Installed deps (yarn, `--ignore-engines`), added `postcss.config.mjs` (Tailwind v4), `next.config.js` (allowedDevOrigins).
-- Fixed TS error: `properties/[slug]/page.tsx` `p.propertyId` → `p.id`.
-- Made `sanity/schemaTypes/homepage.ts` dependency-free (plain schema object, matching `area.ts`) so the website
-  type-checks/builds without the Studio-only `sanity` SDK. **Type-check: 0 errors. Production build: green (17 routes).**
-- Stood up local PostgreSQL + ran `001_crm.sql`, `002_auth_security.sql`; seeded ADMIN user.
-- Resolved CRITICAL preview-only hydration failure by serving a **production build** (`next start`) instead of
-  Turbopack dev mode (dev HMR/RSC streaming broke through the ingress).
-- Defense-in-depth: added `method="post"` + explicit `type="submit"` to the admin-login and finance-enquiry forms
-  so credentials/PII can never leak to a URL even if JS fails.
-- Scrubbed plaintext credentials that a prior dev-mode test run left in access logs.
+## DB schema
+- leads {id,type,source,status,name,email,phone,message,marketing_consent,privacy_notice_version,assigned_to,created_at,updated_at}
+- activities, audit_logs, request_limits (rate limit)
+- backoffice_users {id,email,name,password_hash,role[ADMIN|PROPERTY|FINANCE|MARKETING|CONTENT],active}
+- properties {id,title,description,location/area,price,property_type,listing_type,bedrooms,bathrooms,sqft,status,photos,...}
 
-## Verification (testing agent — iteration_2)
-- Backend: **32/32 pytest (100%)** — leads, auth 401/200 + HttpOnly cookie, RBAC PATCH, public routes,
-  invalid-slug 404s, compliance copy, illustrative disclaimers, prototype labels, map placeholder.
-- Frontend (preview URL, **100%**): homepage cinematic hero; property search filters; both calculators reactive;
-  property/area detail + PROTOTYPE labels; lead enquiry → POST /api/leads → success + persisted; Back Office
-  unauth→redirect, login→dashboard, leads list + detail + activity, logout clears session; no creds-in-URL.
+## Lead `type` enum (extended in V2 Phase A)
+PROPERTY_ENQUIRY, VIEWING, INVESTMENT, MORTGAGE, BUY_TO_LET, REMORTGAGE, PORTFOLIO, SELLER,
+LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTATION, GENERAL.
 
-## Phase 2 — Cinematic Visual Hero (storyboard-driven)
-- Pulled the approved asset from GitHub: `public/hero/desktop/London Luxury Property Storyboard.png` (7-panel contact sheet).
-- Programmatically detected the grid geometry and cropped **7 clean photographic panels** (baked storyboard text trimmed),
-  exported to `public/hero/panels/{01-london,02-westlondon,03-chelsea,04-property,05-interior,06-theview,07-foxy}.jpg`
-  (+ lighter `public/hero/panels/mobile/*.jpg`). ~1 MB total.
-- Rebuilt `src/components/hero/CinematicHero.tsx` into a **tall sticky, scroll-driven journey** (GSAP ScrollTrigger scrub):
-  per-stage image crossfade (reveal-on-top) + continuous camera push-in (scale) + focus-pull blur + synchronized editorial
-  captions, atmospheric scrims + film grain, a storyboard-style 01–07 rail, and a final FOXY stage carrying the CTA that
-  transitions into the next homepage section. Timeline windows per brief (London 0–16% … FOXY 91–100%).
-- Mouse = extremely subtle atmospheric parallax only (never drives the journey). `gsap.matchMedia` gates desktop (richer,
-  720vh) / mobile (lighter, 560vh) / `prefers-reduced-motion` (static 100vh hero with CTA visible).
-- Verified (testing agent iteration_3, frontend 100%, 9/9): scroll journey + caption order, storyboard assets actually used,
-  final CTA hrefs/navigation, reduced-motion fallback, mobile responsive (no overflow), zero console errors. Type-check 0
-  errors, production build green. Compliance copy unchanged/clean.
-- **Sharpness upgrade:** the original storyboard crops were low-resolution (~375–500px wide), so full-bleed they looked soft.
-  Replaced all 7 panels with **high-resolution 1264×848 sharp cinematic renders** (faithful to the approved storyboard scenes,
-  generated using the storyboard panels as reference) at the same filenames + lighter mobile variants. Verified iteration_4 (100%).
+## What was done BEFORE V2 (V7 / phases 1–4 — all verified)
+- Audit & stabilisation, TS fixes, production-mode serving (fixed hydration).
+- Cinematic scroll hero (7-stage GSAP, 4K responsive assets, reduced-motion fallback).
+- Homepage: animated overlay + hero search + featured (PROTOTYPE) properties.
+- Admin panel `/admin/properties`: property CRUD, Live⇄Coming Soon, object-storage photo upload
+  with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
+- Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
-## Phase 3 — Homepage enhancements (on top of the cinematic hero)
-- **Animated opening overlay** on the London stage: eyebrow + headline "FIND YOUR PLACE IN LONDON." + subheadline + a **property search bar** (Location, Property Type = Buy/Rent/Invest, Min £, Max £), fading out as the journey begins. On-load fade/slide entrance via `gsap.from` (respects reduced-motion).
-- **Hero search** submits to `/properties?location=&intent=&min=&max=`; `PropertySearch` now pre-fills the Location filter from `?location`.
-- **Navbar**: gold underline hover animation (`.nav-underline`) + gold hover colour on each link and the consultation button.
-- **Scroll cue**: "SCROLL TO EXPLORE" made brighter + a bouncing gold arrow (`.foxy-bounce`, reduced-motion safe).
-- **Featured Properties** section below the hero: 3 cards reusing the clearly-labelled PROTOTYPE properties (self-hosted images under `/public/properties/`, area, title, £ price, Bed/Bath, PROTOTYPE label, gold "VIEW PROPERTY" → `/properties/<slug>`).
-- Verified (testing agent iteration_6, frontend 100%, 9/9): entrance, search + handoff, journey preserved, nav hover, scroll cue, featured cards + navigation, reduced-motion, mobile, zero console errors. Type-check 0 errors, production build green.
+## ✅ V2 PHASE A — Navigation + Core Service Pages (2026-06, VERIFIED, iteration_9, 92%→fixed)
+New/changed files:
+- `components/navigation/SiteHeader.tsx` — rebuilt premium MEGA-MENU (PROPERTIES, SELL, LETTINGS,
+  LANDLORDS, INVESTMENT, MORTGAGES, AREAS, INSIGHTS, ABOUT) + EN|TR + BOOK A CONSULTATION,
+  hover dropdowns + full mobile panel (data-testids: nav-*, nav-sub-*, nav-mobile-toggle/panel, nav-m-*).
+- `components/navigation/SiteFooter.tsx` — 4-column footer + full compliance disclaimer block.
+- `components/site/PageHero.tsx` (concept-imagery label, CTAs), `components/site/JourneyRail.tsx`.
+- `components/lead/LeadForm.tsx` — reusable, POST /api/leads, honeypot + privacy + marketing consent.
+- `components/landlord/LandlordJourney.tsx` — "What would you like us to help with?" 7 needs → contextual form.
+- `components/management/ManagementSlider.tsx` — YOU MANAGE ↔ FOXY MANAGES (Let Only/Rent Collection/Fully Managed).
+- Pages: `/sell`, `/lettings`, `/landlords`, `/property-management`, `/investment`, `/mortgages`,
+  `/insights`, `/about`, `/contact`. Added SiteHeader+SiteFooter to `/properties`, `/areas`, `/areas/[slug]`,
+  and SiteFooter to homepage.
+- `api/leads/route.ts` — enum extended; rateLimit() moved inside try/catch (DB failure → 503 not 500).
+- `scripts/db-setup.sh` + `scripts/seed-admin.js` (new) wired into runner.
+Verified: type-check 0 errors, prod build green (all routes), mega-menu + mobile nav, all 9 pages render,
+lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 401, ManagementSlider + LandlordJourney work.
 
-## Phase 4 — Admin panel + DB-backed properties
-- **Auth**: reuses the existing Postgres/bcrypt session (role `ADMIN` has `properties:edit`). New login at `/admin` → `/admin/properties`. Admin `admin@foxyproperty.co.uk` / `Sa281616@` (login min-length lowered to 8 for this 9-char password — shorter than recommended; advise a longer one before production).
-- **Property management** (`/admin/properties`, guarded): add/edit/delete, Live⇄Coming Soon toggle, multi-photo upload. Fields: title, description, area, price, type (apartment/house/commercial), listing (buy/rent), beds, baths, size sqft, status, photos.
-- **Photos**: multi-upload to object storage with **drag-and-drop reordering** + "SET COVER" (first photo = cover, shown with a COVER badge); order flows to the public card cover and detail-page gallery. Verified iteration_8 (frontend 100%).
-- **Storage**: Emergent Object Storage via `src/lib/storage.ts` (Node fetch, init/put/get); uploads at `POST /api/admin/upload`, served publicly through `GET /api/media/[...path]`. Keys in `.env.local` (`EMERGENT_LLM_KEY`, `INTEGRATION_PROXY_URL`).
-- **Data**: `properties` table (migration `003_properties.sql`); `src/lib/propertiesDb.ts` CRUD. Public `GET /api/properties` returns ALL admin properties (LIVE + COMING_SOON) + labelled prototypes.
-- **Public /properties**: rewritten filters — Buy/Rent toggle, Location, Bedrooms, Property Type, dual price-range slider (min/max); card hover = image zoom + gold border glow; real admin photos render. Detail page resolves DB property (with photo gallery) or prototype.
-- Verified (testing agent iteration_7 + curl): backend 100% (7/7 admin suite; login/CRUD/upload/media/public list), UI admin CRUD/toggle/delete + public filters + slider; object storage upload→serve confirmed; COMING_SOON public listing fixed & verified. Type-check 0 errors, build green.
-
-## Not yet configured (optional integrations — degrade gracefully, no crash)
-- **Sanity**: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`,
-  `SANITY_API_READ_TOKEN` → homepage falls back to approved FOXY copy.
-- **Mapbox**: `NEXT_PUBLIC_MAPBOX_TOKEN` → map shows a placeholder; area navigation still works.
-- **PostgreSQL (production)**: currently pod-local dev DB; a managed Postgres `DATABASE_URL` is needed for prod.
-- **Session/limit secrets**: `BACKOFFICE_SESSION_SECRET`, `RATE_LIMIT_SECRET` are locally generated for preview;
-  set fresh production values before launch.
-
-## Backlog (post-approval)
-- P1: Provide Sanity + Mapbox credentials to light up CMS content and the London map.
-- P1: Provide managed production `DATABASE_URL` and production secrets; run migrations there.
-- P2: Content pages linked in the header but not yet built (`/investment`, `/mortgages`, `/about`, `/contact`).
-- P2: Pin `next`/`react` versions in package.json for reproducible builds (currently `latest`).
-- P0 (pre-launch, from README): TLS at edge, CSRF/origin + CSP/security headers, trusted-proxy IP handling,
-  retention/deletion + privacy/legal review, monitoring/alerting, dependency scanning.
+## ROADMAP — remaining V2 phases (priority order)
+- **Phase B (P0):** Interactive landlord tools — Rental Valuation (`/landlords/rental-valuation`),
+  Landlord Service Options comparison, Landlord Revenue Simulator, Sell-or-Let tool (`/tools/sell-or-let`),
+  Landlord Health Check, Rent-protection/certainty (configurable, no guarantees).
+- **Phase C (P0):** Compliance Centre (`/landlords/compliance`) + Renters' Rights (Act 2025) — WEB RESEARCH
+  GOV.UK/legislation.gov.uk, record SOURCE + DATE CHECKED + JURISDICTION; FOXY credentials blank until verified.
+- **Phase D (P1):** Tenant experience (`/rent`, `/rent/register`, `/tenants`, `/tenants/maintenance`),
+  Maintenance portal (ticket statuses + emergency guidance), Landlord/Tenant portals (My FOXY, RBAC-separated, DEMO-labelled).
+- **Phase E (P1):** Back Office expansion — lead pipelines (Sales/Landlord/Buyer/Finance), lettings/landlords/
+  tenancies/rent/management/maintenance modules; Switch-to-FOXY doc upload; Portfolio landlords.
+- **Phase F (P2):** Homepage cinematic extension (more stages: investment→finance→letting→management→landlord),
+  Property Lifecycle interactive section, property-detail lettings fields, unified BUY/RENT search, SEO/structured data.
+- **Config/integrations still needed:** Sanity + Mapbox keys; managed prod DATABASE_URL + fresh prod secrets;
+  verified FOXY fees/memberships/regulatory status; production security hardening (CSRF/CSP/TLS/retention).
 
 ## DO NOT
-- Do not deploy/publish or connect `foxyproperty.co.uk` yet (awaiting user approval).
-- Do not redesign or replace the cinematic hero / brand direction.
+- Do not deploy/publish or connect foxyproperty.co.uk (awaiting approval).
+- Do not build HMO anything. Do not invent data/fees/credentials/guarantees.
+- Do not switch to `next dev` (breaks over ingress). Rebuild after code changes.

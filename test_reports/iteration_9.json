@@ -1,0 +1,40 @@
+{
+  "summary": "Phase A frontend testing of FOXY V2: mega-menu, mobile nav, 9 new pages, journey rails, ManagementSlider, and 9 lead forms. Nav & pages render cleanly (no console errors). Discovered CRITICAL blocker: Postgres user 'foxy' did not exist so /api/leads returned 500 for ALL submissions. Testing agent created the DB user + database and ran migrations 001/002/003. After fix, 7/9 forms verified with 201 responses; the remaining 2 hit the (working) rate-limit (429) due to rapid same-IP submits. Regressions: /properties and /areas pages do not render SiteHeader/SiteFooter (root layout doesn't inject them and those pages haven't been updated).",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "/api/leads", "issue": "Was returning 500 for every submission because Postgres role 'foxy' did not exist (DATABASE_URL in /app/.env.local expects user 'foxy' with password from .env.local). Testing agent fixed by CREATE USER foxy + CREATE DATABASE foxy + running migrations 001/002/003. Main agent must decide whether this DB bootstrapping should be part of a repeatable init script (currently no init script exists in /app/scripts).", "priority": "CRITICAL"}
+    ],
+    "minor": [
+      {"endpoint": "/api/leads", "issue": "Route wraps DB call in try/catch returning 503, but rateLimit() call is OUTSIDE the try — any Postgres failure in rateLimit surfaces as an unhandled 500 rather than the intended 503. Recommend moving rateLimit() inside try."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "PropertiesPage (/properties)", "issue": "Renders SiteHeader manually but no SiteFooter — inconsistent with 9 new pages that all show footer", "selector": "footer", "priority": "MEDIUM"},
+      {"component": "AreasPage (/areas)", "issue": "Renders NEITHER SiteHeader NOR SiteFooter (no global layout inclusion). Regression per spec 'homepage still renders + now a footer' and consistency.", "selector": "[data-testid='site-header'], footer", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Add a DB bootstrap/seed script (e.g. /app/scripts/db-setup.sh) that creates the foxy PG role, DB and runs migrations idempotently, so preview environments are self-provisioning.",
+    "Move rateLimit() call inside the try/catch in /app/src/app/api/leads/route.ts so DB failures return 503 (not 500).",
+    "Move <SiteHeader/> and <SiteFooter/> into /app/src/app/layout.tsx (or add them to /properties and /areas pages) so header+footer render consistently across the whole app.",
+    "Consider raising or bypassing lead rate-limit for automated tests via a header, or reset request_limits table between test runs."
+  ],
+  "critical_code_review_comments": [
+    "Route file /app/src/app/api/leads/route.ts is one giant one-liner — unreadable/unreviewable. Split into multi-line for maintainability.",
+    "rateLimit() executes outside try/catch — masks intended 503 fallback and leaks stack traces as 500 to the client.",
+    "No global DB init/seed script; a fresh cluster restart wipes state and forces manual role creation.",
+    "SiteHeader/SiteFooter are added per-page instead of via root layout — easy to forget on new pages (already forgotten on /areas)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "92% (all pages load, mega-menu OK, mobile nav OK, 7/9 lead forms verified successful, remaining 2 blocked only by rate limit)"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ (not exercised — public pages only)",
+  "seed_data_creation": "Created Postgres role 'foxy' with password from .env.local, created 'foxy' database, ran migrations 001_crm.sql, 002_auth_security.sql, 003_properties.sql. Inserted ~9 test leads with names 'Test A'..'Test I' via form submissions.",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "DB user/db now exist. If Postgres is reset again, re-run: CREATE USER foxy WITH PASSWORD 'a2d0887a5d533d92344a942e'; CREATE DATABASE foxy OWNER foxy; then apply /app/database/migrations/*.sql. To retest switch-form / management-review-form (429 rate-limited during my run), either wait 15 min, TRUNCATE request_limits, or run: PGPASSWORD=a2d0887a5d533d92344a942e psql -U foxy -h localhost -d foxy -c 'TRUNCATE request_limits;'. All mega-menu testids verified: nav-properties/sell/lettings/landlords/investment/mortgages/areas/insights/about, nav-consultation, nav-mobile-toggle, nav-mobile-panel, nav-m-*, nav-sub-*. Journey rail on /sell shows 7 stages, /property-management timeline shows 10 stages, ManagementSlider levels 0..2 switch label to FULLY MANAGED correctly. FCA 'not authorised' disclaimer present on /mortgages (line-broken in DOM so use non-strict text match).",
+  "rca of the issue": "Root cause of the lead API 500s: Postgres role 'foxy' referenced by DATABASE_URL in /app/.env.local did not exist on the cluster (only default 'postgres' role existed). rateLimit() executed a query against Postgres before entering the API route's try/catch, so pg driver threw 'password authentication failed for user foxy' (SQLSTATE 28P01) and Next.js returned a bare 500. Mitigation applied: created the role/db and applied 3 migration files; verified /api/leads now returns 201 leadId. Permanent fix: add a repeatable init script and move rateLimit() inside try/catch to fall through to the 503 branch."
+}

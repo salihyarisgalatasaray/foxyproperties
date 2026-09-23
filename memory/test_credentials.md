@@ -1,27 +1,13 @@
-# FOXY Property — Test Credentials & Local Services
+# FOXY Property — Test Credentials
 
-## Back Office admin (seeded via scripts-seed-user.mjs)
-- URL: `/admin-login`
+## Admin / Back Office (PostgreSQL `backoffice_users`, role ADMIN)
 - Email: `admin@foxyproperty.co.uk`
 - Password: `Sa281616@`
-- Role: `ADMIN` (full RBAC matrix, includes properties:edit)
-- Admin panel: `/admin` (login) → `/admin/properties` (property management)
+- Login pages: `/admin` (property CRUD) and `/backoffice` (leads/CRM)
+- Seeded idempotently by `/app/scripts/seed-admin.js` (run via `/app/scripts/db-setup.sh`).
+  Override with env `ADMIN_EMAIL` / `ADMIN_PASSWORD` before seeding if needed.
 
-> Demo/local credential for the Emergent Preview only. Not a production account.
-> Re-seed with: `DATABASE_URL="$DATABASE_URL" node scripts-seed-user.mjs <email> <password> "<name>" <ROLE>`
-
-## Local PostgreSQL (pod-local dev database)
-- DATABASE_URL: `postgresql://foxy:a2d0887a5d533d92344a942e@localhost:5432/foxy`
-- Role `foxy` (LOGIN, SUPERUSER for local dev), database `foxy`
-- Cluster: PostgreSQL 15 (`pg_ctlcluster 15 main start`) — auto-started by the frontend runner.
-- Migrations applied: `database/migrations/001_crm.sql`, `002_auth_security.sql`
-
-## Runtime topology (Emergent preview run-glue)
-- Next.js app (at `/app`) runs on port 3000 via `/app/frontend` runner (`next dev`).
-- `/api/*` requests are routed by the ingress to port 8001, where a FastAPI reverse
-  proxy (`/app/backend/server.py`) forwards them to the Next.js server on 3000.
-- Env: `/app/.env.local` (server secrets; git-ignored).
-
-## Not yet configured (optional integrations — degrade gracefully)
-- `NEXT_PUBLIC_SANITY_PROJECT_ID` / `SANITY_API_READ_TOKEN` (homepage falls back to local FOXY copy)
-- `NEXT_PUBLIC_MAPBOX_TOKEN` (map shows a placeholder; area navigation still works)
+## Database (local preview)
+- `DATABASE_URL` in `/app/.env.local` → `postgresql://foxy:<pw>@localhost:5432/foxy`
+- Re-provision after a cluster reset: `bash /app/scripts/db-setup.sh`
+- Reset lead rate-limit during testing: `TRUNCATE request_limits;`
