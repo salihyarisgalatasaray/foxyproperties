@@ -88,6 +88,9 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Added animated stat badges to each LifecycleJourney scene via `src/components/home/SceneStats.tsx`
+  (client CountUp + IntersectionObserver, `.scene-stat` CSS reveal in globals.css, reduced-motion safe). 2 illustrative
+  stats per scene (yield/horizon, rate/decision, time-to-let/occupancy, 24-7/inspections) + "ILLUSTRATIVE" micro-label.
 - [Jun 2026] Added LifecycleJourney (`src/components/home/LifecycleJourney.tsx`) — 4 full-bleed 100vh cinematic
   scenes between PropertyLab and FeaturedEditorial: 07 INVEST→/investment, 08 FINANCE→/mortgages, 09 LET→/lettings,
   10 MANAGE→/property-management. Alternating left/right align, ParallaxImage depth-tuned, AI 2560px assets

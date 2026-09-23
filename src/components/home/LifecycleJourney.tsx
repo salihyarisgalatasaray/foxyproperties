@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { ParallaxImage } from "./ParallaxImage";
+import { SceneStats, type Stat } from "./SceneStats";
 
 type Scene = {
   id: string;
@@ -17,6 +18,7 @@ type Scene = {
   to: number;
   scaleFrom: number;
   scaleTo: number;
+  stats: Stat[];
 };
 
 const SCENES: Scene[] = [
@@ -36,6 +38,10 @@ const SCENES: Scene[] = [
     to: 8,
     scaleFrom: 1.16,
     scaleTo: 1.28,
+    stats: [
+      { to: 5.4, decimals: 1, suffix: "%", label: "AVG. INDICATIVE YIELD" },
+      { to: 10, suffix: " YR", label: "LONG-TERM HORIZON" },
+    ],
   },
   {
     id: "finance",
@@ -53,6 +59,10 @@ const SCENES: Scene[] = [
     to: 6,
     scaleFrom: 1.18,
     scaleTo: 1.3,
+    stats: [
+      { to: 5.1, decimals: 1, suffix: "%", label: "FROM INDICATIVE RATE" },
+      { to: 48, suffix: " H", label: "DECISION IN PRINCIPLE" },
+    ],
   },
   {
     id: "let",
@@ -70,6 +80,10 @@ const SCENES: Scene[] = [
     to: 10,
     scaleFrom: 1.2,
     scaleTo: 1.34,
+    stats: [
+      { to: 14, suffix: " DAYS", label: "TYPICAL TIME TO LET" },
+      { to: 98, suffix: "%", label: "PORTFOLIO OCCUPANCY" },
+    ],
   },
   {
     id: "manage",
@@ -87,6 +101,10 @@ const SCENES: Scene[] = [
     to: 6,
     scaleFrom: 1.16,
     scaleTo: 1.28,
+    stats: [
+      { to: 0, static: "24/7", label: "SUPPORT & REPORTING" },
+      { to: 4, suffix: " / YR", label: "PROPERTY INSPECTIONS" },
+    ],
   },
 ];
 
@@ -116,6 +134,8 @@ function JourneyScene({ s }: { s: Scene }) {
             >
               {s.cta} <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
+            <SceneStats stats={s.stats} align={s.align} />
+            <p className={`mt-4 text-[10px] tracking-[.2em] text-white/35 ${right ? "text-right" : ""}`}>ILLUSTRATIVE · NOT A FORECAST OR GUARANTEE</p>
           </Reveal>
         </div>
       </div>
