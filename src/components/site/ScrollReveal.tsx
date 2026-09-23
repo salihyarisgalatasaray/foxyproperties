@@ -11,6 +11,7 @@ export function ScrollReveal() {
   const path = usePathname();
   useEffect(() => {
     if (path === "/") return;
+    let io: IntersectionObserver | null = null;
     const run = () => {
       const els = Array.from(document.querySelectorAll("main section")) as HTMLElement[];
       if (!els.length) return;
@@ -19,12 +20,12 @@ export function ScrollReveal() {
         els.forEach((e) => e.classList.add("reveal", "is-in"));
         return;
       }
-      const io = new IntersectionObserver(
+      io = new IntersectionObserver(
         (entries) => {
           entries.forEach((en) => {
             if (en.isIntersecting) {
               en.target.classList.add("is-in");
-              io.unobserve(en.target);
+              io?.unobserve(en.target);
             }
           });
         },
@@ -34,12 +35,14 @@ export function ScrollReveal() {
         e.classList.add("reveal");
         const r = e.getBoundingClientRect();
         if (r.top < window.innerHeight * 0.9) e.classList.add("is-in");
-        else io.observe(e);
+        else io!.observe(e);
       });
-      return () => io.disconnect();
     };
     const t = window.setTimeout(run, 60);
-    return () => window.clearTimeout(t);
+    return () => {
+      window.clearTimeout(t);
+      if (io) io.disconnect();
+    };
   }, [path]);
   return null;
 }

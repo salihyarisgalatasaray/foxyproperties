@@ -49,6 +49,14 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ GLOBAL POLISH — scroll reveals, page transitions, gold-gradient CTAs (2026-06, VERIFIED, iteration_14, frontend 100%)
+- `components/site/ScrollReveal.tsx`: IntersectionObserver reveals every `main section` on non-home pages (fade+slide),
+  above-fold revealed instantly, reduced-motion safe, observer disconnected on cleanup. Homepage excluded (bespoke anim).
+- `components/site/RouteTransition.tsx`: subtle `.page-fade` between routes; skips /admin & /backoffice to avoid remounting stateful trees.
+- `globals.css`: `.reveal/.is-in`, `.page-fade`, and site-wide gold→amber gradient + lift/glow on hover for CTA
+  buttons/links (`a/button.bg-[#D4AF37]`). Full-screen hero, Playfair/Inter typography and mobile responsiveness were already in place.
+- Verified iteration_14: 0 stuck sections across 7 pages, transitions & hovers work, reduced-motion + responsive (390/768/1440, 0 overflow), admin/backoffice load, 0 console errors.
+
 ## ✅ V2 VISUAL REDESIGN — Homepage to reference mockup (2026-06, VERIFIED, iteration_13, frontend 100%)
 - Hero cinematic scroll restored (2026-06): `HomeHero` is now a pinned sticky section (215vh desktop / 165vh
   mobile) with GSAP ScrollTrigger scrub — the London image zooms (scale 1.05→1.45), content rises+fades, plus

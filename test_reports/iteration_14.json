@@ -1,0 +1,67 @@
+{
+  "summary": "Frontend-only regression + verification of 3 new global behaviours (scroll reveal on non-home pages, page fade transition, gold gradient CTA hover) plus reduced-motion + responsive + admin regression. All checks passed with zero console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "tests_executed": {
+    "scroll_reveal_non_home": {
+      "pages_checked": ["/sell","/lettings","/landlords","/property-management","/investment","/mortgages","/contact"],
+      "first_section_visible_immediately": true,
+      "stuck_sections_after_scroll": 0,
+      "detail": "First main>section on every page starts at opacity 1 (above-fold auto is-in). After gradual scroll to bottom, every section ended at opacity ~1 (0 stuck). Sections per page: /sell=3, /lettings=6, /landlords=5, /property-management=4, /investment=4, /mortgages=4, /contact=2."
+    },
+    "homepage_excluded": {
+      "sections_with_reveal_class": 0,
+      "opacities": [1,1,1,1,1,1],
+      "result": "Homepage correctly skipped by ScrollReveal; all 6 sections visible."
+    },
+    "page_fade_transition": {
+      "wrapper_present": true,
+      "opacity_right_after_nav": "0 (animation pageFade running)",
+      "opacity_after_700ms": 1,
+      "result": "Route change /sell -> /landlords triggers .page-fade animation from 0 to 1 in ~0.5s. No permanent hidden state."
+    },
+    "gold_gradient_cta_hover": {
+      "gradient_present": true,
+      "bg_position_before": "8% 0px",
+      "bg_position_after_hover": "92% 0px",
+      "transform_after_hover": "translateY(-1px)",
+      "box_shadow_after_hover": "rgba(212,175,55,0.30) 0 10px 34px",
+      "result": "Gold->amber gradient shifts, lift and glow apply on hover as designed."
+    },
+    "reduced_motion": {
+      "sections_all_opacity_1": true,
+      "cta_transition_duration": "0s",
+      "result": "prefers-reduced-motion:reduce -> sections instantly visible, CTA transition disabled."
+    },
+    "responsive_no_overflow": {
+      "checked_viewports": [390,768,1440],
+      "checked_pages": ["/","/sell","/landlords","/property-management","/mortgages"],
+      "max_horizontal_overflow_px": 0
+    },
+    "hamburger_below_1280": {"viewport": 1024, "found": true, "aria_label": "Toggle menu", "visible": true},
+    "admin_and_regression_pages": {
+      "/properties": "loads, body_len=1563",
+      "/areas": "loads, body_len=1426",
+      "/admin": "loads (login form visible)",
+      "/backoffice": "loads (Sign in form rendered)"
+    },
+    "console_errors": 0
+  },
+  "critical_code_review_comments": [
+    "ScrollReveal.tsx: cleanup function returned from inside setTimeout is never used by React (useEffect cleanup only sees the outer clearTimeout). IntersectionObserver is not disconnected on unmount. Minor memory leak on client-side route changes; recommend hoisting the io reference to the outer effect scope and disconnecting in the effect cleanup.",
+    "RouteTransition.tsx: using key={pathname} unmounts/remounts the entire tree on every navigation which loses component state (form inputs, scroll positions inside components). Acceptable for marketing pages but risky if applied around stateful areas like /backoffice or /admin. Consider scoping RouteTransition to public marketing routes only.",
+    "globals.css: `.reveal{opacity:0}` combined with a 60ms setTimeout in ScrollReveal means for a very brief instant sections have no class and are visible, then flash to opacity:0 before is-in is added on above-fold. Not observed as visible flash in tests but consider adding `.reveal{opacity:0}` only via JS to eliminate risk on slow devices.",
+    "Selector `a.bg-[#D4AF37],button.bg-[#D4AF37]` is fragile — any refactor of the Tailwind arbitrary color class breaks the gold gradient globally. Prefer a semantic class (e.g. .cta-gold) applied to CTAs."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100%"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ (not exercised — regression only verified login page renders).",
+  "seed_data_creation": "None.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 3 new global behaviours verified working across all 7 non-home pages, homepage correctly excluded, reduced-motion honored, no horizontal overflow at 390/768/1440, hamburger visible <1280, admin+backoffice login pages load. Zero console errors. Code review notes are advisory (non-blocking)."
+}
