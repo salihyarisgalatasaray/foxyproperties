@@ -1,93 +1,66 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Item = { label: string; href: string };
 type Nav = { label: string; href: string; children?: Item[] };
 
 const NAV: Nav[] = [
-  {
-    label: "PROPERTIES",
-    href: "/properties",
-    children: [
-      { label: "For Sale", href: "/properties?intent=buy" },
-      { label: "To Rent", href: "/properties?intent=rent" },
-      { label: "All Properties", href: "/properties" },
-    ],
-  },
-  { label: "SELL", href: "/sell" },
-  {
-    label: "LETTINGS",
-    href: "/lettings",
-    children: [
-      { label: "Properties to Rent", href: "/properties?intent=rent" },
-      { label: "Find a Home", href: "/lettings#find" },
-      { label: "Register as a Tenant", href: "/lettings#register" },
-      { label: "Tenant Guide", href: "/lettings#guide" },
-      { label: "Report Maintenance", href: "/lettings#maintenance" },
-    ],
-  },
-  {
-    label: "LANDLORDS",
-    href: "/landlords",
-    children: [
-      { label: "Let Your Property", href: "/landlords" },
-      { label: "Rental Valuation", href: "/landlords#valuation" },
-      { label: "Let Only", href: "/property-management#options" },
-      { label: "Rent Collection", href: "/property-management#options" },
-      { label: "Fully Managed", href: "/property-management#options" },
-      { label: "Management Options", href: "/property-management" },
-      { label: "Portfolio Landlords", href: "/landlords#portfolio" },
-      { label: "Switch to FOXY", href: "/landlords#switch" },
-    ],
-  },
-  { label: "INVESTMENT", href: "/investment" },
-  {
-    label: "MORTGAGES",
-    href: "/mortgages",
-    children: [
-      { label: "Residential", href: "/mortgages#residential" },
-      { label: "Buy-to-Let", href: "/mortgages#btl" },
-      { label: "Remortgage", href: "/mortgages#remortgage" },
-      { label: "Portfolio", href: "/mortgages#portfolio" },
-      { label: "Finance Enquiry", href: "/mortgages#enquiry" },
-    ],
-  },
-  { label: "AREAS", href: "/areas" },
-  { label: "INSIGHTS", href: "/insights" },
-  { label: "ABOUT", href: "/about" },
+  { label: "Buy", href: "/properties?intent=buy", children: [
+    { label: "For Sale", href: "/properties?intent=buy" },
+    { label: "New Homes", href: "/properties" },
+    { label: "Acquisitions", href: "/investment" },
+    { label: "International Investors", href: "/investment" },
+  ] },
+  { label: "Rent", href: "/properties?intent=rent" },
+  { label: "Invest", href: "/investment" },
+  { label: "HMO", href: "/#lab" },
+  { label: "Sell", href: "/sell" },
+  { label: "Let", href: "/lettings" },
+  { label: "Landlords", href: "/landlords" },
+  { label: "Property Lab", href: "/#lab" },
+  { label: "Mortgages", href: "/mortgages" },
+  { label: "Areas", href: "/areas" },
+  { label: "Insights", href: "/insights" },
+  { label: "About", href: "/about" },
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header
       data-testid="site-header"
-      className="fixed inset-x-0 top-0 z-50 flex h-[82px] items-center justify-between border-b border-white/10 bg-[#0B0B0A]/70 px-5 backdrop-blur-md md:px-10"
+      className={`fixed inset-x-0 top-0 z-50 flex h-[76px] items-center justify-between px-5 transition-colors duration-500 md:px-8 ${
+        scrolled ? "border-b border-white/10 bg-[#0B0B0A]/80 backdrop-blur-md" : "bg-gradient-to-b from-black/50 to-transparent"
+      }`}
     >
-      <a href="/" data-testid="nav-logo" className="display text-xl tracking-[.14em] text-[#D4AF37]">
-        FOXY
+      <a href="/" data-testid="nav-logo" className="leading-none">
+        <span className="display block text-lg tracking-[.16em] text-[#D4AF37]">FOXY</span>
+        <span className="block text-[9px] tracking-[.4em] text-white/60">PROPERTY</span>
       </a>
 
-      <nav className="hidden items-center gap-6 text-[11px] tracking-[.14em] lg:flex">
+      <nav className="hidden items-center gap-5 text-[11px] tracking-[.1em] xl:flex">
         {NAV.map((n) => (
-          <div key={n.href} className="group relative">
+          <div key={n.label} className="group relative">
             <a
               href={n.href}
-              data-testid={`nav-${n.label.toLowerCase()}`}
+              data-testid={`nav-${n.label.toLowerCase().replace(/[^a-z]+/g, "-")}`}
               className="nav-underline flex items-center gap-1 py-6 text-white/85 transition-colors duration-300 hover:text-[#D4AF37]"
             >
               {n.label}
-              {n.children && <span className="text-[8px] text-[#D4AF37]">▾</span>}
+              {n.children && <span className="text-[7px] text-[#D4AF37]">▾</span>}
             </a>
             {n.children && (
-              <div className="invisible absolute left-0 top-[70px] w-64 translate-y-2 border border-white/10 bg-[#0E0E0E] p-2 opacity-0 shadow-2xl transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="invisible absolute left-0 top-[64px] w-60 translate-y-2 border border-white/10 bg-[#0E0E0E] p-2 opacity-0 shadow-2xl transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                 {n.children.map((c) => (
-                  <a
-                    key={c.label + c.href}
-                    href={c.href}
-                    data-testid={`nav-sub-${c.label.toLowerCase().replace(/[^a-z]+/g, "-")}`}
-                    className="block px-4 py-3 text-[11px] tracking-[.1em] text-white/70 transition-colors hover:bg-white/5 hover:text-[#D4AF37]"
-                  >
+                  <a key={c.label} href={c.href} className="block px-4 py-2.5 text-[11px] tracking-[.08em] text-white/70 transition-colors hover:bg-white/5 hover:text-[#D4AF37]">
                     {c.label}
                   </a>
                 ))}
@@ -97,66 +70,31 @@ export function SiteHeader() {
         ))}
       </nav>
 
-      <div className="hidden items-center gap-5 lg:flex">
-        <span className="text-[11px] tracking-[.14em] text-white/50">
-          <span className="text-[#D4AF37]">EN</span> | TR
-        </span>
-        <a
-          href="/contact"
-          data-testid="nav-consultation"
-          className="border border-[#D4AF37] px-5 py-3 text-[11px] tracking-[.13em] text-[#D4AF37] transition-colors duration-300 hover:bg-[#D4AF37] hover:text-black"
-        >
-          BOOK A CONSULTATION
+      <div className="hidden items-center gap-3 xl:flex">
+        <span className="text-[10px] tracking-[.14em] text-white/45"><span className="text-[#D4AF37]">EN</span> · TR</span>
+        <a href="/admin" data-testid="nav-login" className="border border-white/25 px-4 py-2.5 text-[10px] tracking-[.13em] text-white/85 transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37]">
+          LOGIN
+        </a>
+        <a href="/contact" data-testid="nav-getstarted" className="bg-[#D4AF37] px-4 py-2.5 text-[10px] font-semibold tracking-[.13em] text-black transition-colors hover:bg-[#e6c84f]">
+          GET STARTED
         </a>
       </div>
 
-      <button
-        data-testid="nav-mobile-toggle"
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Toggle menu"
-        className="text-2xl text-[#D4AF37] lg:hidden"
-      >
+      <button data-testid="nav-mobile-toggle" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu" className="text-2xl text-[#D4AF37] xl:hidden">
         {open ? "✕" : "☰"}
       </button>
 
       {open && (
-        <div
-          data-testid="nav-mobile-panel"
-          className="fixed inset-x-0 top-[82px] z-50 max-h-[calc(100vh-82px)] overflow-y-auto border-b border-white/10 bg-[#0B0B0A] px-6 py-6 lg:hidden"
-        >
+        <div data-testid="nav-mobile-panel" className="fixed inset-x-0 top-[76px] z-50 max-h-[calc(100vh-76px)] overflow-y-auto border-b border-white/10 bg-[#0B0B0A] px-6 py-5 xl:hidden">
           {NAV.map((n) => (
-            <div key={n.href} className="border-b border-white/5 py-2">
-              <a
-                href={n.href}
-                onClick={() => setOpen(false)}
-                data-testid={`nav-m-${n.label.toLowerCase()}`}
-                className="block py-2 text-sm tracking-[.14em] text-[#D4AF37]"
-              >
-                {n.label}
-              </a>
-              {n.children && (
-                <div className="pl-3">
-                  {n.children.map((c) => (
-                    <a
-                      key={c.label + c.href}
-                      href={c.href}
-                      onClick={() => setOpen(false)}
-                      className="block py-2 text-xs tracking-[.1em] text-white/60"
-                    >
-                      {c.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+            <a key={n.label} href={n.href} onClick={() => setOpen(false)} className="block border-b border-white/5 py-3 text-sm tracking-[.12em] text-white/85">
+              {n.label}
+            </a>
           ))}
-          <a
-            href="/contact"
-            onClick={() => setOpen(false)}
-            className="mt-5 block border border-[#D4AF37] px-5 py-4 text-center text-xs tracking-[.14em] text-[#D4AF37]"
-          >
-            BOOK A CONSULTATION
-          </a>
+          <div className="mt-5 flex gap-3">
+            <a href="/admin" onClick={() => setOpen(false)} className="flex-1 border border-white/25 px-4 py-3 text-center text-xs tracking-[.13em] text-white/85">LOGIN</a>
+            <a href="/contact" onClick={() => setOpen(false)} className="flex-1 bg-[#D4AF37] px-4 py-3 text-center text-xs font-semibold tracking-[.13em] text-black">GET STARTED</a>
+          </div>
         </div>
       )}
     </header>

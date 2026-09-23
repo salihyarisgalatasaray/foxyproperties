@@ -1,2 +1,23 @@
-import {SiteHeader} from "../components/navigation/SiteHeader";import {SiteFooter} from "../components/navigation/SiteFooter";import {CinematicHero} from "../components/hero/CinematicHero";import {LifecycleJourney} from "../components/hero/LifecycleJourney";import {PropertyLifecycle} from "../components/property/PropertyLifecycle";import {FeaturedProperties} from "../components/property/FeaturedProperties";import {getHomepage} from "@/sanity/lib/homepage";
-export default async function Home(){const c=await getHomepage();return <main><SiteHeader/><CinematicHero eyebrow={c?.heroEyebrow} title={c?.heroTitle} intro={c?.heroIntro} ctaLabel={c?.primaryCtaLabel} ctaHref={c?.primaryCtaHref}/><LifecycleJourney/><section className="mx-auto max-w-6xl px-5 py-32 md:px-12 md:py-44"><p className="text-xs tracking-[.3em] text-[#D4AF37]">FOXY PROPERTY</p><h2 className="display mt-6 max-w-4xl text-4xl leading-tight md:text-7xl">{c?.decisionTitle||"A PROPERTY IS MORE THAN A NUMBER."}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-[#A7A29A]">{c?.decisionBody||"We help you understand the property, the location and the numbers — before you make your move."}</p></section><PropertyLifecycle/><FeaturedProperties/><SiteFooter/></main>}
+import { SiteHeader } from "../components/navigation/SiteHeader";
+import { SiteFooter } from "../components/navigation/SiteFooter";
+import { HomeHero } from "../components/home/HomeHero";
+import { WestLondon } from "../components/home/WestLondon";
+import { InteriorSection } from "../components/home/InteriorSection";
+import { PropertyLab } from "../components/home/PropertyLab";
+import { FeaturedEditorial } from "../components/home/FeaturedEditorial";
+import { Finale } from "../components/home/Finale";
+
+export default function Home() {
+  return (
+    <main className="overflow-x-hidden bg-[#0B0B0A]">
+      <SiteHeader />
+      <HomeHero />
+      <WestLondon />
+      <InteriorSection />
+      <PropertyLab />
+      <FeaturedEditorial />
+      <Finale />
+      <SiteFooter />
+    </main>
+  );
+}

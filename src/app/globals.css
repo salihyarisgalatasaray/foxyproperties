@@ -8,3 +8,10 @@
 @keyframes foxy-fade-up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
 .foxy-fade-up{animation:foxy-fade-up .8s cubic-bezier(.22,.61,.36,1) both}
 @media (prefers-reduced-motion: reduce){.foxy-bounce{animation:none}.foxy-fade-up{animation:none}}
+.foxy-reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.foxy-reveal.is-in{opacity:1;transform:none}
+.ken{animation:ken 26s ease-out forwards}
+@keyframes ken{from{transform:scale(1.14)}to{transform:scale(1.02)}}
+.diag-top{clip-path:polygon(0 4vw,100% 0,100% 100%,0 100%)}
+.diag-both{clip-path:polygon(0 4vw,100% 0,100% calc(100% - 4vw),0 100%)}
+@media (prefers-reduced-motion: reduce){.foxy-reveal{opacity:1;transform:none;transition:none}.ken{animation:none}}
