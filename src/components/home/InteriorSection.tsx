@@ -4,7 +4,7 @@ import { ParallaxImage } from "./ParallaxImage";
 export function InteriorSection() {
   return (
     <section id="interior" data-testid="home-interior" className="diag-top relative -mt-[4vw] min-h-[90vh] overflow-hidden bg-[#0B0B0A]">
-      <ParallaxImage src="/home/interior.jpg" alt="Luxury London interior" objectPosition="50% 45%" />
+      <ParallaxImage src="/home/interior.jpg" alt="Luxury London interior" objectPosition="50% 45%" from={-11} to={11} scaleFrom={1.24} scaleTo={1.36} />
       <div className="absolute inset-0 bg-gradient-to-r from-[#0B0B0A]/95 via-[#0B0B0A]/40 to-[#0B0B0A]/20" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0B0B0A] to-transparent" />
 

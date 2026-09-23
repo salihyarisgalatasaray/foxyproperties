@@ -4,7 +4,7 @@ import { ParallaxImage } from "./ParallaxImage";
 export function Finale() {
   return (
     <section data-testid="home-finale" className="relative min-h-[92vh] overflow-hidden bg-[#0B0B0A]">
-      <ParallaxImage src="/home/finale.jpg" alt="London skyline at dusk from a private terrace" objectPosition="50% 50%" scaleFrom={1.12} scaleTo={1.26} />
+      <ParallaxImage src="/home/finale.jpg" alt="London skyline at dusk from a private terrace" objectPosition="50% 50%" from={-3} to={3} scaleFrom={1.10} scaleTo={1.18} />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0A] via-[#0B0B0A]/45 to-[#0B0B0A]/25" />
       <div className="relative mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-end px-5 py-24 md:px-10 md:py-28">
         <Reveal>

@@ -51,8 +51,9 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
 
 ## ✅ GLOBAL POLISH — scroll reveals, page transitions, gold-gradient CTAs (2026-06, VERIFIED, iteration_14, frontend 100%)
 - Section camera parallax (2026-06): `components/home/ParallaxImage.tsx` gives West London, Interior & Finale a
-  scroll-linked vertical drift + slow push-in (GSAP ScrollTrigger scrub), overscaled (1.12–1.26) so no edge gaps;
-  reduced-motion static. Makes the homepage feel like one continuous camera travel with the hero zoom.
+  scroll-linked vertical drift + slow push-in (GSAP ScrollTrigger scrub), overscaled so no edge gaps;
+  reduced-motion static. Depth-tuned per scene (2026-06): far skyline/Finale drifts slow (yPercent ±3), West
+  London street medium (±7), near Interior room fastest (±11) — each overscaled to match, giving layered depth.
 - `components/site/ScrollReveal.tsx`: IntersectionObserver reveals every `main section` on non-home pages (fade+slide),
   above-fold revealed instantly, reduced-motion safe, observer disconnected on cleanup. Homepage excluded (bespoke anim).
 - `components/site/RouteTransition.tsx`: subtle `.page-fade` between routes; skips /admin & /backoffice to avoid remounting stateful trees.
