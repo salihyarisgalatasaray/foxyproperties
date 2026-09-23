@@ -18,8 +18,12 @@ export function PropertySearch() {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     if (q.get("location")) setArea(q.get("location") as string);
-    if (q.get("intent") === "rent") setListing("rent");
-    else if (q.get("intent") === "buy") setListing("buy");
+    const intent = q.get("intent");
+    if (intent === "rent") setListing("rent");
+    else if (intent === "buy" || intent === "invest" || intent === "hmo") setListing("buy");
+    if (q.get("beds")) setBeds(parseInt(q.get("beds") as string, 10) || 0);
+    const t = (q.get("type") || "").toLowerCase();
+    if (["apartment", "house", "commercial"].includes(t)) setType(t);
     if (q.get("min")) setMin(Number(q.get("min")) || 0);
     if (q.get("max")) setMax(Number(q.get("max")) || PRICE_MAX);
     fetch("/api/properties").then((r) => r.json()).then((d) => setAll(d.items || [])).catch(() => setAll([]));

@@ -49,6 +49,20 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ V2 VISUAL REDESIGN — Homepage to reference mockup (2026-06, VERIFIED, iteration_13, frontend 100%)
+- New premium header (`SiteHeader.tsx`): transparent-over-hero → dark translucent+blur on scroll; nav Buy▾/Rent/Invest/HMO/Sell/Let/Landlords/Property Lab/Mortgages/Areas/Insights/About + Login(/admin) + Get Started(/contact); hamburger below 1280px.
+- New homepage (`app/page.tsx`) = curated cinematic bands (consolidated, no repeated journeys):
+  HomeHero (full-viewport 3840px London skyline, scene rail 01-07, Buy/Rent/Invest/HMO search → /properties)
+  → WestLondon → InteriorSection (floating PROTOTYPE price panel) → PropertyLab (SELL/LET/BTL/HMO/REFINANCE/MANAGE
+  tabs, architectural cutaway + HMO room labels + ILLUSTRATIVE analysis panel) → FeaturedEditorial (IVORY band,
+  image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
+- Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
+- `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- Assets in `/public/home/`: hero.jpg genuine 3840×2339 (Unsplash); west/interior real photos 2560px; lab_house.jpg
+  & finale.jpg AI CONCEPT (~1264px, labelled). Old CinematicHero/LifecycleJourney/PropertyLifecycle/FeaturedProperties
+  retained in repo but no longer on homepage.
+- Verified iteration_13: all testids/links, header scroll toggle, search wiring, Property Lab tabs+HMO, responsive 390/768/1440 zero overflow, reduced-motion, regression pages clean, 0 console errors.
+
 ## ✅ RESPONSIVE AUDIT (2026-06, VERIFIED, iteration_12, frontend 100%)
 - All 13 routes checked at mobile 390 / tablet 768 / desktop 1440 = 39/39 with ZERO horizontal overflow.
 - Mega-menu fits one row at 1024 & 1280; hamburger + mobile panel below 1024; heroes, lead forms,

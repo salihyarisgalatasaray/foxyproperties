@@ -1,0 +1,70 @@
+{
+  "summary": "Frontend-only visual redesign audit of the new FOXY Property homepage (dev-foxy-pull preview). Verified ALL specified data-testid elements are present and wired correctly: header transparency at top vs dark translucent + blur after scrolling >40px, all 12 nav items + login/getStarted + mobile toggle, hero copy with STARTS HERE in gold, hero CTA hrefs, 7 scene rail buttons (desktop only), search tabs (buy/rent/invest/hmo) with active gold state, search-submit wiring that navigates to /properties?intent=<tab>&location=<value>, West London / Interior / Featured / Finale sections and their CTAs, Property Lab strategy tabs with correct lab-cta href per strategy (sell->/sell, let->/lettings, btl & hmo->/calculators/buy-to-let, refinance->/mortgages, manage->/property-management), HMO analysis panel content (£4,600 / £55,200 / £11,500 / £43,700 / 8.2%) with ILLUSTRATIVE label, HMO room labels lab-room-room1..5 visible on the house image at desktop, interior-price-panel content (£1,250,000 Kensington W8 3 bed / 2 bath / 1,450 sq ft + PROTOTYPE), 3 featured prototype card hrefs, mobile hamburger opens nav-mobile-panel at 390. Responsive: 0 horizontal overflow at 390/768/1440; scene rail hidden on mobile/tablet, visible on desktop; mobile-toggle hidden at 1440. Reveal animations: after gradual scroll, 0 elements are stuck at opacity-0 (the single opacity-0 element seen is the nav-buy hover dropdown, which is expected). Under prefers-reduced-motion:reduce, only the same hover dropdown remains hidden (expected). Regression: /properties, /areas, /sell, /landlords, /property-management all 200 with 0 console errors. Zero page errors captured across the entire run.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "detailed_findings": {
+    "header": {
+      "top_classes": "bg-gradient-to-b from-black/50 to-transparent (transparent gradient)",
+      "scrolled_classes": "border-b border-white/10 bg-[#0B0B0A]/80 backdrop-blur-md",
+      "changes_on_scroll_gt_40px": true,
+      "nav_testids_present": ["nav-buy","nav-rent","nav-invest","nav-hmo","nav-sell","nav-let","nav-landlords","nav-property-lab","nav-mortgages","nav-areas","nav-insights","nav-about","nav-login","nav-getstarted","nav-mobile-toggle"],
+      "nav_buy_dropdown_on_hover": "visible; items: For Sale, New Homes, Acquisitions, International Investors",
+      "mobile_toggle_visibility": {"390": true, "768": true, "1440": false},
+      "mobile_panel_opens": true
+    },
+    "hero": {
+      "home-hero": true,
+      "hero-explore_href": "/properties",
+      "hero-journey": true,
+      "scene_rail_desktop_visible": true,
+      "scene_rail_mobile_hidden": true
+    },
+    "search_wiring": {
+      "buy_tab_with_chelsea": "/properties?intent=buy&location=Chelsea",
+      "hmo_tab_empty": "/properties?intent=hmo",
+      "active_state_toggles": true
+    },
+    "property_lab": {
+      "lab-tab-sell_cta": "/sell",
+      "lab-tab-let_cta": "/lettings",
+      "lab-tab-btl_cta": "/calculators/buy-to-let",
+      "lab-tab-hmo_cta": "/calculators/buy-to-let",
+      "lab-tab-refinance_cta": "/mortgages",
+      "lab-tab-manage_cta": "/property-management",
+      "hmo_panel_text": "Total Monthly Rent £4,600 / Annual £55,200 / Operating £11,500 / Net £43,700 / Estimated Yield 8.2% + ILLUSTRATIVE label",
+      "lab-room-room1..5_visible_on_hmo_desktop": true,
+      "lab-open_href": "/investment"
+    },
+    "featured": {
+      "featured-card-prototype-chelsea-residence": "/properties/prototype-chelsea-residence",
+      "featured-card-prototype-kensington-residence": "/properties/prototype-kensington-residence",
+      "featured-card-prototype-fulham-residence": "/properties/prototype-fulham-residence",
+      "featured-viewall": "/properties",
+      "featured-explore-tile": "/properties"
+    },
+    "finale": {"finale-about": "/about", "finale-consult": "/contact"},
+    "interior_price_panel": "£1,250,000 · Kensington, London W8 · 3 Bed · 2 Bath · 1,450 sqft · PROTOTYPE · NOT A LIVE PROPERTY",
+    "responsive_overflow": {"390": 0, "768": 0, "1440": 0},
+    "stuck_opacity0_after_scroll": {"count": 1, "note": "nav-buy hover dropdown (invisible/opacity-0 by design, becomes group-hover:visible on hover) - not a bug"},
+    "reduced_motion_stuck_opacity0": {"count": 1, "note": "same nav-buy hover dropdown - expected"},
+    "regression_pages_200_no_errors": ["/properties","/areas","/sell","/landlords","/property-management"],
+    "console_errors_total": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Search wiring emits intent=hmo/buy/rent/invest querystring, but /properties filter UI only exposes ALL/BUY/RENT tabs and does not appear to apply an HMO filter based on ?intent=hmo (0 results when navigating from HMO search with no other filters). The routing itself is correct per spec; consider surfacing an HMO/Invest filter or mapping ?intent=hmo to a sensible default so the landing page shows relevant results. Non-blocking for this review.",
+    "The nav-buy dropdown container uses `invisible opacity-0 group-hover:visible`. Consider also making it keyboard-focusable (focus-within) for a11y."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100% - all 45+ specified testids present, all links & CTAs correct, 3-viewport responsive clean, reveals + reduced-motion clean, regression clean"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "New homepage redesign is fully wired and clean. Header transparency toggle, hero + scene rail, search->/properties with intent+location+type+beds+min+max querystring, Property Lab strategy tabs (incl. HMO with ILLUSTRATIVE label and lab-room-room1..5), featured 3 prototypes + 4th explore tile, finale CTAs, mobile hamburger and mobile panel all work. Only cosmetic follow-up would be to actually consume the ?intent=hmo|invest querystring on /properties (filter UI currently only offers ALL/BUY/RENT).",
+  "rca_of_the_issue": "N/A - no bugs found."
+}
