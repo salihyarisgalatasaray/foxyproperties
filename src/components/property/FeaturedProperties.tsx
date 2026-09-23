@@ -1,5 +1,11 @@
+"use client";
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prototypeProperties } from "@/lib/properties";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 
@@ -11,9 +17,36 @@ const IMAGES: Record<string, string> = {
 };
 
 export function FeaturedProperties() {
+  const rootRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const head = root.querySelector<HTMLElement>("[data-reveal-head]");
+        const cards = gsap.utils.toArray<HTMLElement>("[data-reveal-card]");
+        gsap.set([head, ...cards], { autoAlpha: 0, y: 46 });
+        const tl = gsap.timeline({ scrollTrigger: { trigger: root, start: "top 80%" } });
+        tl.to(head, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out", clearProps: "transform,opacity,visibility" })
+          .to(cards, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.85,
+            stagger: 0.16,
+            ease: "power3.out",
+            clearProps: "transform,opacity,visibility",
+          }, "-=0.35");
+        return () => tl.kill();
+      });
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section data-testid="featured-properties" className="mx-auto max-w-6xl px-5 pb-32 md:px-12">
-      <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-8">
+    <section ref={rootRef} data-testid="featured-properties" className="mx-auto max-w-6xl px-5 pb-32 md:px-12">
+      <div data-reveal-head className="flex items-end justify-between gap-6 border-b border-white/10 pb-8">
         <div>
           <p className="text-xs tracking-[.3em] text-[#D4AF37]">FEATURED PROPERTIES</p>
           <h2 className="display mt-4 text-3xl md:text-5xl">A considered selection.</h2>
@@ -27,6 +60,7 @@ export function FeaturedProperties() {
         {prototypeProperties.map((p) => (
           <article
             key={p.id}
+            data-reveal-card
             data-testid={`featured-card-${p.slug}`}
             className="group flex flex-col overflow-hidden border border-white/10 bg-[#141413] transition-transform duration-500 hover:-translate-y-1.5"
           >
