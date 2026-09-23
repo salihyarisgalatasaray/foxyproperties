@@ -1,0 +1,39 @@
+{
+  "summary": "Frontend-only regression + primary black-gap bug retest on homepage. PRIMARY BUG FIXED: no black/empty viewport frame exists between hero and West London (or anywhere between named scenes). Full-viewport heights, hero scroll-zoom, finale 4K image, and regression pages all verified. No console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verification_details": {
+    "black_gap_hero_to_west": {
+      "desktop_1440x900": "PASS - fine-grained scroll scan from y=0 to y=1350 in 40px steps: at every step, the combined visible height of adjacent sections (hero+west or west+following section) equals the viewport height. E.g. y=1000: hero_vis=0, west_vis=800, remaining 100px covered by next section (FeaturedEditorial). No transparent/empty band observed.",
+      "mobile_390x844": "PASS - same fine scan, no empty frame; e.g. y=1000: west_vis=688, remaining 156px covered by next section."
+    },
+    "section_full_viewport_heights": {
+      "desktop_1440x900": "home-hero=900 (1.00), home-west=900 (1.00), home-interior=900 (1.00), home-finale=900 (1.00)",
+      "mobile_390x844": "home-hero=844 (1.00), home-west=844 (1.00), home-interior=844 (1.00), home-finale=844 (1.00)"
+    },
+    "hero_scroll_zoom": "img transform scaled from matrix(1.06...) at scrollY=0 to matrix(1.206...) at scrollY=0.8*vh -- GSAP scrub zoom working.",
+    "hero_content": "Headline 'YOUR NEXT PROPERTY DECISION STARTS HERE.' present; hero-search form visible.",
+    "finale_image": "/home/finale.jpg loaded, naturalWidth=3840 (4K) ✓",
+    "horizontal_overflow": "None at 390, 768, 1440",
+    "regression_pages": "/properties 200, /sell 200, /landlords 200 (all render titles)",
+    "console_errors": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "HomeHero uses id='hero' plus data-testid='home-hero'; other scenes only have data-testid. Testing spec referenced both id and testid interchangeably — fine, but consider consistent ids for anchor scrollTo(#west, #interior).",
+    "InteriorSection uses `-mt-[4vw]` diagonal overlap with WestLondon — visually fine, no gap observed, but be aware overlap subtracts from effective height (still >=0.95*vh)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "test_credentials": "N/A (no auth)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Bug reproduction script: set scrollBehavior='auto', use window.scrollTo(0,y) in 40px increments from 0 to ~1.5*vh, compute (hero.visible + west.visible + nextSection.visible)/vh — expect >=1.0 at every step. If a scroll y produces a total <1.0 with no other section visible, black gap regression has returned.",
+  "rca of the issue": "Not applicable this iteration — bug fix verified. Historical RCA: previous hero was 215vh with a 100vh sticky inner, leaving ~100vh empty parent bg between hero and next section. Current hero is a plain h-screen section with non-pinned GSAP scrub zoom, so DOM flow places WestLondon immediately after hero — eliminating the empty parent."
+}

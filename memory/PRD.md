@@ -49,6 +49,15 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ BUGFIX — homepage black/empty scroll gap + full-page scenes (2026-06, VERIFIED, iteration_15, frontend 100%)
+- Root cause: hero was a 215vh section with a 100vh sticky inner → ~100vh of empty black parent bg showed between
+  hero and West London while scrolling.
+- Fix: hero is now a plain 100vh (`h-screen`) full-viewport section with a NON-pinned GSAP ScrollTrigger scrub zoom
+  (img 1.06→1.26, start top top / end bottom top) + desktop mouse parallax — no dead zone, West follows immediately.
+- West/Interior/Finale set to `min-h-screen` (true full page). Finale image replaced with a genuine 3840×2160 photo.
+- Verified: no black gap at any scrollY (desktop 1440 & mobile 390), all scenes ~100vh, hero zoom works, finale 4K,
+  0 overflow, 0 console errors, regression pages fine.
+
 ## ✅ GLOBAL POLISH — scroll reveals, page transitions, gold-gradient CTAs (2026-06, VERIFIED, iteration_14, frontend 100%)
 - Section camera parallax (2026-06): `components/home/ParallaxImage.tsx` gives West London, Interior & Finale a
   scroll-linked vertical drift + slow push-in (GSAP ScrollTrigger scrub), overscaled so no edge gaps;
