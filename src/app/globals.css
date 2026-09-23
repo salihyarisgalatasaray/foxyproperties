@@ -15,3 +15,17 @@
 .diag-top{clip-path:polygon(0 4vw,100% 0,100% 100%,0 100%)}
 .diag-both{clip-path:polygon(0 4vw,100% 0,100% calc(100% - 4vw),0 100%)}
 @media (prefers-reduced-motion: reduce){.foxy-reveal{opacity:1;transform:none;transition:none}.ken{animation:none}}
+
+/* Global scroll reveal (non-home pages) */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .85s cubic-bezier(.22,.61,.36,1),transform .85s cubic-bezier(.22,.61,.36,1)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* Page fade transition */
+.page-fade{animation:pageFade .5s ease both}
+@keyframes pageFade{from{opacity:0}to{opacity:1}}
+
+/* Gold gradient CTA buttons + links (site-wide) */
+a.bg-\[\#D4AF37\],button.bg-\[\#D4AF37\]{background-image:linear-gradient(120deg,#EBCE7A 0%,#D4AF37 45%,#B9772E 100%);background-size:210% 100%;background-position:8% 0;transition:background-position .55s ease,box-shadow .4s ease,transform .3s ease}
+a.bg-\[\#D4AF37\]:hover,button.bg-\[\#D4AF37\]:hover{background-position:92% 0;box-shadow:0 10px 34px rgba(212,175,55,.30);transform:translateY(-1px)}
+
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}.page-fade{animation:none}a.bg-\[\#D4AF37\],button.bg-\[\#D4AF37\]{transition:none}}
