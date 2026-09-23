@@ -2,7 +2,7 @@ import { Reveal } from "./Reveal";
 
 export function WestLondon() {
   return (
-    <section id="west" data-testid="home-west" className="diag-top relative -mt-[4vw] min-h-[86vh] overflow-hidden bg-[#0B0B0A]">
+    <section id="west" data-testid="home-west" className="relative min-h-[86vh] overflow-hidden bg-[#0B0B0A]">
       <img src="/home/west.jpg" alt="West London period terrace" loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: "50% 35%" }} />
       <div className="absolute inset-0 bg-gradient-to-r from-[#0B0B0A] via-[#0B0B0A]/40 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0B0B0A] to-transparent" />

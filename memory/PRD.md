@@ -50,6 +50,10 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
 ## ✅ V2 VISUAL REDESIGN — Homepage to reference mockup (2026-06, VERIFIED, iteration_13, frontend 100%)
+- Hero cinematic scroll restored (2026-06): `HomeHero` is now a pinned sticky section (215vh desktop / 165vh
+  mobile) with GSAP ScrollTrigger scrub — the London image zooms (scale 1.05→1.45), content rises+fades, plus
+  subtle desktop mouse parallax; reduced-motion = static 100vh hero. Removed WestLondon `-mt-[4vw]` overlap so
+  the hero is a clean full page (next section no longer peeks in at the bottom).
 - New premium header (`SiteHeader.tsx`): transparent-over-hero → dark translucent+blur on scroll; nav Buy▾/Rent/Invest/HMO/Sell/Let/Landlords/Property Lab/Mortgages/Areas/Insights/About + Login(/admin) + Get Started(/contact); hamburger below 1280px.
 - New homepage (`app/page.tsx`) = curated cinematic bands (consolidated, no repeated journeys):
   HomeHero (full-viewport 3840px London skyline, scene rail 01-07, Buy/Rent/Invest/HMO search → /properties)
