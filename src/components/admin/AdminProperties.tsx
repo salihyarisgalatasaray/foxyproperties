@@ -14,9 +14,16 @@ export function AdminProperties({ initial }: { initial: DbProperty[] }) {
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
 
   const set = (k: keyof Form, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
   const reset = () => { setForm(EMPTY); setEditingId(null); };
+  const movePhoto = (from: number, to: number) => setForm((f) => {
+    const a = [...f.photos];
+    const [m] = a.splice(from, 1);
+    a.splice(to, 0, m);
+    return { ...f, photos: a };
+  });
 
   async function upload(files: FileList | null) {
     if (!files?.length) return;
@@ -90,11 +97,26 @@ export function AdminProperties({ initial }: { initial: DbProperty[] }) {
             <p className="text-xs tracking-[.14em] text-white/60">PHOTOS</p>
             <input type="file" accept="image/*" multiple onChange={(e) => upload(e.target.files)} data-testid="pf-photos" className="mt-2 block w-full text-xs text-white/70 file:mr-3 file:border file:border-[#D4AF37]/60 file:bg-transparent file:px-3 file:py-2 file:text-[#D4AF37]" />
             {uploading && <p className="mt-2 text-xs text-white/50">Uploading…</p>}
-            <div className="mt-3 flex flex-wrap gap-2">
-              {form.photos.map((p) => (
-                <div key={p} className="relative h-16 w-20 overflow-hidden border border-white/10">
-                  <img src={mediaUrl(p)} alt="" className="h-full w-full object-cover" />
-                  <button onClick={() => set("photos", form.photos.filter((x) => x !== p))} className="absolute right-0 top-0 bg-black/70 px-1 text-xs text-white">×</button>
+            {form.photos.length > 0 && <p className="mt-3 text-[10px] tracking-[.14em] text-white/40">DRAG TO REORDER · FIRST PHOTO IS THE COVER</p>}
+            <div className="mt-2 flex flex-wrap gap-2" data-testid="photo-grid">
+              {form.photos.map((p, i) => (
+                <div
+                  key={p}
+                  draggable
+                  onDragStart={() => setDragIndex(i)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => { if (dragIndex !== null && dragIndex !== i) movePhoto(dragIndex, i); setDragIndex(null); }}
+                  onDragEnd={() => setDragIndex(null)}
+                  data-testid={`photo-thumb-${i}`}
+                  className={`group/ph relative h-20 w-28 cursor-grab overflow-hidden border transition-opacity active:cursor-grabbing ${i === 0 ? "border-[#D4AF37]" : "border-white/10"} ${dragIndex === i ? "opacity-40" : ""}`}
+                >
+                  <img src={mediaUrl(p)} alt="" draggable={false} className="pointer-events-none h-full w-full object-cover" />
+                  {i === 0 ? (
+                    <span className="absolute left-1 top-1 bg-[#D4AF37] px-1.5 py-0.5 text-[9px] font-semibold tracking-[.1em] text-black">COVER</span>
+                  ) : (
+                    <button type="button" onClick={() => movePhoto(i, 0)} data-testid={`photo-cover-${i}`} className="absolute left-1 top-1 hidden bg-black/70 px-1.5 py-0.5 text-[9px] tracking-[.08em] text-[#D4AF37] group-hover/ph:block">SET COVER</button>
+                  )}
+                  <button type="button" onClick={() => set("photos", form.photos.filter((x) => x !== p))} data-testid={`photo-remove-${i}`} className="absolute right-0 top-0 bg-black/70 px-1 text-xs text-white">×</button>
                 </div>
               ))}
             </div>
