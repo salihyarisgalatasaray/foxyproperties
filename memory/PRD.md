@@ -49,6 +49,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ CINEMATIC POLISH — scene vignette + gold light seams (2026-06)
+- Added CSS `.scene-vignette` (soft inset darkening frame) + `.gold-seam-top/bottom` (thin gold line + radial bloom)
+  to hero, West London, Interior and Finale for a filmic scene-to-scene flow. Pure CSS, no perf cost, no layout change.
+  Hero visually confirmed; structure unchanged so no black-gap regression.
+
 ## ✅ BUGFIX — homepage black/empty scroll gap + full-page scenes (2026-06, VERIFIED, iteration_15, frontend 100%)
 - Root cause: hero was a 215vh section with a 100vh sticky inner → ~100vh of empty black parent bg showed between
   hero and West London while scrolling.

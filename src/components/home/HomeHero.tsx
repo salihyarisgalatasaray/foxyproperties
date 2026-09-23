@@ -95,7 +95,7 @@ export function HomeHero() {
   }, []);
 
   return (
-    <section id="hero" ref={sectionRef} data-testid="home-hero" className="relative h-screen min-h-screen overflow-hidden bg-[#0B0B0A]">
+    <section id="hero" ref={sectionRef} data-testid="home-hero" className="scene-vignette gold-seam-bottom relative h-screen min-h-screen overflow-hidden bg-[#0B0B0A]">
       <div ref={imgWrapRef} className="absolute inset-0">
         <img
           ref={imgRef}
