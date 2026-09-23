@@ -49,6 +49,12 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ RESPONSIVE AUDIT (2026-06, VERIFIED, iteration_12, frontend 100%)
+- All 13 routes checked at mobile 390 / tablet 768 / desktop 1440 = 39/39 with ZERO horizontal overflow.
+- Mega-menu fits one row at 1024 & 1280; hamburger + mobile panel below 1024; heroes, lead forms,
+  ManagementSlider, PropertyLifecycle tiles and footer all fit and stack correctly at every width.
+- Tuned oversized headings for tablet: `/areas/[slug]` h1 → text-5xl→lg:text-8xl; `/areas` h1 responsive scale.
+
 ## ✅ V2 PHASE F (partial) — Homepage Journey (2026-06, VERIFIED, iteration_10, frontend 100%)
 - **Featured Properties staggered reveal** (`components/property/FeaturedProperties.tsx`, now client):
   GSAP ScrollTrigger fades + slides the heading and 3 prototype cards in with a 0.16s stagger as the
