@@ -12,6 +12,9 @@
 .foxy-reveal.is-in{opacity:1;transform:none}
 .scene-stat{opacity:0;transform:translateY(22px) scale(.96);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1),border-color .3s ease}
 .scene-stat.is-in{opacity:1;transform:none}
+.lifecycle-fade{animation:lifecycleFade .55s cubic-bezier(.22,.61,.36,1) both}
+@keyframes lifecycleFade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.lifecycle-fade{animation:none}}
 @media (prefers-reduced-motion: reduce){.scene-stat{opacity:1;transform:none;transition:border-color .3s ease}}
 .ken{animation:ken 26s ease-out forwards}
 @keyframes ken{from{transform:scale(1.14)}to{transform:scale(1.02)}}

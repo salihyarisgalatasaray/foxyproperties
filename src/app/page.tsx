@@ -5,6 +5,7 @@ import { WestLondon } from "../components/home/WestLondon";
 import { InteriorSection } from "../components/home/InteriorSection";
 import { PropertyLab } from "../components/home/PropertyLab";
 import { LifecycleJourney } from "../components/home/LifecycleJourney";
+import { PropertyLifecycle } from "../components/home/PropertyLifecycle";
 import { FeaturedEditorial } from "../components/home/FeaturedEditorial";
 import { Finale } from "../components/home/Finale";
 
@@ -17,6 +18,7 @@ export default function Home() {
       <InteriorSection />
       <PropertyLab />
       <LifecycleJourney />
+      <PropertyLifecycle />
       <FeaturedEditorial />
       <Finale />
       <SiteFooter />
