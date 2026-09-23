@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 // Public catalogue = live admin properties + clearly-labelled prototypes.
 export async function GET() {
-  const live = await listProperties(true).catch(() => []);
+  const live = await listProperties(false).catch(() => []);
   const dbItems = live.map((p) => ({
     id: p.id, slug: p.slug, title: p.title, area: p.area, price: p.price,
     bedrooms: p.bedrooms, bathrooms: p.bathrooms, type: p.propertyType,

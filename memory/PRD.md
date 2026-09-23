@@ -70,6 +70,14 @@ Mapbox GL (optional); Zod validation; bcryptjs; HttpOnly signed session cookie +
 - **Featured Properties** section below the hero: 3 cards reusing the clearly-labelled PROTOTYPE properties (self-hosted images under `/public/properties/`, area, title, £ price, Bed/Bath, PROTOTYPE label, gold "VIEW PROPERTY" → `/properties/<slug>`).
 - Verified (testing agent iteration_6, frontend 100%, 9/9): entrance, search + handoff, journey preserved, nav hover, scroll cue, featured cards + navigation, reduced-motion, mobile, zero console errors. Type-check 0 errors, production build green.
 
+## Phase 4 — Admin panel + DB-backed properties
+- **Auth**: reuses the existing Postgres/bcrypt session (role `ADMIN` has `properties:edit`). New login at `/admin` → `/admin/properties`. Admin `admin@foxyproperty.co.uk` / `Sa281616@` (login min-length lowered to 8 for this 9-char password — shorter than recommended; advise a longer one before production).
+- **Property management** (`/admin/properties`, guarded): add/edit/delete, Live⇄Coming Soon toggle, multi-photo upload. Fields: title, description, area, price, type (apartment/house/commercial), listing (buy/rent), beds, baths, size sqft, status, photos.
+- **Storage**: Emergent Object Storage via `src/lib/storage.ts` (Node fetch, init/put/get); uploads at `POST /api/admin/upload`, served publicly through `GET /api/media/[...path]`. Keys in `.env.local` (`EMERGENT_LLM_KEY`, `INTEGRATION_PROXY_URL`).
+- **Data**: `properties` table (migration `003_properties.sql`); `src/lib/propertiesDb.ts` CRUD. Public `GET /api/properties` returns ALL admin properties (LIVE + COMING_SOON) + labelled prototypes.
+- **Public /properties**: rewritten filters — Buy/Rent toggle, Location, Bedrooms, Property Type, dual price-range slider (min/max); card hover = image zoom + gold border glow; real admin photos render. Detail page resolves DB property (with photo gallery) or prototype.
+- Verified (testing agent iteration_7 + curl): backend 100% (7/7 admin suite; login/CRUD/upload/media/public list), UI admin CRUD/toggle/delete + public filters + slider; object storage upload→serve confirmed; COMING_SOON public listing fixed & verified. Type-check 0 errors, build green.
+
 ## Not yet configured (optional integrations — degrade gracefully, no crash)
 - **Sanity**: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`,
   `SANITY_API_READ_TOKEN` → homepage falls back to approved FOXY copy.

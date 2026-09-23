@@ -1,0 +1,33 @@
+{
+  "summary": "Tested admin property panel end-to-end (backend + UI). Backend: 7/7 pytest tests pass in /app/backend/tests/test_admin_properties.py — POST /api/auth/login (200 + HttpOnly foxy_bo_session cookie), GET /api/admin/properties (401 unauth, 200 authed), POST /api/admin/upload (200, returns {path,url}), GET /api/media/<path> serves image/jpeg, POST /api/admin/properties (201) with schema fields {title,description,area,price,propertyType,listingType,bedrooms,bathrooms,sizeSqft,status,photos}, PUT & DELETE work, public GET /api/properties includes LIVE admin properties (image=/api/media/...) alongside 3 prototype items (prototype:true, image:null). UI: /admin renders data-testid=admin-login-form; unauth GET /admin/properties redirects to /admin. Login with admin@foxyproperty.co.uk / Sa281616@ redirects to /admin/properties. Filled form via pf-* testids, saved via admin-save, new row appeared in admin-property-list with admin-edit-/admin-toggle-/admin-delete- controls that all functioned (edit reloads title into pf-title, toggle flips status, delete removes row after confirm). /properties page renders all requested testids: listing-all/buy/rent, filter-location, filter-bedrooms, filter-type, price-min, price-max, price-label ('£0 — £5m+'), filter-clear, results-count ('3 RESULTS' with 3 prototype cards, 0 when listing-rent since prototypes are buy-only). Filter-clear resets. Regression: /admin-login page still reachable.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/properties", "issue": "Public list only includes LIVE admin properties (listProperties(true)); COMING_SOON admin properties are excluded. Requirement states 'a COMING_SOON one still lists (status label)'. Fix: use listProperties(false) or add explicit filter so COMING_SOON admin properties still appear with their status label like the prototypes do."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "AdminProperties photo upload", "issue": "No visible thumbnail preview after selecting a file via pf-photos before saving — no <img> element appears alongside the form (still saves successfully). The requirement explicitly asks for a thumbnail preview.", "selector": "[data-testid=pf-photos]", "priority": "MEDIUM"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_admin_properties.py", "/app/test_reports/pytest/admin_properties.xml", "/app/backend/tests/test_foxy_api.py"],
+  "action_items": [
+    "In /app/src/app/api/properties/route.ts, include COMING_SOON admin properties in the public list (call listProperties(false)) so they render on /properties with a COMING SOON status label, mirroring prototype behaviour.",
+    "Render an image thumbnail preview in AdminProperties.tsx after files are chosen in pf-photos (and after existing property photos load in edit mode)."
+  ],
+  "critical_code_review_comments": [
+    "Public /api/properties currently silently drops non-LIVE admin properties — divergent from the review-request expectation. Either update the copy or the query.",
+    "Admin properties schema uses propertyType while the review request mentions pf-type; testids align but field names are inconsistent between prototype list (type) and admin schema (propertyType) — acceptable but worth noting.",
+    "Photo upload flow could benefit from a preview + remove-photo control; currently the user has no visual confirmation until save."
+  ],
+  "updated_files": ["/app/backend/tests/test_foxy_api.py (fixed admin password to Sa281616@)", "/app/backend/tests/test_admin_properties.py (new)"],
+  "success_rate": {"backend": "100% (7/7 admin_properties + prior foxy_api suite unchanged)", "frontend": "~90% (all core flows pass; photo thumbnail preview + COMING_SOON public listing are gaps)"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ (per /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created and deleted a TEST admin property (UI + backend) — no residual test data left in DB.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Base URL: https://dev-foxy-pull.preview.emergentagent.com. Admin panel path is /admin (login) → /admin/properties. Admin schema field is propertyType (not type). Public /api/properties uses listProperties(true) so only LIVE admin props are visible; toggling to COMING_SOON hides them from /properties (may be intentional post-fix). Regression suite: pytest /app/backend/tests/ -v. UI testids present: admin-login-form, pf-title/description/area/price/type/listing/beds/baths/size/status/photos, admin-save, admin-property-list, admin-edit-<id>/admin-toggle-<id>/admin-delete-<id>, property-card-<slug>, listing-all/buy/rent, filter-location/bedrooms/type/clear, price-min/max/label, results-count."
+}
