@@ -9,11 +9,12 @@ gsap.registerPlugin(ScrollTrigger);
 const SCENES = [
   ["01", "LONDON", "#hero"],
   ["02", "WEST LONDON", "#west"],
-  ["03", "PRIME LONDON", "#west"],
-  ["04", "THE PROPERTY", "#interior"],
-  ["05", "INSIDE", "#interior"],
-  ["06", "PROPERTY LAB", "#lab"],
-  ["07", "YOUR STRATEGY", "#lab"],
+  ["03", "THE PROPERTY", "#interior"],
+  ["04", "PROPERTY LAB", "#lab"],
+  ["05", "INVEST", "#invest"],
+  ["06", "FINANCE", "#finance"],
+  ["07", "LET", "#let"],
+  ["08", "MANAGE", "#manage"],
 ];
 const TABS = ["Buy", "Rent", "Invest", "HMO"];
 const PRICE: Record<string, [string, string]> = {

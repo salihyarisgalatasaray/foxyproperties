@@ -4,6 +4,7 @@ import { HomeHero } from "../components/home/HomeHero";
 import { WestLondon } from "../components/home/WestLondon";
 import { InteriorSection } from "../components/home/InteriorSection";
 import { PropertyLab } from "../components/home/PropertyLab";
+import { LifecycleJourney } from "../components/home/LifecycleJourney";
 import { FeaturedEditorial } from "../components/home/FeaturedEditorial";
 import { Finale } from "../components/home/Finale";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <WestLondon />
       <InteriorSection />
       <PropertyLab />
+      <LifecycleJourney />
       <FeaturedEditorial />
       <Finale />
       <SiteFooter />

@@ -88,6 +88,10 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Added LifecycleJourney (`src/components/home/LifecycleJourney.tsx`) — 4 full-bleed 100vh cinematic
+  scenes between PropertyLab and FeaturedEditorial: 07 INVEST→/investment, 08 FINANCE→/mortgages, 09 LET→/lettings,
+  10 MANAGE→/property-management. Alternating left/right align, ParallaxImage depth-tuned, AI 2560px assets
+  (invest/finance/letting/management.jpg). Hero side-nav SCENES updated to 8 anchored scenes. Rebuilt + restarted.
 - [Jun 2026] Regenerated west.jpg (2560×1717) + interior.jpg (2560×1717) as AI cinematic scenes and lab_house.jpg
   (2048×3052) as AI 4K architectural cutaway render (Gemini), LANCZOS-upscaled + unsharp, quality 90 progressive JPEG.
 - Assets in `/public/home/`: hero.jpg genuine 3840×2339 (Unsplash); west/interior real photos 2560px; lab_house.jpg
