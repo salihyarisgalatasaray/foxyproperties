@@ -88,6 +88,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Added interactive PropertyLifecycle timeline (`src/components/home/PropertyLifecycle.tsx`) between
+  LifecycleJourney and FeaturedEditorial: 4 clickable nodes (ACQUIRE→/properties, FINANCE→/mortgages, LET→/lettings,
+  MANAGE→/property-management) with lucide icons, gold progress line, per-node auto-advance progress ring (6s,
+  pause-on-hover), fade-swapping detail panel + 3-step list per stage. lucide-react added. Tested (iteration_16):
+  7/7 frontend checks PASS, 100%, 0 console errors.
 - [Jun 2026] Added animated stat badges to each LifecycleJourney scene via `src/components/home/SceneStats.tsx`
   (client CountUp + IntersectionObserver, `.scene-stat` CSS reveal in globals.css, reduced-motion safe). 2 illustrative
   stats per scene (yield/horizon, rate/decision, time-to-let/occupancy, 24-7/inspections) + "ILLUSTRATIVE" micro-label.

@@ -1,0 +1,49 @@
+{
+  "summary": "Frontend-only test of interactive PropertyLifecycle timeline + LifecycleJourney cinematic scenes + SceneStats count-up badges on FOXY PROPERTY homepage. All 7 requested feature checks PASS. No console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verification_details": {
+    "homepage_load": "PASS - / loads on 1440x900, 0 console errors, smooth scroll through hero->west->interior->propertylab->lifecycle-journey scenes->PropertyLifecycle->editorial->finale with no black gaps.",
+    "home_lifecycle_visible": "PASS - [data-testid=home-lifecycle] present. 4 nodes present: lifecycle-node-acquire/finance/let/manage.",
+    "node_click_updates_detail_panel": {
+      "acquire": "heading='Find & secure the right property', step0='Curated search & private viewings', cta href=/properties",
+      "finance": "heading='Structure the right funding', step0='Decision in principle', cta href=/mortgages",
+      "let":     "heading='Bring it to market', step0='Rental valuation & marketing', cta href=/lettings",
+      "manage":  "heading='Care for it, long term', step0='Rent collection & statements', cta href=/property-management (verified step0 contains 'Rent collection')"
+    },
+    "cta_href_per_stage": "PASS - lifecycle-cta href changes per stage exactly as spec (acquire/finance/let/manage -> /properties, /mortgages, /lettings, /property-management).",
+    "auto_advance_and_pause_on_hover": "PASS - with mouse moved outside section, stage auto-advanced from 'Structure the right funding' (finance) -> 'Bring it to market' (let) at t~6s. Progress ring stroke-dashoffset animated 136.96 -> 112.47 -> 88.39 -> 64.31 -> 39.82 -> 15.74 across t=0..5s, confirming 6s DURATION and requestAnimationFrame tick. When section is hovered (paused=true) the ring SVG is not rendered and stage does not advance (verified in earlier hover pass).",
+    "lifecycle_journey_scenes": {
+      "home-invest":  "present, invest-cta href=/investment, scene-stats visible (2 badges)",
+      "home-finance": "present, finance-cta href=/mortgages, scene-stats visible (2 badges)",
+      "home-let":     "present, let-cta href=/lettings, scene-stats visible (2 badges)",
+      "home-manage":  "present, manage-cta href=/property-management, scene-stats visible (2 badges)"
+    },
+    "scene_stats_countup_values_when_in_view": {
+      "invest":  ["5.4% AVG. INDICATIVE YIELD", "10 YR LONG-TERM HORIZON"],
+      "finance": ["5.1% FROM INDICATIVE RATE", "48 H DECISION IN PRINCIPLE"],
+      "let":     ["14 DAYS TYPICAL TIME TO LET", "98% PORTFOLIO OCCUPANCY"],
+      "manage":  ["24/7 SUPPORT & REPORTING (static)", "4 / YR PROPERTY INSPECTIONS"]
+    },
+    "console_errors": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "PropertyLifecycle uses useState<number>(0) for rafRef but requestAnimationFrame returns a number - fine; still consider guarding against double-fire in React 18 StrictMode (dev only) by tracking a mounted flag. Not a bug in prod build.",
+    "SceneStats CountUp animates from 0 to `to` but for the manage scene stat 'PROPERTY INSPECTIONS' the value 4 is very small — count-up over 1300ms is barely perceptible; acceptable but could gate short values with a shorter duration for consistency.",
+    "PropertyLifecycle CTA is an anchor with class hover:bg-[#e6c84f]; no data-testid variation per-stage — fine since it's aria/label-driven, but ensure analytics tracks selected stage on click."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100%"},
+  "test_credentials": "N/A",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "To validate auto-advance reliably, dispatch mouseleave on [data-testid=home-lifecycle] after any programmatic scroll/click (scroll_into_view_if_needed and Playwright click both move the mouse into the section, triggering paused=true). Then poll [data-testid=lifecycle-detail] h3 textContent over ~7s; expect it to change (DURATION=6000ms).",
+  "rca of the issue": "N/A - no issues found."
+}
