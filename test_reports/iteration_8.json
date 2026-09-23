@@ -1,0 +1,26 @@
+{
+  "summary": "Frontend-only regression + new-feature test for the admin photo drag-and-drop reorder / SET COVER feature. All acceptance criteria pass end-to-end. Steps executed: (1) Logged in at /admin with admin@foxyproperty.co.uk. (2) Filled a new property via pf-* testids with LIVE status. (3) Uploaded two images through pf-photos — both thumbnails appear in [data-testid=photo-grid] as photo-thumb-0 and photo-thumb-1, with the COVER badge on photo-thumb-0. (4) Hovered photo-thumb-1 and clicked photo-cover-1 (SET COVER): the two <img src> values swapped between index 0 and 1, and the COVER badge followed the new index 0 (deterministic reorder verified). (5) Saved via admin-save; DB row confirmed via psql to store photos in the new order (cover file first). (6) Public /api/properties returned image=<new cover mediaUrl>. (7) On /properties the property-card-<slug> img src equals the new cover. (8) On /properties/<slug> the hero section CSS background-image URL is the new cover (photos[0]) and the gallery renders the remaining photo. (9) photo-remove-1 deletes a thumbnail (2→1). (10) Regression: admin-toggle flips LIVE↔COMING_SOON, admin-delete removes the row, no residual test data. (11) Public /properties filters (listing-rent, filter-clear) + price slider still function; results-count updates. (12) No pageerror and no console errors captured during the run.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/properties initial load after admin navigation", "issues": ["Occasionally results-count reads '0 RESULTS' on first paint before hydration/price-slider defaults settle; clicking CLEAR FILTERS restores '3 RESULTS'. Minor timing-only nit — not a functional bug."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_admin_properties.py", "/app/test_reports/pytest/admin_properties.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AdminProperties.tsx photo-remove uses form.photos.filter((x)=>x!==p) — if the same file path were ever duplicated in the array this would remove all copies; using filter by index (i) would be safer.",
+    "AdminProperties.tsx uses <img> key={p} — duplicate photo strings would collide as React keys; index-based composite key would be more robust.",
+    "/properties/[slug]/page.tsx renders hero via inline CSS background-image URL — Playwright/img-based selectors won't find the cover as an <img>. Adding data-testid=property-hero (or an <img> for the hero) would improve testability."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100% (all acceptance checks + regression)"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ (per /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created one TEST_REORDER_<ts> property with two uploaded photos, then deleted it. Verified via psql that no rows remain matching title LIKE 'TEST_REORDER%'.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Base URL: https://dev-foxy-pull.preview.emergentagent.com. Admin path: /admin -> /admin/properties. Photo reorder acceptance verified via SET COVER button (photo-cover-<i>) which deterministically moves a photo to index 0; native HTML5 drag was not simulated because SET COVER is the deterministic path spec'd in the request. Detail-page hero uses CSS background-image (not <img>) — check the first section[style*='background-image'] element rather than <img> tags. Property card cover comes from /api/properties image field = mediaUrl(photos[0]).",
+  "rca of the issue": "N/A — no defects found."
+}
