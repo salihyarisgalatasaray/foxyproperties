@@ -50,7 +50,10 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
 ## ✅ V2 PHASE F (partial) — Homepage Journey (2026-06, VERIFIED, iteration_10, frontend 100%)
-- `components/hero/LifecycleJourney.tsx` (NEW): cinematic GSAP ScrollTrigger scrub section placed right
+- **Featured Properties staggered reveal** (`components/property/FeaturedProperties.tsx`, now client):
+  GSAP ScrollTrigger fades + slides the heading and 3 prototype cards in with a 0.16s stagger as the
+  section enters view, then clearProps so the hover lift still works; reduced-motion shows cards
+  immediately. Verified iteration_11 (frontend 100%, normal + reduced-motion).- `components/hero/LifecycleJourney.tsx` (NEW): cinematic GSAP ScrollTrigger scrub section placed right
   after the hero, continuing the story through 8 stages (PROPERTY VALUE → INVESTMENT → FINANCE → LETTING
   → TENANT → RENT → MANAGEMENT → LANDLORD DASHBOARD), each with crossfading full-bleed visual + editorial
   caption + CTA into the matching page; right-side progress rail; reduced-motion stacked fallback; mobile lighter.
