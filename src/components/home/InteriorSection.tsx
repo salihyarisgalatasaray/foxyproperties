@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { ParallaxImage } from "./ParallaxImage";
+import { InteriorPricePanel } from "./InteriorPricePanel";
 
 export function InteriorSection() {
   return (
@@ -24,15 +25,8 @@ export function InteriorSection() {
         </Reveal>
       </div>
 
-      {/* Floating property information panel (prototype / illustrative) */}
-      <div data-testid="interior-price-panel" className="absolute bottom-16 right-5 z-10 w-[min(88vw,20rem)] border border-white/12 bg-black/70 p-6 backdrop-blur-md md:right-10">
-        <p className="display text-3xl text-white">£1,250,000</p>
-        <p className="mt-1 text-sm text-[#A7A29A]">Kensington, London W8</p>
-        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 border-t border-white/10 pt-4 text-sm text-white/75">
-          <span>3 Bedrooms</span><span>2 Bathrooms</span><span>1,450 sq ft</span>
-        </div>
-        <p className="mt-4 text-[10px] tracking-[.18em] text-[#D4AF37]/80">PROTOTYPE · NOT A LIVE PROPERTY</p>
-      </div>
+      {/* Floating property information panel (prototype / illustrative) — scripted reveal */}
+      <InteriorPricePanel />
     </section>
   );
 }
