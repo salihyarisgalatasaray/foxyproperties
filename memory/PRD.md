@@ -88,6 +88,8 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Regenerated west.jpg (2560×1717) + interior.jpg (2560×1717) as AI cinematic scenes and lab_house.jpg
+  (2048×3052) as AI 4K architectural cutaway render (Gemini), LANCZOS-upscaled + unsharp, quality 90 progressive JPEG.
 - Assets in `/public/home/`: hero.jpg genuine 3840×2339 (Unsplash); west/interior real photos 2560px; lab_house.jpg
   & finale.jpg AI CONCEPT (~1264px, labelled). Old CinematicHero/LifecycleJourney/PropertyLifecycle/FeaturedProperties
   retained in repo but no longer on homepage.
