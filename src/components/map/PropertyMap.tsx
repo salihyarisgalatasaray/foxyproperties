@@ -46,6 +46,7 @@ export function PropertyMap({
   points,
   selectedSlug,
   activeSlug,
+  resizeKey,
   zoom = 13,
   pitch = 55,
   bearing = -20,
@@ -54,13 +55,14 @@ export function PropertyMap({
   points: MapPoint[];
   selectedSlug?: string;
   activeSlug?: string | null;
+  resizeKey?: string | number;
   zoom?: number;
   pitch?: number;
   bearing?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const controllerRef = useRef<{ setActive: (s: string | null) => void } | null>(null);
+  const controllerRef = useRef<{ setActive: (s: string | null) => void; resize: () => void } | null>(null);
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
   useEffect(() => {
@@ -110,7 +112,7 @@ export function PropertyMap({
         for (const [s, mk] of Object.entries(markers)) styleMarker(mk.getElement(), s === slug);
         setGlow(p ?? null);
       };
-      controllerRef.current = { setActive };
+      controllerRef.current = { setActive, resize: () => m.resize() };
 
       m.on("style.load", () => {
         if (disposed) return;
@@ -168,6 +170,12 @@ export function PropertyMap({
   useEffect(() => {
     controllerRef.current?.setActive(activeSlug ?? null);
   }, [activeSlug]);
+
+  useEffect(() => {
+    if (resizeKey === undefined) return;
+    const t = setTimeout(() => controllerRef.current?.resize(), 80);
+    return () => clearTimeout(t);
+  }, [resizeKey]);
 
   if (!token) {
     return (

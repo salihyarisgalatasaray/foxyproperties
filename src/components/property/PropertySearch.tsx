@@ -57,6 +57,7 @@ export function PropertySearch() {
   const fld = "bg-[#141413] px-4 py-3 text-xs tracking-[.12em] text-white outline-none focus:ring-1 focus:ring-[#D4AF37]";
 
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [mobileView, setMobileView] = useState<"list" | "map">("list");
   const mapPoints = useMemo(() => items.map(pointFor).filter((p): p is MapPoint => p !== null), [items]);
 
   return (
@@ -84,18 +85,26 @@ export function PropertySearch() {
 
       <p className="mt-6 text-xs tracking-[.15em] text-white/45" data-testid="results-count">{items.length} RESULT{items.length === 1 ? "" : "S"}</p>
 
+      {items.length && mapPoints.length > 0 ? (
+        <div className="mt-4 inline-flex overflow-hidden border border-white/15 xl:hidden" data-testid="view-tabs">
+          {(["list", "map"] as const).map((v) => (
+            <button key={v} onClick={() => setMobileView(v)} data-testid={`view-tab-${v}`} className={`px-6 py-2.5 text-xs tracking-[.16em] transition-colors ${mobileView === v ? "bg-[#D4AF37] text-black" : "text-white/70 hover:text-white"}`}>{v.toUpperCase()}</button>
+          ))}
+        </div>
+      ) : null}
+
       {items.length ? (
         <div className="mt-6 grid gap-8 xl:grid-cols-[1fr_400px]">
-          <div className="grid gap-6 sm:grid-cols-2" onMouseLeave={() => setActiveSlug(null)}>
+          <div className={`${mobileView === "list" ? "grid" : "hidden"} gap-6 sm:grid-cols-2 xl:grid`} onMouseLeave={() => setActiveSlug(null)}>
             {items.map((p, i) => (
               <PropertyFlipCard key={p.id} p={p} hint={i === 0} onActivate={setActiveSlug} />
             ))}
           </div>
           {mapPoints.length > 0 && (
-            <div className="hidden xl:block">
-              <div className="sticky top-24">
-                <PropertyMap points={mapPoints} activeSlug={activeSlug} zoom={12} className="h-[640px]" />
-                <p className="mt-3 text-xs tracking-[.14em] text-white/45" data-testid="map-hint">HOVER A PROPERTY TO LOCATE IT · DRAG TO TILT & ROTATE</p>
+            <div className={`${mobileView === "map" ? "block" : "hidden"} xl:block`}>
+              <div className="xl:sticky xl:top-24">
+                <PropertyMap points={mapPoints} activeSlug={activeSlug} resizeKey={mobileView} zoom={12} className="h-[68vh] xl:h-[640px]" />
+                <p className="mt-3 text-xs tracking-[.14em] text-white/45" data-testid="map-hint">HOVER OR TAP A PIN TO EXPLORE · DRAG TO TILT &amp; ROTATE</p>
               </div>
             </div>
           )}
