@@ -16,7 +16,7 @@ const SCENES = [
   ["07", "LET", "#let"],
   ["08", "MANAGE", "#manage"],
 ];
-const TABS = ["Buy", "Rent", "Invest", "HMO"];
+const TABS = ["Buy", "Rent", "Invest"];
 const PRICE: Record<string, [string, string]> = {
   "Any": ["", ""],
   "Up to £500k": ["", "500000"],

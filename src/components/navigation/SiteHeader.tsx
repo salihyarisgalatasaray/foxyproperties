@@ -13,7 +13,6 @@ const NAV: Nav[] = [
   ] },
   { label: "Rent", href: "/properties?intent=rent" },
   { label: "Invest", href: "/investment" },
-  { label: "HMO", href: "/#lab" },
   { label: "Sell", href: "/sell" },
   { label: "Let", href: "/lettings" },
   { label: "Landlords", href: "/landlords", children: [

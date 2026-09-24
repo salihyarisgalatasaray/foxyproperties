@@ -36,7 +36,7 @@ export function PropertySearch() {
     if (q.get("location")) setArea(q.get("location") as string);
     const intent = q.get("intent");
     if (intent === "rent") setListing("rent");
-    else if (intent === "buy" || intent === "invest" || intent === "hmo") setListing("buy");
+    else if (intent === "buy" || intent === "invest") setListing("buy");
     if (q.get("beds")) setBeds(parseInt(q.get("beds") as string, 10) || 0);
     const t = (q.get("type") || "").toLowerCase();
     if (["apartment", "house", "commercial"].includes(t)) setType(t);

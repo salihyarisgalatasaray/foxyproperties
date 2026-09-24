@@ -10,26 +10,16 @@ const STRATS: Record<string, Strat> = {
     rows: [["Est. Monthly Rent", "£4,750"], ["Est. Annual Rent", "£57,000"], ["Service", "Fully Managed"], ["Est. Net Income", "£48,400"]] },
   BTL: { title: "BUY-TO-LET SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/calculators/buy-to-let",
     rows: [["Purchase Price", "£1,850,000"], ["Deposit (25%)", "£462,500"], ["Est. Monthly Rent", "£4,750"], ["Est. Gross Yield", "3.1%", true]] },
-  HMO: { title: "HMO ANALYSIS", cta: "ANALYSE THIS PROPERTY", ctaHref: "/calculators/buy-to-let",
-    rows: [["Total Monthly Rent", "£4,600"], ["Annual Rent", "£55,200"], ["Operating Costs", "£11,500"], ["Net Annual Income", "£43,700"], ["Estimated Yield", "8.2%", true]] },
   REFINANCE: { title: "REFINANCE SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/mortgages",
     rows: [["Estimated Value", "£1,850,000"], ["Outstanding Loan", "£900,000"], ["New LTV", "49%"], ["Indicative Rate", "from 5.1%"]] },
   MANAGE: { title: "MANAGEMENT SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/property-management",
     rows: [["Monthly Rent", "£4,750"], ["Maintenance Reserve", "£300 pcm"], ["Inspections", "Quarterly"], ["Reporting", "Monthly"]] },
 };
 
-const ROOMS = [
-  { n: "Room 1", r: "£850 pcm", pos: "left-[6%] top-[22%]" },
-  { n: "Room 2", r: "£775 pcm", pos: "left-[6%] top-[52%]" },
-  { n: "Room 3", r: "£800 pcm", pos: "left-[6%] top-[80%]" },
-  { n: "Room 4", r: "£725 pcm", pos: "right-[6%] top-[30%]" },
-  { n: "Room 5", r: "£750 pcm", pos: "right-[6%] top-[62%]" },
-];
-
-const KEYS = ["SELL", "LET", "BTL", "HMO", "REFINANCE", "MANAGE"];
+const KEYS = ["SELL", "LET", "BTL", "REFINANCE", "MANAGE"];
 
 export function PropertyLab() {
-  const [key, setKey] = useState("HMO");
+  const [key, setKey] = useState("SELL");
   const s = STRATS[key];
 
   return (
@@ -61,12 +51,6 @@ export function PropertyLab() {
           <div className="relative">
             <img src="/home/lab_house.jpg" alt="Architectural cutaway of a London townhouse — concept" className="mx-auto w-full max-w-xl object-contain" />
             <span className="absolute left-3 top-3 border border-white/20 bg-black/50 px-2 py-1 text-[8px] tracking-[.2em] text-white/60">CONCEPT · ILLUSTRATIVE</span>
-            {key === "HMO" && ROOMS.map((r) => (
-              <div key={r.n} data-testid={`lab-room-${r.n.replace(" ", "").toLowerCase()}`} className={`absolute hidden border border-[#D4AF37]/40 bg-black/70 px-3 py-1.5 backdrop-blur md:block ${r.pos}`}>
-                <p className="text-[9px] tracking-[.16em] text-white/60">{r.n}</p>
-                <p className="text-xs text-[#D4AF37]">{r.r}</p>
-              </div>
-            ))}
           </div>
 
           {/* Right: analysis panel */}
