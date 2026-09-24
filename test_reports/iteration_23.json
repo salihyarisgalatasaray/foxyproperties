@@ -1,0 +1,28 @@
+{
+  "summary": "Frontend-only test of /properties page map sidebar + card->pin highlight sync. All acceptance criteria pass at 1600x1000 viewport.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "map_renders_with_3_markers_on_xl": "PASS - .mapboxgl-canvas + 3 .mapboxgl-marker rendered; data-testid=property-map present; map-hint visible",
+    "flip_cards_present": "PASS - 3 .flip-card elements with data-testid=property-card-prototype-{chelsea,kensington,fulham}-residence",
+    "card_hover_pin_highlight": "PASS - Hovering chelsea card scaled marker[0] svg to scale(1.7) with gold drop-shadow rgba(212,175,55,0.95) 0 0 9px; other 2 remained scale(1)/none",
+    "highlight_moves_to_other_card": "PASS - Hovering kensington card: marker[0] reset to scale(1), marker[1] scaled to 1.7 with gold glow (only one active at a time)",
+    "mouse_leave_clears_highlight": "PASS - After moving mouse off grid, all 3 markers reset to scale(1)/filter none",
+    "filter_sync_updates_markers": "PASS - Typing 'Beach' in location filter: cards=0, markers=0, results-count='0 RESULTS' (from '3 RESULTS')",
+    "results_count_correct": "PASS - shows '3 RESULTS' baseline; '0 RESULTS' after non-matching filter",
+    "console_errors": "PASS - Zero JS console errors / page errors. Only benign WebGL GPU-stall performance warnings from Mapbox driver."
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100%"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Map sidebar only renders at xl (>=1280px). Use viewport >=1600 to be safe. Marker svg transform + filter reliably reflect activeSlug state; use those as the assertion (map instance not exposed globally). data-testid available: property-map, map-hint, property-card-<slug>, results-count, filter-location."
+}

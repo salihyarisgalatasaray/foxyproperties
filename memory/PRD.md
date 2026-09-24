@@ -88,6 +88,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Card↔Map sync on /properties (tested iteration_23, 100%, 0 errors): added a sticky 3D PropertyMap sidebar
+  (xl screens) beside the flip-card grid. Hovering/focusing a card highlights its map pin (gold glow ring + enlarged
+  marker via PropertyMap.setActive/activeSlug, no camera jump); leaving the grid clears it; map markers stay in sync
+  with active filters (mapPoints = useMemo over filtered items, coords from AREA_CENTERS + per-slug offset).
+  PropertyFlipCard onActivate; PropertyMap now supports activeSlug (hover) alongside selectedSlug (fly) & click-fly.
 - [Jun 2026] Mobile flip hint (tested iteration_22, 100%): subtle animated gold corner-peel with "TAP" label on the
   FIRST /properties card only (hint={i===0}). CSS-gated to '@media (hover:none)' (hidden on desktop), removed once the
   card is flipped, reduced-motion safe. Elements: .flip-hint (data-testid=flip-hint), cornerPeel keyframes.
