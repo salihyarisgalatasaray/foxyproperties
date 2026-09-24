@@ -47,6 +47,8 @@ export function PropertyMap({
   selectedSlug,
   activeSlug,
   resizeKey,
+  heatPoints,
+  heatVisible = false,
   zoom = 13,
   pitch = 55,
   bearing = -20,
@@ -56,13 +58,15 @@ export function PropertyMap({
   selectedSlug?: string;
   activeSlug?: string | null;
   resizeKey?: string | number;
+  heatPoints?: { lng: number; lat: number; weight: number }[];
+  heatVisible?: boolean;
   zoom?: number;
   pitch?: number;
   bearing?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const controllerRef = useRef<{ setActive: (s: string | null) => void; resize: () => void } | null>(null);
+  const controllerRef = useRef<{ setActive: (s: string | null) => void; resize: () => void; setHeat: (v: boolean) => void; setHeatData: (pts: { lng: number; lat: number; weight: number }[]) => void } | null>(null);
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
   useEffect(() => {
@@ -112,7 +116,15 @@ export function PropertyMap({
         for (const [s, mk] of Object.entries(markers)) styleMarker(mk.getElement(), s === slug);
         setGlow(p ?? null);
       };
-      controllerRef.current = { setActive, resize: () => m.resize() };
+      controllerRef.current = {
+        setActive,
+        resize: () => m.resize(),
+        setHeat: (v: boolean) => { if (m.getLayer("foxy-heat")) m.setLayoutProperty("foxy-heat", "visibility", v ? "visible" : "none"); },
+        setHeatData: (pts) => {
+          const src = m.getSource("foxy-heat") as import("mapbox-gl").GeoJSONSource | undefined;
+          src?.setData({ type: "FeatureCollection", features: pts.map((p) => ({ type: "Feature", geometry: { type: "Point", coordinates: [p.lng, p.lat] }, properties: { weight: p.weight } })) });
+        },
+      };
 
       m.on("style.load", () => {
         if (disposed) return;
@@ -120,6 +132,26 @@ export function PropertyMap({
           m.addSource("foxy-glow", { type: "geojson", data: EMPTY });
           m.addLayer({ id: "foxy-glow-fill", type: "fill", source: "foxy-glow", paint: { "fill-color": "#D4AF37", "fill-opacity": 0.22 } });
           m.addLayer({ id: "foxy-glow-line", type: "line", source: "foxy-glow", paint: { "line-color": "#F0D67A", "line-width": 2, "line-opacity": 0.85 } });
+        }
+        // Price/density heat layer (illustrative — driven by connected data)
+        if (!m.getSource("foxy-heat")) {
+          m.addSource("foxy-heat", { type: "geojson", data: EMPTY });
+          m.addLayer({
+            id: "foxy-heat",
+            type: "heatmap",
+            source: "foxy-heat",
+            maxzoom: 16,
+            layout: { visibility: heatVisible ? "visible" : "none" },
+            paint: {
+              "heatmap-weight": ["interpolate", ["linear"], ["get", "weight"], 0, 0, 3, 1],
+              "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 10, 1, 16, 3],
+              "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
+                0, "rgba(11,11,10,0)", 0.2, "rgba(107,85,39,0.5)", 0.45, "rgba(184,149,62,0.75)", 0.7, "#D4AF37", 1, "#F5E7B0"],
+              "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 10, 30, 16, 90],
+              "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0.9, 16, 0.35],
+            },
+          });
+          if (heatPoints && heatPoints.length) controllerRef.current?.setHeatData(heatPoints);
         }
         if (!m.getLayer("foxy-3d-buildings")) {
           const labelId = m.getStyle().layers?.find((l) => l.type === "symbol" && (l.layout as Record<string, unknown> | undefined)?.["text-field"])?.id;
@@ -176,6 +208,14 @@ export function PropertyMap({
     const t = setTimeout(() => controllerRef.current?.resize(), 80);
     return () => clearTimeout(t);
   }, [resizeKey]);
+
+  useEffect(() => {
+    if (heatPoints) controllerRef.current?.setHeatData(heatPoints);
+  }, [heatPoints]);
+
+  useEffect(() => {
+    controllerRef.current?.setHeat(heatVisible);
+  }, [heatVisible]);
 
   if (!token) {
     return (
