@@ -42,10 +42,11 @@ export function PipelineBoard({ initial, canUpdate }: { initial: LeadRow[]; canU
 
   const activeFilters = q.trim() !== "" || typeFilter !== "ALL" || sourceFilter !== "ALL";
 
-  async function move(lead: LeadRow, dir: -1 | 1) {
-    const idx = leadStatuses.indexOf(lead.status);
-    const next = leadStatuses[idx + dir];
-    if (!next || busy) return;
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [overCol, setOverCol] = useState<LeadStatus | null>(null);
+
+  async function moveTo(lead: LeadRow, next: LeadStatus) {
+    if (next === lead.status || busy) return;
     setBusy(lead.id);
     setError(null);
     const prev = lead.status;
@@ -115,54 +116,79 @@ export function PipelineBoard({ initial, canUpdate }: { initial: LeadRow[]; canU
         )}
       </div>
 
+      {canUpdate && (
+        <p className="mb-3 text-xs text-neutral-400" data-testid="pipeline-dnd-hint">
+          Drag a card into another column to change its stage.
+        </p>
+      )}
+
       <div className="grid gap-4 overflow-x-auto pb-4 md:grid-flow-col md:auto-cols-[minmax(220px,1fr)]">
         {leadStatuses.map((s) => (
-          <div key={s} data-testid={`pipeline-col-${s.toLowerCase()}`} className="rounded-xl border border-black/10 bg-black/[.02] p-3">
+          <div
+            key={s}
+            data-testid={`pipeline-col-${s.toLowerCase()}`}
+            onDragOver={(e) => { if (canUpdate && draggingId) { e.preventDefault(); setOverCol(s); } }}
+            onDragLeave={() => setOverCol((c) => (c === s ? null : c))}
+            onDrop={(e) => {
+              e.preventDefault();
+              setOverCol(null);
+              const id = draggingId || e.dataTransfer.getData("text/plain");
+              const lead = leads.find((l) => l.id === id);
+              if (lead) moveTo(lead, s);
+            }}
+            className={`rounded-xl border p-3 transition-colors ${
+              overCol === s ? "border-[#d4af37] bg-[#d4af37]/10" : "border-black/10 bg-black/[.02]"
+            }`}
+          >
             <div className="flex items-center justify-between px-1 pb-3">
               <span className="text-xs font-medium tracking-[.14em] text-neutral-600">{LABELS[s].toUpperCase()}</span>
               <span className="rounded-full bg-[#11110f] px-2 py-0.5 text-[10px] text-[#d4af37]">{byStatus[s].length}</span>
             </div>
-            <div className="space-y-3">
-              {byStatus[s].map((l) => {
-                const idx = leadStatuses.indexOf(l.status);
-                return (
-                  <div key={l.id} data-testid={`pipeline-card-${l.id}`} className="rounded-lg border border-black/10 bg-white p-3 shadow-sm">
-                    <Link href={`/backoffice/leads/${l.id}`} className="block font-medium underline decoration-black/20 underline-offset-2 hover:decoration-[#d4af37]">
-                      {l.name}
-                    </Link>
-                    <div className="mt-1 truncate text-xs text-neutral-500">{l.email}</div>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      <span className="rounded bg-[#d4af37]/15 px-1.5 py-0.5 text-[10px] tracking-[.08em] text-[#8a6d1a]">{l.type}</span>
-                      <span className="rounded bg-black/5 px-1.5 py-0.5 text-[10px] tracking-[.08em] text-neutral-600">{l.source}</span>
-                    </div>
-                    <div className="mt-2 text-[10px] text-neutral-400">{new Date(l.created_at).toLocaleDateString("en-GB")}</div>
-                    {canUpdate && (
-                      <div className="mt-3 flex items-center justify-between border-t border-black/5 pt-2">
-                        <button
-                          onClick={() => move(l, -1)}
-                          disabled={idx === 0 || busy === l.id}
-                          data-testid={`pipeline-back-${l.id}`}
-                          className="rounded px-2 py-1 text-xs text-neutral-500 hover:bg-black/5 disabled:opacity-30"
-                          aria-label="Move back a stage"
-                        >
-                          ←
-                        </button>
-                        <span className="text-[10px] text-neutral-400">{busy === l.id ? "saving…" : "move stage"}</span>
-                        <button
-                          onClick={() => move(l, 1)}
-                          disabled={idx === leadStatuses.length - 1 || busy === l.id}
-                          data-testid={`pipeline-fwd-${l.id}`}
-                          className="rounded px-2 py-1 text-xs text-[#8a6d1a] hover:bg-[#d4af37]/10 disabled:opacity-30"
-                          aria-label="Advance a stage"
-                        >
-                          →
-                        </button>
-                      </div>
-                    )}
+            <div className="min-h-[60px] space-y-3">
+              {byStatus[s].map((l) => (
+                <div
+                  key={l.id}
+                  data-testid={`pipeline-card-${l.id}`}
+                  draggable={canUpdate}
+                  onDragStart={(e) => { setDraggingId(l.id); e.dataTransfer.setData("text/plain", l.id); e.dataTransfer.effectAllowed = "move"; }}
+                  onDragEnd={() => { setDraggingId(null); setOverCol(null); }}
+                  className={`rounded-lg border border-black/10 bg-white p-3 shadow-sm ${canUpdate ? "cursor-grab active:cursor-grabbing" : ""} ${
+                    draggingId === l.id ? "opacity-40" : ""
+                  } ${busy === l.id ? "ring-1 ring-[#d4af37]" : ""}`}
+                >
+                  <Link href={`/backoffice/leads/${l.id}`} className="block font-medium underline decoration-black/20 underline-offset-2 hover:decoration-[#d4af37]">
+                    {l.name}
+                  </Link>
+                  <div className="mt-1 truncate text-xs text-neutral-500">{l.email}</div>
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    <span className="rounded bg-[#d4af37]/15 px-1.5 py-0.5 text-[10px] tracking-[.08em] text-[#8a6d1a]">{l.type}</span>
+                    <span className="rounded bg-black/5 px-1.5 py-0.5 text-[10px] tracking-[.08em] text-neutral-600">{l.source}</span>
                   </div>
-                );
-              })}
-              {byStatus[s].length === 0 && <p className="px-1 py-6 text-center text-xs text-neutral-300">—</p>}
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-[10px] text-neutral-400">{new Date(l.created_at).toLocaleDateString("en-GB")}</span>
+                    {busy === l.id && <span className="text-[10px] text-[#8a6d1a]">saving…</span>}
+                  </div>
+                  {canUpdate && (
+                    <label className="mt-3 block border-t border-black/5 pt-2 text-[10px] text-neutral-400">
+                      Move to
+                      <select
+                        value={l.status}
+                        onChange={(e) => moveTo(l, e.target.value as LeadStatus)}
+                        disabled={busy === l.id}
+                        data-testid={`pipeline-select-${l.id}`}
+                        className="mt-1 w-full rounded border border-black/10 bg-white px-2 py-1 text-xs text-neutral-700 outline-none focus:border-[#d4af37]"
+                      >
+                        {leadStatuses.map((st) => (
+                          <option key={st} value={st}>{LABELS[st]}</option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                </div>
+              ))}
+              {byStatus[s].length === 0 && (
+                <p className="px-1 py-6 text-center text-xs text-neutral-300">{overCol === s ? "Drop here" : "—"}</p>
+              )}
             </div>
           </div>
         ))}
