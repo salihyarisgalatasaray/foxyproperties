@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Home, Landmark, KeyRound, ShieldCheck } from "lucide-react";
+import { useT } from "@/components/i18n/language";
 import { Reveal } from "./Reveal";
 
 type Stage = {
@@ -65,6 +66,7 @@ const STAGES: Stage[] = [
 const DURATION = 6000;
 
 export function PropertyLifecycle() {
+  const t = useT();
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -104,12 +106,12 @@ export function PropertyLifecycle() {
     >
       <div className="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
         <Reveal>
-          <p className="text-[11px] tracking-[.4em] text-[#D4AF37]">THE FOXY LIFECYCLE</p>
+          <p className="text-[11px] tracking-[.4em] text-[#D4AF37]">{t("THE FOXY LIFECYCLE")}</p>
           <h2 className="display mt-5 max-w-3xl text-4xl leading-[1.05] md:text-5xl">
-            ONE PROPERTY.<br />ONE GUIDED JOURNEY.
+            {t("ONE PROPERTY.")}<br />{t("ONE GUIDED JOURNEY.")}
           </h2>
           <p className="mt-6 max-w-xl text-sm leading-7 text-[#A7A29A] md:text-base">
-            From the first viewing to long-term stewardship — follow how FOXY supports every stage of your property.
+            {t("From the first viewing to long-term stewardship — follow how FOXY supports every stage of your property.")}
           </p>
         </Reveal>
 
@@ -163,9 +165,9 @@ export function PropertyLifecycle() {
                         isActive ? "text-[#D4AF37]" : "text-white/70 group-hover:text-white"
                       }`}
                     >
-                      {st.label}
+                      {t(st.label)}
                     </span>
-                    <span className="mt-1 block text-[9px] tracking-[.18em] text-white/35">{st.duration}</span>
+                    <span className="mt-1 block text-[9px] tracking-[.18em] text-white/35">{t(st.duration)}</span>
                   </span>
                 </button>
               );
@@ -177,16 +179,16 @@ export function PropertyLifecycle() {
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
           <div key={s.key} data-testid="lifecycle-detail" className="lifecycle-fade">
             <span data-testid="lifecycle-duration" className="inline-flex items-center gap-2 border border-[#D4AF37]/30 px-3 py-1.5 text-[10px] tracking-[.2em] text-[#D4AF37]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" /> {s.duration}
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" /> {t(s.duration)}
             </span>
-            <h3 className="display mt-5 text-3xl leading-tight md:text-4xl">{s.title}</h3>
-            <p className="mt-5 max-w-lg text-sm leading-7 text-[#C9C4BB] md:text-base">{s.copy}</p>
+            <h3 className="display mt-5 text-3xl leading-tight md:text-4xl">{t(s.title)}</h3>
+            <p className="mt-5 max-w-lg text-sm leading-7 text-[#C9C4BB] md:text-base">{t(s.copy)}</p>
             <a
               href={s.href}
               data-testid="lifecycle-cta"
               className="group mt-8 inline-flex items-center gap-2 bg-[#D4AF37] px-7 py-4 text-xs font-semibold tracking-[.16em] text-black transition-colors hover:bg-[#e6c84f]"
             >
-              {s.cta} <span className="transition-transform group-hover:translate-x-1">→</span>
+              {t(s.cta)} <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>
 
@@ -194,14 +196,14 @@ export function PropertyLifecycle() {
             {s.steps.map((step, i) => (
               <li key={step} data-testid={`lifecycle-step-${i}`} className="flex items-baseline gap-4 py-4">
                 <span className="display text-lg text-[#D4AF37]/70">0{i + 1}</span>
-                <span className="text-sm leading-6 text-white/75">{step}</span>
+                <span className="text-sm leading-6 text-white/75">{t(step)}</span>
               </li>
             ))}
           </ul>
         </div>
 
         <p className="mt-10 text-[10px] tracking-[.2em] text-white/35">
-          ILLUSTRATIVE JOURNEY · SERVICES SUBJECT TO ELIGIBILITY & TERMS
+          {t("ILLUSTRATIVE JOURNEY · SERVICES SUBJECT TO ELIGIBILITY & TERMS")}
         </p>
       </div>
     </section>

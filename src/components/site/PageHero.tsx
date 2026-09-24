@@ -1,7 +1,8 @@
 type CTA = { label: string; href: string; primary?: boolean };
 import { ParallaxBackground } from "./ParallaxBackground";
+import { getT } from "@/lib/i18n/server";
 
-export function PageHero({
+export async function PageHero({
   eyebrow,
   title,
   intro,
@@ -18,6 +19,7 @@ export function PageHero({
   concept?: boolean;
   align?: "left" | "center";
 }) {
+  const t = await getT();
   return (
     <section
       data-testid="page-hero"
@@ -27,7 +29,7 @@ export function PageHero({
       <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0A] via-[#0B0B0A]/55 to-[#0B0B0A]/25" />
       {concept && (
         <span className="absolute right-5 top-[100px] border border-white/25 bg-black/40 px-3 py-1 text-[9px] tracking-[.2em] text-white/70 backdrop-blur md:right-12">
-          CONCEPT IMAGERY · NOT A LIVE LISTING
+          {t("CONCEPT IMAGERY · NOT A LIVE LISTING")}
         </span>
       )}
       <div
@@ -35,9 +37,9 @@ export function PageHero({
           align === "center" ? "text-center" : ""
         }`}
       >
-        <p className="foxy-fade-up text-xs tracking-[.32em] text-[#D4AF37]">{eyebrow}</p>
+        <p className="foxy-fade-up text-xs tracking-[.32em] text-[#D4AF37]">{t(eyebrow)}</p>
         <h1 className="foxy-fade-up display mt-6 max-w-4xl text-4xl leading-[1.05] md:text-7xl">
-          {title}
+          {t(title)}
         </h1>
         {intro && (
           <p
@@ -45,7 +47,7 @@ export function PageHero({
               align === "center" ? "mx-auto" : ""
             }`}
           >
-            {intro}
+            {t(intro)}
           </p>
         )}
         {ctas && ctas.length > 0 && (
@@ -65,7 +67,7 @@ export function PageHero({
                     : "border border-[#D4AF37] px-7 py-4 text-xs tracking-[.16em] text-[#D4AF37] transition-colors hover:bg-[#D4AF37] hover:text-black"
                 }
               >
-                {c.label} →
+                {t(c.label)} →
               </a>
             ))}
           </div>

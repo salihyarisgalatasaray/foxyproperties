@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useT } from "@/components/i18n/language";
 
 export type Stat = {
   to: number;
@@ -67,6 +68,7 @@ function CountUp({ s, run }: { s: Stat; run: boolean }) {
 }
 
 export function SceneStats({ stats, align = "left" }: { stats: Stat[]; align?: "left" | "right" }) {
+  const t = useT();
   const { ref, inView } = useInView();
   return (
     <div
@@ -85,7 +87,7 @@ export function SceneStats({ stats, align = "left" }: { stats: Stat[]; align?: "
           <p className="display text-3xl leading-none text-[#D4AF37] md:text-4xl">
             <CountUp s={s} run={inView} />
           </p>
-          <p className="mt-2 text-[10px] tracking-[.22em] text-white/55">{s.label}</p>
+          <p className="mt-2 text-[10px] tracking-[.22em] text-white/55">{t(s.label)}</p>
         </div>
       ))}
     </div>

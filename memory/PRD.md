@@ -49,6 +49,31 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ EN/TR LANGUAGE TOGGLE — i18n (2026-06, VERIFIED via screenshots + assertions)
+- Navbar EN · TR toggle (top-right, next to LOGIN/GET STARTED; also in mobile panel). `components/i18n/language.tsx`
+  (LanguageProvider + useT + useLang + setLang + LanguageToggle). Preference saved to BOTH localStorage and a
+  `foxy_lang` cookie; toggling reloads the page so server-rendered text switches too. Persists across nav + refresh.
+- Source-string dictionary approach: `src/lib/i18n/dictionary.ts` (English source → Turkish). Missing key → English,
+  so EN always renders. `src/lib/i18n/index.ts` (translate), `src/lib/i18n/server.ts` (getLang/getT for server comps).
+  Root layout reads cookie, sets <html lang>, wraps app in LanguageProvider.
+- TRANSLATED (public): Navbar, Footer, Home (all sections: HomeHero, WestLondon, InteriorSection+PricePanel,
+  PropertyLab, LifecycleJourney, PropertyLifecycle, SceneStats, FeaturedEditorial, Finale), Properties
+  (PropertySearch + PropertyFlipCard), Investment, Mortgages, Areas, About, Sell, Lettings, Contact, Insights,
+  Property Management, Landlords + shared LeadForm, ManagementSlider, LandlordJourney, PageHero, JourneyRail.
+  Prices stay £ (GBP) per user. Verified TR on home/properties/landlords/contact + toggle persistence (all PASS).
+- NOT YET TRANSLATED (render English, no breakage) — NEXT ITERATION: landlords/rental-valuation wizard,
+  landlords/compliance, calculators/mortgage, calculators/buy-to-let, areas/[slug], properties/[slug],
+  RentalValuationJourney, LandlordRevenueSimulator, MortgageCalculator, BuyToLetCalculator, FinanceEnquiryForm,
+  AreasMapPanel labels. PHASE 2 (agreed): Admin / Back Office panels.
+
+## ✅ HMO HIDDEN (2026-06)
+- Removed all HMO surfaces from the public site (nav item, HomeHero search tab, PropertyLab tab + room labels,
+  PropertySearch intent). HMO reserved for a future separate consultancy site.
+
+## ✅ LOGIN FIX (2026-06)
+- Root cause: preview Postgres wiped on pod restart (admin user gone) + runner's db-setup ran before cluster ready.
+  Re-seeded DB; added a `pg_isready` wait loop to `scripts/db-setup.sh` so seeding no longer races on boot.
+
 ## ✅ LEAD → CLIENT CONVERSION (2026-06, VERIFIED via curl + screenshot)
 - One-click convert a website lead into a CRM client record. Button lives ONLY on the lead detail
   page (`/backoffice/leads/[id]`) via `components/backoffice/ConvertLeadButton.tsx` (testid lead-convert-button).

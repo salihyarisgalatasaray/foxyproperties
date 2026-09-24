@@ -1,6 +1,7 @@
 "use client";
 import { useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useT } from "@/components/i18n/language";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -28,6 +29,7 @@ const PRICE: Record<string, [string, string]> = {
 
 export function HomeHero() {
   const router = useRouter();
+  const t = useT();
   const [tab, setTab] = useState("Buy");
   const sectionRef = useRef<HTMLElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
@@ -122,7 +124,7 @@ export function HomeHero() {
         {SCENES.map(([num, label, hash], i) => (
           <button key={num} onClick={() => scrollTo(hash)} data-testid={`scene-${num}`} className="group flex items-center justify-end gap-3 text-right">
             <span className={`text-[10px] tracking-[.24em] transition-colors ${i === 0 ? "text-white" : "text-white/35 group-hover:text-white/70"}`} style={{ textShadow: "0 1px 10px rgba(0,0,0,.6)" }}>
-              {num} <span className="mx-1">—</span> {label}
+              {num} <span className="mx-1">—</span> {t(label)}
             </span>
             <span className={`h-1.5 w-1.5 rounded-full transition-colors ${i === 0 ? "bg-[#D4AF37]" : "bg-white/25 group-hover:bg-[#D4AF37]"}`} />
           </button>
@@ -131,19 +133,19 @@ export function HomeHero() {
 
       <div className="relative z-10 mx-auto flex h-screen max-w-7xl flex-col justify-center px-5 pt-24 md:px-10">
         <div ref={headlineRef} className="will-change-transform">
-        <p className="foxy-fade-up text-[11px] tracking-[.4em] text-[#D4AF37]">LONDON PROPERTY · GLOBAL OPPORTUNITY.</p>
+        <p className="foxy-fade-up text-[11px] tracking-[.4em] text-[#D4AF37]">{t("LONDON PROPERTY · GLOBAL OPPORTUNITY.")}</p>
         <h1 className="foxy-fade-up display mt-6 max-w-4xl text-[2.7rem] leading-[1.02] sm:text-6xl lg:text-7xl xl:text-[5.2rem]">
-          YOUR NEXT<br />PROPERTY DECISION<br /><span className="text-[#D4AF37]">STARTS HERE.</span>
+          {t("YOUR NEXT")}<br />{t("PROPERTY DECISION")}<br /><span className="text-[#D4AF37]">{t("STARTS HERE.")}</span>
         </h1>
         <p className="foxy-fade-up mt-7 text-base leading-8 text-[#C9C4BB] md:text-lg">
-          London property.<br />Strategic investment.<br />Long-term thinking.
+          {t("London property.")}<br />{t("Strategic investment.")}<br />{t("Long-term thinking.")}
         </p>
         <div className="foxy-fade-up mt-9 flex flex-wrap gap-4">
           <a href="/properties" data-testid="hero-explore" className="group inline-flex items-center gap-2 bg-[#D4AF37] px-7 py-4 text-xs font-semibold tracking-[.16em] text-black transition-colors hover:bg-[#e6c84f]">
-            EXPLORE PROPERTIES <span className="transition-transform group-hover:translate-x-1">→</span>
+            {t("EXPLORE PROPERTIES")} <span className="transition-transform group-hover:translate-x-1">→</span>
           </a>
           <button onClick={() => scrollTo("#lab")} data-testid="hero-journey" className="inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-xs tracking-[.16em] text-white transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37]">
-            START YOUR JOURNEY
+            {t("START YOUR JOURNEY")}
           </button>
         </div>
         </div>
@@ -151,25 +153,25 @@ export function HomeHero() {
         <div ref={searchRef} className="will-change-transform">
         <form onSubmit={submit} data-testid="hero-search" className="foxy-fade-up mt-12 w-full max-w-5xl border border-white/12 bg-black/55 p-3 backdrop-blur-md">
           <div className="flex flex-wrap gap-1 border-b border-white/10 pb-2">
-            {TABS.map((t) => (
-              <button type="button" key={t} onClick={() => setTab(t)} data-testid={`search-tab-${t.toLowerCase()}`} className={`px-4 py-2 text-[11px] tracking-[.14em] transition-colors ${tab === t ? "text-[#D4AF37]" : "text-white/55 hover:text-white"}`}>
-                {t.toUpperCase()}
+            {TABS.map((tb) => (
+              <button type="button" key={tb} onClick={() => setTab(tb)} data-testid={`search-tab-${tb.toLowerCase()}`} className={`px-4 py-2 text-[11px] tracking-[.14em] transition-colors ${tab === tb ? "text-[#D4AF37]" : "text-white/55 hover:text-white"}`}>
+                {t(tb.toUpperCase())}
               </button>
             ))}
           </div>
           <div className="mt-2 grid grid-cols-1 gap-2 md:grid-cols-[1.6fr_1fr_1fr_1fr_auto]">
-            <input name="location" data-testid="search-location" placeholder="Enter location (e.g. Chelsea, W8)" className="bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none focus:ring-1 focus:ring-[#D4AF37]" />
+            <input name="location" data-testid="search-location" placeholder={t("Enter location (e.g. Chelsea, W8)")} className="bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none focus:ring-1 focus:ring-[#D4AF37]" />
             <select name="type" data-testid="search-type" defaultValue="Any" className="cursor-pointer bg-white/5 px-3 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#D4AF37]">
-              {["Any", "Apartment", "House", "Penthouse", "Commercial"].map((o) => <option key={o} className="bg-[#141413]">{o}</option>)}
+              {["Any", "Apartment", "House", "Penthouse", "Commercial"].map((o) => <option key={o} value={o} className="bg-[#141413]">{t(o)}</option>)}
             </select>
             <select name="beds" data-testid="search-beds" defaultValue="Any" className="cursor-pointer bg-white/5 px-3 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#D4AF37]">
-              {["Any", "1+", "2+", "3+", "4+", "5+"].map((o) => <option key={o} className="bg-[#141413]">{o}</option>)}
+              {["Any", "1+", "2+", "3+", "4+", "5+"].map((o) => <option key={o} value={o} className="bg-[#141413]">{t(o)}</option>)}
             </select>
             <select name="price" data-testid="search-price" defaultValue="Any" className="cursor-pointer bg-white/5 px-3 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#D4AF37]">
-              {Object.keys(PRICE).map((o) => <option key={o} className="bg-[#141413]">{o}</option>)}
+              {Object.keys(PRICE).map((o) => <option key={o} value={o} className="bg-[#141413]">{t(o)}</option>)}
             </select>
             <button type="submit" data-testid="search-submit" className="bg-[#D4AF37] px-6 py-3 text-xs font-semibold tracking-[.14em] text-black transition-colors hover:bg-[#e6c84f]">
-              SEARCH PROPERTIES
+              {t("SEARCH PROPERTIES")}
             </button>
           </div>
         </form>
@@ -177,7 +179,7 @@ export function HomeHero() {
       </div>
 
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5">
-        <span className="text-[9px] tracking-[.3em] text-white/70">SCROLL TO EXPLORE</span>
+        <span className="text-[9px] tracking-[.3em] text-white/70">{t("SCROLL TO EXPLORE")}</span>
         <span className="foxy-bounce text-lg leading-none text-[#D4AF37]">↓</span>
       </div>
     </section>

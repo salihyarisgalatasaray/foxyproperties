@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PageHero } from "@/components/site/PageHero";
 import { JourneyRail } from "@/components/site/JourneyRail";
 import { LeadForm } from "@/components/lead/LeadForm";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
   title: "Sell Your Property | FOXY Property",
@@ -10,7 +11,8 @@ export const metadata = {
     "Thinking of selling in London? Understand your property before your next move with FOXY Property.",
 };
 
-export default function SellPage() {
+export default async function SellPage() {
+  const t = await getT();
   return (
     <main>
       <SiteHeader />
@@ -44,14 +46,12 @@ export default function SellPage() {
       <section id="valuation" className="mx-auto max-w-6xl px-5 pb-28 md:px-12">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
           <div>
-            <p className="text-xs tracking-[.3em] text-[#D4AF37]">PROPERTY VALUATION</p>
+            <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("PROPERTY VALUATION")}</p>
             <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">
-              REQUEST A PROPERTY VALUATION.
+              {t("REQUEST A PROPERTY VALUATION.")}
             </h2>
             <p className="mt-6 max-w-md text-sm leading-7 text-[#A7A29A]">
-              Share a few details and a member of our team will arrange a considered appraisal. We do
-              not provide an automated valuation figure online — every property and street is
-              different.
+              {t("Share a few details and a member of our team will arrange a considered appraisal. We do not provide an automated valuation figure online — every property and street is different.")}
             </p>
           </div>
           <LeadForm

@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/navigation/SiteHeader";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PageHero } from "@/components/site/PageHero";
 import { LeadForm } from "@/components/lead/LeadForm";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
   title: "Lettings | FOXY Property",
@@ -28,7 +29,8 @@ function Block({
   );
 }
 
-export default function LettingsPage() {
+export default async function LettingsPage() {
+  const t = await getT();
   return (
     <main>
       <SiteHeader />
@@ -44,29 +46,27 @@ export default function LettingsPage() {
         ]}
       />
 
-      <Block id="find" eyebrow="FIND A HOME" title="FIND YOUR NEXT HOME IN LONDON.">
+      <Block id="find" eyebrow={t("FIND A HOME")} title={t("FIND YOUR NEXT HOME IN LONDON.")}>
         <p>
-          Browse our available properties to rent. Prototype and concept listings are clearly
-          labelled and do not represent live inventory.
+          {t("Browse our available properties to rent. Prototype and concept listings are clearly labelled and do not represent live inventory.")}
         </p>
         <a
           href="/properties?intent=rent"
           className="mt-6 inline-block border border-[#D4AF37] px-6 py-4 text-xs tracking-[.14em] text-[#D4AF37] transition-colors hover:bg-[#D4AF37] hover:text-black"
         >
-          BROWSE PROPERTIES TO RENT →
+          {t("BROWSE PROPERTIES TO RENT")} →
         </a>
       </Block>
 
       <section id="register" className="border-y border-white/10 bg-[#0E0E0E]">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_1.1fr] md:px-12">
           <div>
-            <p className="text-xs tracking-[.3em] text-[#D4AF37]">REGISTER AS A TENANT</p>
+            <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("REGISTER AS A TENANT")}</p>
             <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">
-              TELL US WHAT YOU’RE LOOKING FOR.
+              {t("TELL US WHAT YOU’RE LOOKING FOR.")}
             </h2>
             <p className="mt-6 max-w-md text-sm leading-7 text-[#A7A29A]">
-              Register your requirements and we will be in touch about suitable homes. We only ask for
-              the information we need.
+              {t("Register your requirements and we will be in touch about suitable homes. We only ask for the information we need.")}
             </p>
           </div>
           <LeadForm
@@ -85,17 +85,17 @@ export default function LettingsPage() {
         </div>
       </section>
 
-      <Block id="guide" eyebrow="TENANT GUIDE" title="RENTING WITH CONFIDENCE.">
+      <Block id="guide" eyebrow={t("TENANT GUIDE")} title={t("RENTING WITH CONFIDENCE.")}>
         <ul className="grid gap-4 md:grid-cols-2">
           {[
             ["Book a viewing", "Arrange a viewing of a property that interests you."],
             ["Referencing", "Standard referencing confirms your ability to rent the property."],
             ["Moving in", "Deposit protection, inventory and a clear start to your tenancy."],
             ["During your tenancy", "Report maintenance and stay informed throughout."],
-          ].map(([t, d]) => (
-            <li key={t} className="border border-white/10 bg-[#141413] p-6">
-              <p className="text-sm font-semibold tracking-[.1em] text-white">{t}</p>
-              <p className="mt-2 text-sm leading-6 text-[#A7A29A]">{d}</p>
+          ].map(([title, d]) => (
+            <li key={title} className="border border-white/10 bg-[#141413] p-6">
+              <p className="text-sm font-semibold tracking-[.1em] text-white">{t(title)}</p>
+              <p className="mt-2 text-sm leading-6 text-[#A7A29A]">{t(d)}</p>
             </li>
           ))}
         </ul>
@@ -104,10 +104,10 @@ export default function LettingsPage() {
       <section id="viewing" className="mx-auto max-w-6xl px-5 py-16 md:px-12">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
           <div>
-            <p className="text-xs tracking-[.3em] text-[#D4AF37]">BOOK A VIEWING</p>
-            <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">ARRANGE A VIEWING.</h2>
+            <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("BOOK A VIEWING")}</p>
+            <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">{t("ARRANGE A VIEWING.")}</h2>
             <p className="mt-6 max-w-md text-sm leading-7 text-[#A7A29A]">
-              Let us know which property you would like to see and when suits you.
+              {t("Let us know which property you would like to see and when suits you.")}
             </p>
           </div>
           <LeadForm
@@ -126,23 +126,19 @@ export default function LettingsPage() {
 
       <section id="maintenance" className="border-t border-white/10 bg-[#0E0E0E]">
         <div className="mx-auto max-w-6xl px-5 py-16 md:px-12">
-          <p className="text-xs tracking-[.3em] text-[#D4AF37]">MAINTENANCE</p>
-          <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">REPORT MAINTENANCE.</h2>
+          <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("MAINTENANCE")}</p>
+          <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">{t("REPORT MAINTENANCE.")}</h2>
           <div className="mt-6 border border-red-400/40 bg-red-500/5 p-5 text-sm leading-7 text-red-200">
-            <strong>Emergency?</strong> If there is an immediate risk to life, gas leak, fire or
-            flood, contact the emergency services (999) or the relevant emergency provider first. Do
-            not wait for an online report.
+            <strong>{t("Emergency?")}</strong> {t("If there is an immediate risk to life, gas leak, fire or flood, contact the emergency services (999) or the relevant emergency provider first. Do not wait for an online report.")}
           </div>
           <p className="mt-6 max-w-2xl text-sm leading-7 text-[#A7A29A]">
-            For non-emergency maintenance, a dedicated tenant maintenance portal with photo/video
-            reporting and ticket tracking is being prepared. In the meantime, please contact FOXY to
-            report an issue.
+            {t("For non-emergency maintenance, a dedicated tenant maintenance portal with photo/video reporting and ticket tracking is being prepared. In the meantime, please contact FOXY to report an issue.")}
           </p>
           <a
             href="/contact"
             className="mt-6 inline-block border border-[#D4AF37] px-6 py-4 text-xs tracking-[.14em] text-[#D4AF37] transition-colors hover:bg-[#D4AF37] hover:text-black"
           >
-            CONTACT FOXY →
+            {t("CONTACT FOXY")} →
           </a>
         </div>
       </section>

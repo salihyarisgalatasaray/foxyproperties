@@ -1,12 +1,13 @@
 import { Reveal } from "./Reveal";
 import { ParallaxImage } from "./ParallaxImage";
 import { SceneStats, type Stat } from "./SceneStats";
+import { getT } from "@/lib/i18n/server";
 
 type Scene = {
   id: string;
   num: string;
   eyebrow: string;
-  title: React.ReactNode;
+  title: string;
   copy: string;
   cta: string;
   href: string;
@@ -26,7 +27,7 @@ const SCENES: Scene[] = [
     id: "invest",
     num: "07",
     eyebrow: "INVEST",
-    title: <>BUILD LONG-TERM<br />VALUE.</>,
+    title: "BUILD LONG-TERM VALUE.",
     copy: "London remains one of the world's most resilient property markets. Explore acquisition strategies designed around yield, growth and legacy.",
     cta: "EXPLORE INVESTMENT",
     href: "/investment",
@@ -47,7 +48,7 @@ const SCENES: Scene[] = [
     id: "finance",
     num: "08",
     eyebrow: "FINANCE",
-    title: <>FUND IT<br />INTELLIGENTLY.</>,
+    title: "FUND IT INTELLIGENTLY.",
     copy: "From first mortgage to complex portfolio refinancing, our finance specialists structure the right facility around your position.",
     cta: "EXPLORE MORTGAGES",
     href: "/mortgages",
@@ -68,7 +69,7 @@ const SCENES: Scene[] = [
     id: "let",
     num: "09",
     eyebrow: "LET",
-    title: <>LET WITH<br />CONFIDENCE.</>,
+    title: "LET WITH CONFIDENCE.",
     copy: "Qualified tenants, seamless referencing and full compliance — so your property performs from the very first day.",
     cta: "EXPLORE LETTINGS",
     href: "/lettings",
@@ -89,7 +90,7 @@ const SCENES: Scene[] = [
     id: "manage",
     num: "10",
     eyebrow: "MANAGE",
-    title: <>MANAGED,<br />EFFORTLESSLY.</>,
+    title: "MANAGED, EFFORTLESSLY.",
     copy: "Dedicated management, proactive maintenance and transparent reporting. Your portfolio, cared for like our own.",
     cta: "EXPLORE MANAGEMENT",
     href: "/property-management",
@@ -108,7 +109,7 @@ const SCENES: Scene[] = [
   },
 ];
 
-function JourneyScene({ s }: { s: Scene }) {
+function JourneyScene({ s, t }: { s: Scene; t: (v: string) => string }) {
   const right = s.align === "right";
   return (
     <section
@@ -124,18 +125,18 @@ function JourneyScene({ s }: { s: Scene }) {
         <div className={right ? "ml-auto text-right" : ""}>
           <Reveal>
             <p className="display text-2xl text-[#D4AF37]/70">{s.num}</p>
-            <p className="mt-3 text-[11px] tracking-[.4em] text-[#D4AF37]">{s.eyebrow}</p>
-            <h2 className="display mt-5 text-4xl leading-[1.05] md:text-6xl">{s.title}</h2>
-            <p className={`mt-6 max-w-md text-sm leading-7 text-[#C9C4BB] md:text-base ${right ? "ml-auto" : ""}`}>{s.copy}</p>
+            <p className="mt-3 text-[11px] tracking-[.4em] text-[#D4AF37]">{t(s.eyebrow)}</p>
+            <h2 className="display mt-5 text-4xl leading-[1.05] md:text-6xl">{t(s.title)}</h2>
+            <p className={`mt-6 max-w-md text-sm leading-7 text-[#C9C4BB] md:text-base ${right ? "ml-auto" : ""}`}>{t(s.copy)}</p>
             <a
               href={s.href}
               data-testid={`${s.id}-cta`}
               className={`group mt-8 inline-flex items-center gap-2 border border-white/30 px-6 py-3 text-xs tracking-[.16em] text-white transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37] ${right ? "flex-row-reverse" : ""}`}
             >
-              {s.cta} <span className="transition-transform group-hover:translate-x-1">→</span>
+              {t(s.cta)} <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <SceneStats stats={s.stats} align={s.align} />
-            <p className={`mt-4 text-[10px] tracking-[.2em] text-white/35 ${right ? "text-right" : ""}`}>ILLUSTRATIVE · NOT A FORECAST OR GUARANTEE</p>
+            <p className={`mt-4 text-[10px] tracking-[.2em] text-white/35 ${right ? "text-right" : ""}`}>{t("ILLUSTRATIVE · NOT A FORECAST OR GUARANTEE")}</p>
           </Reveal>
         </div>
       </div>
@@ -143,11 +144,12 @@ function JourneyScene({ s }: { s: Scene }) {
   );
 }
 
-export function LifecycleJourney() {
+export async function LifecycleJourney() {
+  const t = await getT();
   return (
     <>
       {SCENES.map((s) => (
-        <JourneyScene key={s.id} s={s} />
+        <JourneyScene key={s.id} s={s} t={t} />
       ))}
     </>
   );

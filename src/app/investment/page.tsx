@@ -4,6 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { JourneyRail } from "@/components/site/JourneyRail";
 import { LandlordRevenueSimulator } from "@/components/investment/LandlordRevenueSimulator";
 import { LeadForm } from "@/components/lead/LeadForm";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
   title: "Property Investment | FOXY Property",
@@ -11,7 +12,8 @@ export const metadata = {
     "Strategic London property investment. Understand purchase, finance, rent, costs and estimated yield — illustrative, never guaranteed.",
 };
 
-export default function InvestmentPage() {
+export default async function InvestmentPage() {
+  const t = await getT();
   return (
     <main>
       <SiteHeader />
@@ -44,13 +46,12 @@ export default function InvestmentPage() {
       />
 
       <section id="simulator" className="mx-auto max-w-6xl px-5 pb-8 pt-4 md:px-12">
-        <p className="text-xs tracking-[.3em] text-[#D4AF37]">LANDLORD REVENUE SIMULATOR</p>
+        <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("LANDLORD REVENUE SIMULATOR")}</p>
         <h2 className="display mt-5 max-w-3xl text-3xl leading-tight md:text-5xl">
-          SEE WHAT YOU COULD TAKE HOME.
+          {t("SEE WHAT YOU COULD TAKE HOME.")}
         </h2>
         <p className="mt-6 max-w-2xl text-sm leading-7 text-[#A7A29A]">
-          Adjust rent, service level, voids and costs to model your estimated net rental income in
-          real time. Every figure is illustrative — confirmed only after a proper valuation.
+          {t("Adjust rent, service level, voids and costs to model your estimated net rental income in real time. Every figure is illustrative — confirmed only after a proper valuation.")}
         </p>
         <div className="mt-10">
           <LandlordRevenueSimulator />
@@ -59,20 +60,18 @@ export default function InvestmentPage() {
 
       <section className="mx-auto max-w-6xl px-5 pb-24 pt-16 md:px-12">
         <div className="border border-[#D4AF37]/30 bg-[#141413] p-8 md:p-12">
-          <p className="text-xs tracking-[.3em] text-[#D4AF37]">INVESTMENT CALCULATOR</p>
+          <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("INVESTMENT CALCULATOR")}</p>
           <h2 className="display mt-5 text-3xl leading-tight md:text-4xl">
-            MODEL AN INVESTMENT.
+            {t("MODEL AN INVESTMENT.")}
           </h2>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-[#A7A29A]">
-            Use our buy-to-let calculator to estimate LTV, gross and net yield, annual costs and cash
-            flow. Results are illustrative only and do not constitute financial advice or a promise of
-            returns.
+            {t("Use our buy-to-let calculator to estimate LTV, gross and net yield, annual costs and cash flow. Results are illustrative only and do not constitute financial advice or a promise of returns.")}
           </p>
           <a
             href="/calculators/buy-to-let"
             className="mt-7 inline-block bg-[#D4AF37] px-7 py-4 text-xs font-semibold tracking-[.16em] text-black"
           >
-            OPEN THE CALCULATOR →
+            {t("OPEN THE CALCULATOR")} →
           </a>
         </div>
       </section>
@@ -80,13 +79,12 @@ export default function InvestmentPage() {
       <section id="enquiry" className="border-t border-white/10 bg-[#0E0E0E]">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 md:grid-cols-[1fr_1.1fr] md:px-12">
           <div>
-            <p className="text-xs tracking-[.3em] text-[#D4AF37]">INVESTMENT ENQUIRY</p>
+            <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("INVESTMENT ENQUIRY")}</p>
             <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">
-              DISCUSS AN INVESTMENT.
+              {t("DISCUSS AN INVESTMENT.")}
             </h2>
             <p className="mt-6 max-w-md text-sm leading-7 text-[#A7A29A]">
-              Tell us what you are considering. We never promise returns — we help you understand the
-              numbers.
+              {t("Tell us what you are considering. We never promise returns — we help you understand the numbers.")}
             </p>
           </div>
           <LeadForm

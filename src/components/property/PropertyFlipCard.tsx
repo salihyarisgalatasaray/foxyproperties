@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState, type MouseEvent } from "react";
+import { useT } from "@/components/i18n/language";
 
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 
@@ -23,6 +24,7 @@ export type FlipItem = {
 const isTouch = () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
 export function PropertyFlipCard({ p, hint, onActivate }: { p: FlipItem; hint?: boolean; onActivate?: (slug: string) => void }) {
+  const t = useT();
   const [flipped, setFlipped] = useState(false);
 
   // On touch devices, the first tap flips the card instead of navigating.
@@ -50,14 +52,14 @@ export function PropertyFlipCard({ p, hint, onActivate }: { p: FlipItem; hint?: 
               <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_20%,rgba(212,175,55,.12),transparent_70%)]" />
             )}
             <span className="absolute left-4 top-4 border border-[#D4AF37]/60 bg-black/60 px-3 py-2 text-[10px] tracking-[.18em] text-[#D4AF37]">{p.status.replaceAll("_", " ")}</span>
-            {p.prototype && <span className="absolute bottom-4 left-4 text-[10px] tracking-[.18em] text-white/60">PROTOTYPE · NOT A LIVE PROPERTY</span>}
+            {p.prototype && <span className="absolute bottom-4 left-4 text-[10px] tracking-[.18em] text-white/60">{t("PROTOTYPE · NOT A LIVE PROPERTY")}</span>}
           </div>
           <div className="p-5">
             <p className="text-[11px] tracking-[.22em] text-[#D4AF37]">{p.area.toUpperCase()} · {p.listingType.toUpperCase()}</p>
             <h2 className="display mt-2 text-2xl leading-tight">{p.title}</h2>
             <div className="mt-4 flex items-end justify-between border-t border-white/10 pt-4">
               <p className="text-lg">{gbp.format(p.price)}</p>
-              <span className="text-[10px] tracking-[.16em] text-white/45">TAP · HOVER FOR DETAILS</span>
+              <span className="text-[10px] tracking-[.16em] text-white/45">{t("TAP · HOVER FOR DETAILS")}</span>
             </div>
           </div>
         </Link>
@@ -69,14 +71,14 @@ export function PropertyFlipCard({ p, hint, onActivate }: { p: FlipItem; hint?: 
             <h2 className="display mt-2 text-2xl leading-tight">{p.title}</h2>
             <p className="display mt-4 text-4xl text-[#D4AF37]">{gbp.format(p.price)}</p>
             <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-5 text-center">
-              <div><dt className="text-[10px] tracking-[.16em] text-white/45">BEDROOMS</dt><dd className="display mt-1 text-2xl">{p.bedrooms}</dd></div>
-              <div><dt className="text-[10px] tracking-[.16em] text-white/45">BATHROOMS</dt><dd className="display mt-1 text-2xl">{p.bathrooms}</dd></div>
-              <div><dt className="text-[10px] tracking-[.16em] text-white/45">SIZE</dt><dd className="display mt-1 text-2xl">{p.sizeSqft ? p.sizeSqft.toLocaleString() : "—"}<span className="text-xs text-white/50"> sqft</span></dd></div>
+              <div><dt className="text-[10px] tracking-[.16em] text-white/45">{t("BEDROOMS")}</dt><dd className="display mt-1 text-2xl">{p.bedrooms}</dd></div>
+              <div><dt className="text-[10px] tracking-[.16em] text-white/45">{t("BATHROOMS")}</dt><dd className="display mt-1 text-2xl">{p.bathrooms}</dd></div>
+              <div><dt className="text-[10px] tracking-[.16em] text-white/45">{t("SIZE")}</dt><dd className="display mt-1 text-2xl">{p.sizeSqft ? p.sizeSqft.toLocaleString() : "—"}<span className="text-xs text-white/50"> {t("sqft")}</span></dd></div>
             </dl>
             <p className="mt-5 text-xs capitalize text-white/55">{p.type} · {p.status.replaceAll("_", " ").toLowerCase()}</p>
           </div>
           <Link href={`/properties/${p.slug}`} data-testid={`property-view-${p.slug}`} onClick={(e) => e.stopPropagation()} className="mt-6 block bg-[#D4AF37] px-6 py-4 text-center text-xs font-semibold tracking-[.16em] text-black">
-            VIEW PROPERTY →
+            {t("VIEW PROPERTY")} →
           </Link>
         </div>
       </div>

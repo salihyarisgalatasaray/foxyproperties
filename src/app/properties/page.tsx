@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/navigation/SiteHeader";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PropertySearch } from "@/components/property/PropertySearch";
-export default function PropertiesPage(){return <><SiteHeader/><main className="min-h-screen bg-[#0B0B0A] px-5 pb-24 pt-36 md:px-12"><div className="mx-auto max-w-[1440px]"><p className="text-xs tracking-[.3em] text-[#D4AF37]">FOXY PROPERTY</p><h1 className="display mt-4 text-5xl md:text-7xl">SELECTED PROPERTIES.</h1><p className="mt-5 max-w-2xl text-[#A7A29A]">Prototype records are clearly labelled; live listings are managed through the FOXY admin.</p><PropertySearch/></div></main><SiteFooter/></>}
+import { getT } from "@/lib/i18n/server";
+export default async function PropertiesPage(){const t=await getT();return <><SiteHeader/><main className="min-h-screen bg-[#0B0B0A] px-5 pb-24 pt-36 md:px-12"><div className="mx-auto max-w-[1440px]"><p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("FOXY PROPERTY")}</p><h1 className="display mt-4 text-5xl md:text-7xl">{t("SELECTED PROPERTIES.")}</h1><p className="mt-5 max-w-2xl text-[#A7A29A]">{t("Prototype records are clearly labelled; live listings are managed through the FOXY admin.")}</p><PropertySearch/></div></main><SiteFooter/></>}

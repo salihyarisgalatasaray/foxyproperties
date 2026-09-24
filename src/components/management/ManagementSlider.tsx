@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useT } from "@/components/i18n/language";
 
 const LEVELS = [
   {
@@ -55,6 +56,7 @@ const ALL = [
 ];
 
 export function ManagementSlider() {
+  const t = useT();
   const [lvl, setLvl] = useState(2);
   const level = LEVELS[lvl];
 
@@ -65,14 +67,14 @@ export function ManagementSlider() {
       className="border-y border-white/10 bg-[#0E0E0E]"
     >
       <div className="mx-auto max-w-6xl px-5 py-24 md:px-12 md:py-32">
-        <p className="text-xs tracking-[.3em] text-[#D4AF37]">MANAGEMENT COMPARISON</p>
+        <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("MANAGEMENT COMPARISON")}</p>
         <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">
-          HOW MUCH WOULD YOU LIKE TO MANAGE?
+          {t("HOW MUCH WOULD YOU LIKE TO MANAGE?")}
         </h2>
 
         <div className="mt-12 flex items-center justify-between text-[11px] tracking-[.14em] text-white/50">
-          <span>YOU MANAGE</span>
-          <span>FOXY MANAGES</span>
+          <span>{t("YOU MANAGE")}</span>
+          <span>{t("FOXY MANAGES")}</span>
         </div>
         <input
           type="range"
@@ -92,7 +94,7 @@ export function ManagementSlider() {
               data-testid={`management-level-${i}`}
               className={i === lvl ? "text-[#D4AF37]" : "text-white/40"}
             >
-              {l.name}
+              {t(l.name)}
             </button>
           ))}
         </div>
@@ -100,14 +102,14 @@ export function ManagementSlider() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div className="border border-[#D4AF37]/30 bg-[#141413] p-8">
             <p className="display text-2xl text-[#D4AF37]" data-testid="management-level-name">
-              {level.name}
+              {t(level.name)}
             </p>
-            <p className="mt-4 text-sm leading-7 text-[#A7A29A]">{level.blurb}</p>
+            <p className="mt-4 text-sm leading-7 text-[#A7A29A]">{t(level.blurb)}</p>
             <a
               href="/landlords#valuation"
               className="mt-8 inline-block bg-[#D4AF37] px-6 py-4 text-xs font-semibold tracking-[.14em] text-black"
             >
-              BUILD MY MANAGEMENT PLAN →
+              {t("BUILD MY MANAGEMENT PLAN")} →
             </a>
           </div>
           <ul className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
@@ -121,15 +123,14 @@ export function ManagementSlider() {
                   }`}
                 >
                   <span className={on ? "text-[#D4AF37]" : "text-white/20"}>{on ? "✓" : "—"}</span>
-                  {item}
+                  {t(item)}
                 </li>
               );
             })}
           </ul>
         </div>
         <p className="mt-8 max-w-2xl text-xs leading-6 text-white/40">
-          Service scope is illustrative and configurable. Specific responsibilities, legal
-          obligations and fees are confirmed in your management agreement and are not implied here.
+          {t("Service scope is illustrative and configurable. Specific responsibilities, legal obligations and fees are confirmed in your management agreement and are not implied here.")}
         </p>
       </div>
     </section>

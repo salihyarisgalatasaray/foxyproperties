@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { useT } from "@/components/i18n/language";
 import { PropertyFlipCard } from "./PropertyFlipCard";
 import { PropertyMap, type MapPoint } from "../map/PropertyMap";
 
@@ -23,6 +24,7 @@ function pointFor(it: Item): MapPoint | null {
 }
 
 export function PropertySearch() {
+  const t = useT();
   const [all, setAll] = useState<Item[]>([]);
   const [listing, setListing] = useState<"all" | "buy" | "rent">("all");
   const [area, setArea] = useState("");
@@ -65,17 +67,17 @@ export function PropertySearch() {
       <div className="mt-10 border-y border-white/10 py-6" data-testid="property-filters">
         <div className="mb-4 inline-flex overflow-hidden border border-white/15" data-testid="filter-listing-toggle">
           {(["all", "buy", "rent"] as const).map((v) => (
-            <button key={v} onClick={() => setListing(v)} data-testid={`listing-${v}`} className={`px-5 py-2 text-xs tracking-[.16em] transition-colors ${listing === v ? "bg-[#D4AF37] text-black" : "text-white/70 hover:text-white"}`}>{v.toUpperCase()}</button>
+            <button key={v} onClick={() => setListing(v)} data-testid={`listing-${v}`} className={`px-5 py-2 text-xs tracking-[.16em] transition-colors ${listing === v ? "bg-[#D4AF37] text-black" : "text-white/70 hover:text-white"}`}>{t(v.toUpperCase())}</button>
           ))}
         </div>
         <div className="grid gap-3 md:grid-cols-4">
-          <input value={area} onChange={(e) => setArea(e.target.value)} aria-label="Location" placeholder="LOCATION" data-testid="filter-location" className={fld} />
-          <select value={beds} onChange={(e) => setBeds(Number(e.target.value))} aria-label="Bedrooms" data-testid="filter-bedrooms" className={fld}><option value="0">BEDROOMS (ANY)</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select>
-          <select value={type} onChange={(e) => setType(e.target.value)} aria-label="Property type" data-testid="filter-type" className={fld}><option value="">PROPERTY TYPE (ANY)</option><option value="apartment">Apartment</option><option value="house">House</option><option value="commercial">Commercial</option></select>
-          <button onClick={reset} data-testid="filter-clear" className="border border-[#D4AF37]/60 px-4 py-3 text-xs tracking-[.15em] text-[#D4AF37] transition-colors hover:bg-[#D4AF37] hover:text-black">CLEAR FILTERS</button>
+          <input value={area} onChange={(e) => setArea(e.target.value)} aria-label="Location" placeholder={t("LOCATION")} data-testid="filter-location" className={fld} />
+          <select value={beds} onChange={(e) => setBeds(Number(e.target.value))} aria-label="Bedrooms" data-testid="filter-bedrooms" className={fld}><option value="0">{t("BEDROOMS (ANY)")}</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select>
+          <select value={type} onChange={(e) => setType(e.target.value)} aria-label="Property type" data-testid="filter-type" className={fld}><option value="">{t("PROPERTY TYPE (ANY)")}</option><option value="apartment">{t("Apartment")}</option><option value="house">{t("House")}</option><option value="commercial">{t("Commercial")}</option></select>
+          <button onClick={reset} data-testid="filter-clear" className="border border-[#D4AF37]/60 px-4 py-3 text-xs tracking-[.15em] text-[#D4AF37] transition-colors hover:bg-[#D4AF37] hover:text-black">{t("CLEAR FILTERS")}</button>
         </div>
         <div className="mt-6" data-testid="filter-price">
-          <div className="flex justify-between text-[11px] tracking-[.14em] text-white/60"><span>PRICE RANGE</span><span data-testid="price-label">{gbp.format(min)} — {max >= PRICE_MAX ? "£5m+" : gbp.format(max)}</span></div>
+          <div className="flex justify-between text-[11px] tracking-[.14em] text-white/60"><span>{t("PRICE RANGE")}</span><span data-testid="price-label">{gbp.format(min)} — {max >= PRICE_MAX ? "£5m+" : gbp.format(max)}</span></div>
           <div className="mt-3 grid gap-2">
             <input type="range" min={0} max={PRICE_MAX} step={50000} value={min} onChange={(e) => setMin(Math.min(Number(e.target.value), max))} aria-label="Minimum price" data-testid="price-min" className="accent-[#D4AF37]" />
             <input type="range" min={0} max={PRICE_MAX} step={50000} value={max} onChange={(e) => setMax(Math.max(Number(e.target.value), min))} aria-label="Maximum price" data-testid="price-max" className="accent-[#D4AF37]" />
@@ -83,12 +85,12 @@ export function PropertySearch() {
         </div>
       </div>
 
-      <p className="mt-6 text-xs tracking-[.15em] text-white/45" data-testid="results-count">{items.length} RESULT{items.length === 1 ? "" : "S"}</p>
+      <p className="mt-6 text-xs tracking-[.15em] text-white/45" data-testid="results-count">{items.length} {items.length === 1 ? t("RESULT") : t("RESULTS")}</p>
 
       {items.length && mapPoints.length > 0 ? (
         <div className="mt-4 inline-flex overflow-hidden border border-white/15 xl:hidden" data-testid="view-tabs">
           {(["list", "map"] as const).map((v) => (
-            <button key={v} onClick={() => setMobileView(v)} data-testid={`view-tab-${v}`} className={`px-6 py-2.5 text-xs tracking-[.16em] transition-colors ${mobileView === v ? "bg-[#D4AF37] text-black" : "text-white/70 hover:text-white"}`}>{v.toUpperCase()}</button>
+            <button key={v} onClick={() => setMobileView(v)} data-testid={`view-tab-${v}`} className={`px-6 py-2.5 text-xs tracking-[.16em] transition-colors ${mobileView === v ? "bg-[#D4AF37] text-black" : "text-white/70 hover:text-white"}`}>{t(v.toUpperCase())}</button>
           ))}
         </div>
       ) : null}
@@ -104,13 +106,13 @@ export function PropertySearch() {
             <div className={`${mobileView === "map" ? "block" : "hidden"} xl:block`}>
               <div className="xl:sticky xl:top-24">
                 <PropertyMap points={mapPoints} activeSlug={activeSlug} resizeKey={mobileView} zoom={12} className="h-[68vh] xl:h-[640px]" />
-                <p className="mt-3 text-xs tracking-[.14em] text-white/45" data-testid="map-hint">HOVER OR TAP A PIN TO EXPLORE · DRAG TO TILT &amp; ROTATE</p>
+                <p className="mt-3 text-xs tracking-[.14em] text-white/45" data-testid="map-hint">{t("HOVER OR TAP A PIN TO EXPLORE · DRAG TO TILT & ROTATE")}</p>
               </div>
             </div>
           )}
         </div>
       ) : (
-        <div className="mt-8 border border-white/10 p-10"><h2 className="display text-3xl">No matching properties.</h2><p className="mt-3 text-[#A7A29A]">Try adjusting the filters or price range.</p></div>
+        <div className="mt-8 border border-white/10 p-10"><h2 className="display text-3xl">{t("No matching properties.")}</h2><p className="mt-3 text-[#A7A29A]">{t("Try adjusting the filters or price range.")}</p></div>
       )}
     </>
   );

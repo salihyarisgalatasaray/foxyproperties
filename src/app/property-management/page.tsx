@@ -4,13 +4,15 @@ import { PageHero } from "@/components/site/PageHero";
 import { JourneyRail } from "@/components/site/JourneyRail";
 import { ManagementSlider } from "@/components/management/ManagementSlider";
 import { LeadForm } from "@/components/lead/LeadForm";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
   title: "Property Management | FOXY Property",
   description: "Your property, our attention. Professional London property management with FOXY.",
 };
 
-export default function PropertyManagementPage() {
+export default async function PropertyManagementPage() {
+  const t = await getT();
   return (
     <main>
       <SiteHeader />
@@ -48,13 +50,12 @@ export default function PropertyManagementPage() {
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-24 md:grid-cols-[1fr_1.1fr] md:px-12">
         <div>
-          <p className="text-xs tracking-[.3em] text-[#D4AF37]">MANAGEMENT REVIEW</p>
+          <p className="text-xs tracking-[.3em] text-[#D4AF37]">{t("MANAGEMENT REVIEW")}</p>
           <h2 className="display mt-5 text-3xl leading-tight md:text-5xl">
-            REQUEST A MANAGEMENT REVIEW.
+            {t("REQUEST A MANAGEMENT REVIEW.")}
           </h2>
           <p className="mt-6 max-w-md text-sm leading-7 text-[#A7A29A]">
-            Tell us about your property and how much you would like us to handle. We will recommend
-            information for your review — without quoting fees before we understand your property.
+            {t("Tell us about your property and how much you would like us to handle. We will recommend information for your review — without quoting fees before we understand your property.")}
           </p>
         </div>
         <LeadForm

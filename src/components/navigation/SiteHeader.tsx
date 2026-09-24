@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useT, LanguageToggle } from "@/components/i18n/language";
 
 type Item = { label: string; href: string };
 type Nav = { label: string; href: string; children?: Item[] };
@@ -28,6 +29,7 @@ const NAV: Nav[] = [
 ];
 
 export function SiteHeader() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -57,14 +59,14 @@ export function SiteHeader() {
               data-testid={`nav-${n.label.toLowerCase().replace(/[^a-z]+/g, "-")}`}
               className="nav-underline flex items-center gap-1 py-6 text-white/85 transition-colors duration-300 hover:text-[#D4AF37]"
             >
-              {n.label}
+              {t(n.label)}
               {n.children && <span className="text-[7px] text-[#D4AF37]">▾</span>}
             </a>
             {n.children && (
               <div className="invisible absolute left-0 top-[64px] w-60 translate-y-2 border border-white/10 bg-[#0E0E0E] p-2 opacity-0 shadow-2xl transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                 {n.children.map((c) => (
                   <a key={c.label} href={c.href} className="block px-4 py-2.5 text-[11px] tracking-[.08em] text-white/70 transition-colors hover:bg-white/5 hover:text-[#D4AF37]">
-                    {c.label}
+                    {t(c.label)}
                   </a>
                 ))}
               </div>
@@ -74,12 +76,12 @@ export function SiteHeader() {
       </nav>
 
       <div className="hidden items-center gap-3 xl:flex">
-        <span className="text-[10px] tracking-[.14em] text-white/45"><span className="text-[#D4AF37]">EN</span> · TR</span>
+        <LanguageToggle />
         <a href="/admin" data-testid="nav-login" className="border border-white/25 px-4 py-2.5 text-[10px] tracking-[.13em] text-white/85 transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37]">
-          LOGIN
+          {t("LOGIN")}
         </a>
         <a href="/contact" data-testid="nav-getstarted" className="bg-[#D4AF37] px-4 py-2.5 text-[10px] font-semibold tracking-[.13em] text-black transition-colors hover:bg-[#e6c84f]">
-          GET STARTED
+          {t("GET STARTED")}
         </a>
       </div>
 
@@ -91,12 +93,13 @@ export function SiteHeader() {
         <div data-testid="nav-mobile-panel" className="fixed inset-x-0 top-[76px] z-50 max-h-[calc(100vh-76px)] overflow-y-auto border-b border-white/10 bg-[#0B0B0A] px-6 py-5 xl:hidden">
           {NAV.map((n) => (
             <a key={n.label} href={n.href} onClick={() => setOpen(false)} className="block border-b border-white/5 py-3 text-sm tracking-[.12em] text-white/85">
-              {n.label}
+              {t(n.label)}
             </a>
           ))}
-          <div className="mt-5 flex gap-3">
-            <a href="/admin" onClick={() => setOpen(false)} className="flex-1 border border-white/25 px-4 py-3 text-center text-xs tracking-[.13em] text-white/85">LOGIN</a>
-            <a href="/contact" onClick={() => setOpen(false)} className="flex-1 bg-[#D4AF37] px-4 py-3 text-center text-xs font-semibold tracking-[.13em] text-black">GET STARTED</a>
+          <div className="mt-5 flex items-center gap-3">
+            <LanguageToggle className="mr-auto" />
+            <a href="/admin" onClick={() => setOpen(false)} className="flex-1 border border-white/25 px-4 py-3 text-center text-xs tracking-[.13em] text-white/85">{t("LOGIN")}</a>
+            <a href="/contact" onClick={() => setOpen(false)} className="flex-1 bg-[#D4AF37] px-4 py-3 text-center text-xs font-semibold tracking-[.13em] text-black">{t("GET STARTED")}</a>
           </div>
         </div>
       )}
