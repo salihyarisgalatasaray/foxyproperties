@@ -48,6 +48,7 @@ a.bg-\[\#D4AF37\]:hover,button.bg-\[\#D4AF37\]:hover{background-position:92% 0;b
 .flip-back{transform:rotateY(180deg)}
 @media (hover:none){.flip-card:hover .flip-inner,.flip-card:focus-within .flip-inner{transform:none}}
 @media (prefers-reduced-motion: reduce){.flip-inner{transition:none}.flip-card:hover .flip-inner,.flip-card:focus-within .flip-inner{transform:none}}
+.flip-card.is-flipped .flip-inner{transform:rotateY(180deg)}
 
 /* Mapbox popup theming (dark/gold) */
 .mapboxgl-popup-content{background:#141413;color:#F4F0E8;border:1px solid rgba(212,175,55,.4);border-radius:2px;padding:14px 16px;font-family:var(--font-inter),sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.5)}

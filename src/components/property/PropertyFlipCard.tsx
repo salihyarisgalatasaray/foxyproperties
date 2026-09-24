@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { useState, type MouseEvent } from "react";
 
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 
@@ -18,12 +20,28 @@ export type FlipItem = {
   prototype: boolean;
 };
 
+const isTouch = () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
 export function PropertyFlipCard({ p }: { p: FlipItem }) {
+  const [flipped, setFlipped] = useState(false);
+
+  // On touch devices, the first tap flips the card instead of navigating.
+  const onFront = (e: MouseEvent) => {
+    if (isTouch() && !flipped) {
+      e.preventDefault();
+      setFlipped(true);
+    }
+  };
+  // Tapping the back (outside the CTA) flips it back on touch.
+  const onBack = () => {
+    if (isTouch()) setFlipped(false);
+  };
+
   return (
-    <div data-testid={`property-card-${p.slug}`} className="flip-card h-[440px]">
+    <div data-testid={`property-card-${p.slug}`} className={`flip-card h-[440px] ${flipped ? "is-flipped" : ""}`}>
       <div className="flip-inner">
         {/* FRONT */}
-        <Link href={`/properties/${p.slug}`} className="flip-face flip-front block border border-white/10 bg-[#141413]">
+        <Link href={`/properties/${p.slug}`} onClick={onFront} className="flip-face flip-front block border border-white/10 bg-[#141413]">
           <div className="relative h-[62%] overflow-hidden bg-[radial-gradient(circle_at_70%_30%,#4b3a22,#1d1d1b_48%,#111)]">
             {p.image ? (
               <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
@@ -38,13 +56,13 @@ export function PropertyFlipCard({ p }: { p: FlipItem }) {
             <h2 className="display mt-2 text-2xl leading-tight">{p.title}</h2>
             <div className="mt-4 flex items-end justify-between border-t border-white/10 pt-4">
               <p className="text-lg">{gbp.format(p.price)}</p>
-              <span className="text-[10px] tracking-[.16em] text-white/45">HOVER FOR DETAILS</span>
+              <span className="text-[10px] tracking-[.16em] text-white/45">TAP · HOVER FOR DETAILS</span>
             </div>
           </div>
         </Link>
 
         {/* BACK */}
-        <div className="flip-face flip-back flex flex-col justify-between border border-[#D4AF37]/40 bg-[#161512] p-6">
+        <div onClick={onBack} className="flip-face flip-back flex flex-col justify-between border border-[#D4AF37]/40 bg-[#161512] p-6">
           <div>
             <p className="text-[11px] tracking-[.22em] text-[#D4AF37]">{p.area.toUpperCase()} · {p.listingType.toUpperCase()}</p>
             <h2 className="display mt-2 text-2xl leading-tight">{p.title}</h2>
@@ -56,7 +74,7 @@ export function PropertyFlipCard({ p }: { p: FlipItem }) {
             </dl>
             <p className="mt-5 text-xs capitalize text-white/55">{p.type} · {p.status.replaceAll("_", " ").toLowerCase()}</p>
           </div>
-          <Link href={`/properties/${p.slug}`} data-testid={`property-view-${p.slug}`} className="mt-6 block bg-[#D4AF37] px-6 py-4 text-center text-xs font-semibold tracking-[.16em] text-black">
+          <Link href={`/properties/${p.slug}`} data-testid={`property-view-${p.slug}`} onClick={(e) => e.stopPropagation()} className="mt-6 block bg-[#D4AF37] px-6 py-4 text-center text-xs font-semibold tracking-[.16em] text-black">
             VIEW PROPERTY →
           </Link>
         </div>
