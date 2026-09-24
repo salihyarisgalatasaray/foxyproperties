@@ -88,6 +88,9 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Mobile flip hint (tested iteration_22, 100%): subtle animated gold corner-peel with "TAP" label on the
+  FIRST /properties card only (hint={i===0}). CSS-gated to '@media (hover:none)' (hidden on desktop), removed once the
+  card is flipped, reduced-motion safe. Elements: .flip-hint (data-testid=flip-hint), cornerPeel keyframes.
 - [Jun 2026] Mobile tap-to-flip on property cards (tested iteration_21, 100% 4/4): PropertyFlipCard is now a client
   component — on touch (matchMedia '(hover:none)') the first tap flips (adds .is-flipped, no navigation), VIEW PROPERTY
   button navigates, tapping the back unflips. Desktop hover-flip + click-to-navigate unchanged (no regression).
