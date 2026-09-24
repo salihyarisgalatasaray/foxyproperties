@@ -50,6 +50,15 @@ a.bg-\[\#D4AF37\]:hover,button.bg-\[\#D4AF37\]:hover{background-position:92% 0;b
 @media (prefers-reduced-motion: reduce){.flip-inner{transition:none}.flip-card:hover .flip-inner,.flip-card:focus-within .flip-inner{transform:none}}
 .flip-card.is-flipped .flip-inner{transform:rotateY(180deg)}
 
+/* Mobile-only corner-peel hint on the first card */
+.flip-hint{position:absolute;top:0;right:0;z-index:6;width:60px;height:60px;pointer-events:none;display:none}
+@media (hover:none){.flip-card .flip-hint{display:block}}
+.flip-hint::before{content:"";position:absolute;top:0;right:0;border-style:solid;border-width:0 60px 60px 0;border-color:transparent #D4AF37 transparent transparent;transform-origin:top right;filter:drop-shadow(-4px 4px 5px rgba(0,0,0,.55));animation:cornerPeel 2.6s ease-in-out infinite}
+.flip-hint::after{content:"TAP";position:absolute;top:8px;right:6px;z-index:7;font-size:8px;letter-spacing:.12em;color:#0B0B0A;font-weight:700;animation:cornerPeelLabel 2.6s ease-in-out infinite}
+@keyframes cornerPeel{0%,72%,100%{transform:scale(1)}82%{transform:scale(1.18) translate(-2px,2px)}92%{transform:scale(1.05)}}
+@keyframes cornerPeelLabel{0%,72%,100%{opacity:.85;transform:translate(0,0)}82%{opacity:1;transform:translate(-1px,1px)}}
+@media (prefers-reduced-motion: reduce){.flip-hint::before,.flip-hint::after{animation:none}}
+
 /* Mapbox popup theming (dark/gold) */
 .mapboxgl-popup-content{background:#141413;color:#F4F0E8;border:1px solid rgba(212,175,55,.4);border-radius:2px;padding:14px 16px;font-family:var(--font-inter),sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.5)}
 .mapboxgl-popup-tip{border-top-color:#141413!important;border-bottom-color:#141413!important}

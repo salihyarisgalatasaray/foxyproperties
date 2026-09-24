@@ -22,7 +22,7 @@ export type FlipItem = {
 
 const isTouch = () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
-export function PropertyFlipCard({ p }: { p: FlipItem }) {
+export function PropertyFlipCard({ p, hint }: { p: FlipItem; hint?: boolean }) {
   const [flipped, setFlipped] = useState(false);
 
   // On touch devices, the first tap flips the card instead of navigating.
@@ -42,6 +42,7 @@ export function PropertyFlipCard({ p }: { p: FlipItem }) {
       <div className="flip-inner">
         {/* FRONT */}
         <Link href={`/properties/${p.slug}`} onClick={onFront} className="flip-face flip-front block border border-white/10 bg-[#141413]">
+          {hint && !flipped && <span className="flip-hint" data-testid="flip-hint" aria-hidden />}
           <div className="relative h-[62%] overflow-hidden bg-[radial-gradient(circle_at_70%_30%,#4b3a22,#1d1d1b_48%,#111)]">
             {p.image ? (
               <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />

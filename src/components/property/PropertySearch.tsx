@@ -67,8 +67,8 @@ export function PropertySearch() {
 
       {items.length ? (
         <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((p) => (
-            <PropertyFlipCard key={p.id} p={p} />
+          {items.map((p, i) => (
+            <PropertyFlipCard key={p.id} p={p} hint={i === 0} />
           ))}
         </div>
       ) : (
