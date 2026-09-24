@@ -88,6 +88,16 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] 3D visual features (tested iteration_19, 100% frontend, 0 errors):
+  (1) 3D card flip on /properties — `PropertyFlipCard.tsx` + CSS (perspective/preserve-3d/backface, hover rotateY,
+  touch+reduced-motion safe). Front: image/area/title/price; back: price, beds/baths/size, VIEW PROPERTY link.
+  (2) Multi-layer parallax — HomeHero headline+search drift at different GSAP scrub speeds; `ParallaxBackground.tsx`
+  adds subtle scroll parallax to all PageHero backgrounds (data-testid=parallax-bg).
+  (3) Mapbox GL JS 3D maps — `PropertyMap.tsx` (dark-v11, pitch 55, NavigationControl visualizePitch, fill-extrusion
+  3D buildings, gold markers + escaped popups -> /properties/<slug>). On /areas (all property pins), /areas/[slug]
+  (area+pins), /properties/[slug] (LOCATION single pin). Coords in lib/properties.ts; areaCenter() in lib/areas.ts.
+  Token set as NEXT_PUBLIC_MAPBOX_TOKEN in .env.local (client maps require NEXT_PUBLIC_ prefix; inlined at build —
+  rebuild if changed). Graceful fallback if missing. MAPBOX NO LONGER MOCKED.
 - [Jun 2026] Pipeline drag-and-drop: cards now move between status columns via native HTML5 DnD (columns are drop
   targets with onDragOver/onDrop -> moveTo; cards draggable with onDragStart + dataTransfer). Old ←/→ arrows removed.
   Kept a per-card "Move to" <select> fallback (pipeline-select-<id>) for touch/keyboard. Column highlights on hover-over,

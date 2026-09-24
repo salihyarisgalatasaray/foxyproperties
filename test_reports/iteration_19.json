@@ -1,0 +1,40 @@
+{
+  "summary": "Frontend-only test of 3 new 3D visual features: PropertyFlipCard hover flip on /properties, Mapbox GL 3D maps on /areas, /areas/chelsea and /properties/prototype-chelsea-residence, and PageHero parallax on / and /sell. All success criteria met: 3 results render, hover flip rotates .flip-inner to 180deg, back button + front anchor both link to /properties/<slug>, all three maps render mapboxgl-canvas with gold markers (3 on /areas, 1 on /areas/chelsea, 1 on property detail), popup on /areas contains VIEW PROPERTY link to /properties/prototype-chelsea-residence, no map-fallback shown, /sell has data-testid=parallax-bg, and no console errors on homepage or /sell.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/areas Mapbox popup", "issues": ["Popup title 'Chelsea Residence' visually overlaps the built-in mapbox '×' close button in the top-right of the popup (title text runs under/behind the close X). Consider adding right padding to the popup title or a wider popup max-width."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Optional/low) Adjust .mapboxgl-popup-content padding-right so the title doesn't collide with the close X."
+  ],
+  "critical_code_review_comments": [
+    "PropertyFlipCard: hover-flip verified via computed transform matrix3d(-1,...,-1,...) == rotateY(180deg). Front face and back CTA both point to /properties/<slug> — good.",
+    "PropertyMap: 3 markers on /areas, marker click opens a single popup with escaped HTML including a working /properties/<slug> anchor. No fallback triggered, meaning NEXT_PUBLIC_MAPBOX_TOKEN is correctly inlined at build time.",
+    "Only warnings surfaced were benign WebGL GPU-stall performance messages from the headless GL driver on /areas — not app errors.",
+    "NavigationControl: query for '.mapboxgl-ctrl-navigation' returned null in this Mapbox version (controls are '.mapboxgl-ctrl-group' containing zoom-in/zoom-out/compass). Visually the +/-/compass control is present (screenshot). Not a bug, just a selector-naming note for future tests."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "n/a (public pages only)",
+  "seed_data_creation": "None — used 3 seeded prototype properties returned by /api/properties.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "For Mapbox nav control assertion, use '.mapboxgl-ctrl-group' (with children .mapboxgl-ctrl-zoom-in / .mapboxgl-ctrl-zoom-out / .mapboxgl-ctrl-compass) rather than '.mapboxgl-ctrl-navigation'. Property flip is CSS-hover driven — must .hover() the .flip-card and read computed transform on the child .flip-inner (rotateY(180deg) => matrix3d with -1 in slots 0 and 10). Properties are client-fetched from /api/properties, so wait_for_selector('.flip-card') before asserting count. All three /properties/<slug>, /areas/<slug>, and /areas map instances share data-testid=property-map. Popup link testid is not set; select via '.mapboxgl-popup a[href^=\"/properties/\"]'.",
+  "test_results_detail": {
+    "properties_flip_card_count": "3 (matches results-count '3 RESULTS')",
+    "properties_hover_flip": "PASS (rotateY 180deg on hover)",
+    "properties_back_button_href": "/properties/prototype-chelsea-residence (correct)",
+    "properties_front_anchor_href": "/properties/prototype-chelsea-residence (correct)",
+    "areas_map_canvas_and_markers": "PASS (canvas + 3 gold markers, no fallback)",
+    "areas_marker_popup_link": "PASS (popup a -> /properties/prototype-chelsea-residence, text 'VIEW PROPERTY →')",
+    "areas_chelsea_map": "PASS (canvas + 1 marker, no fallback)",
+    "property_detail_map": "PASS (canvas + 1 marker, LOCATION heading present)",
+    "homepage_load_and_scroll": "PASS (no console errors after 2x viewport scroll)",
+    "sell_parallax_bg": "PASS (data-testid=parallax-bg present, no console errors)"
+  }
+}
