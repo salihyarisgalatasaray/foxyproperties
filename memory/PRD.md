@@ -49,6 +49,17 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ LEAD → CLIENT CONVERSION (2026-06, VERIFIED via curl + screenshot)
+- One-click convert a website lead into a CRM client record. Button lives ONLY on the lead detail
+  page (`/backoffice/leads/[id]`) via `components/backoffice/ConvertLeadButton.tsx` (testid lead-convert-button).
+- New endpoint `POST /api/backoffice/leads/[id]/convert` (leads:update): reads lead → inserts into `clients`
+  (full_name=name, phone, email, interest=rent if type∈{TENANT,LETTING,RENT} else buy, status=WARM,
+  notes=message + provenance, source_lead_id=lead.id) + activities CONVERTED_TO_CLIENT.
+- Lead is left UNCHANGED after conversion (per user). Duplicate conversion BLOCKED via unique index
+  `clients.source_lead_id` (migration 005) → returns 409 + existing clientId; UI shows "already converted".
+- Verified: first convert 201, second 409, client row created (interest=buy/WARM), detail page shows
+  green "Client record created" + VIEW IN CLIENTS when already converted.
+
 ## ✅ CINEMATIC POLISH — scene vignette + gold light seams (2026-06)
 - Added CSS `.scene-vignette` (soft inset darkening frame) + `.gold-seam-top/bottom` (thin gold line + radial bloom)
   to hero, West London, Interior and Finale for a filmic scene-to-scene flow. Pure CSS, no perf cost, no layout change.

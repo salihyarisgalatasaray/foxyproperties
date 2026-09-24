@@ -1,3 +1,46 @@
-import {notFound} from "next/navigation"; import {dbQuery} from "@/lib/db"; import type {LeadRow,ActivityRow} from "@/lib/crm/types";
-export const dynamic="force-dynamic";
-export default async function LeadDetail({params}:{params:Promise<{id:string}>}){const {id}=await params;let lead:LeadRow|undefined;let activity:ActivityRow[]=[];try{lead=(await dbQuery<LeadRow>(`SELECT id,type,source,status,name,email,phone,message,marketing_consent,created_at::text,updated_at::text FROM leads WHERE id=$1`,[id])).rows[0];activity=(await dbQuery<ActivityRow>(`SELECT id,action,metadata,created_at::text FROM activities WHERE entity_type='LEAD' AND entity_id=$1 ORDER BY created_at DESC`,[id])).rows}catch{}if(!lead)notFound();return <><p className="text-xs tracking-[.2em] text-neutral-500">LEAD DETAIL</p><h1 className="mt-2 font-serif text-4xl">{lead.name}</h1><div className="mt-8 grid gap-6 lg:grid-cols-2"><section className="rounded-xl bg-white p-6"><p>{lead.email}</p><p>{lead.phone||'No phone'}</p><p className="mt-4 text-sm text-neutral-500">{lead.type} · {lead.status} · {lead.source}</p>{lead.message&&<p className="mt-6 whitespace-pre-wrap">{lead.message}</p>}</section><section className="rounded-xl bg-white p-6"><h2 className="font-serif text-2xl">Activity</h2><div className="mt-5 space-y-5">{activity.map(a=><div key={a.id} className="border-l border-[#d4af37] pl-4"><p className="font-medium">{a.action}</p><p className="text-xs text-neutral-500">{new Date(a.created_at).toLocaleString('en-GB')}</p></div>)}</div></section></div></>}
+import { notFound } from "next/navigation";
+import { dbQuery } from "@/lib/db";
+import type { LeadRow, ActivityRow } from "@/lib/crm/types";
+import { ConvertLeadButton } from "@/components/backoffice/ConvertLeadButton";
+
+export const dynamic = "force-dynamic";
+
+export default async function LeadDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  let lead: LeadRow | undefined;
+  let activity: ActivityRow[] = [];
+  let convertedClientId: string | null = null;
+  try {
+    lead = (await dbQuery<LeadRow>(`SELECT id,type,source,status,name,email,phone,message,marketing_consent,created_at::text,updated_at::text FROM leads WHERE id=$1`, [id])).rows[0];
+    activity = (await dbQuery<ActivityRow>(`SELECT id,action,metadata,created_at::text FROM activities WHERE entity_type='LEAD' AND entity_id=$1 ORDER BY created_at DESC`, [id])).rows;
+    convertedClientId = (await dbQuery<{ id: string }>(`SELECT id FROM clients WHERE source_lead_id=$1`, [id])).rows[0]?.id ?? null;
+  } catch {}
+  if (!lead) notFound();
+
+  return (
+    <>
+      <p className="text-xs tracking-[.2em] text-neutral-500">LEAD DETAIL</p>
+      <h1 className="mt-2 font-serif text-4xl">{lead.name}</h1>
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <section className="rounded-xl bg-white p-6">
+          <p>{lead.email}</p>
+          <p>{lead.phone || "No phone"}</p>
+          <p className="mt-4 text-sm text-neutral-500">{lead.type} · {lead.status} · {lead.source}</p>
+          {lead.message && <p className="mt-6 whitespace-pre-wrap">{lead.message}</p>}
+          <ConvertLeadButton leadId={lead.id} initialClientId={convertedClientId} />
+        </section>
+        <section className="rounded-xl bg-white p-6">
+          <h2 className="font-serif text-2xl">Activity</h2>
+          <div className="mt-5 space-y-5">
+            {activity.map((a) => (
+              <div key={a.id} className="border-l border-[#d4af37] pl-4">
+                <p className="font-medium">{a.action}</p>
+                <p className="text-xs text-neutral-500">{new Date(a.created_at).toLocaleString("en-GB")}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
+  );
+}
