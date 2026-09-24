@@ -88,6 +88,10 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Mobile LIST|MAP tabs on /properties (tested iteration_24, 100%, 0 errors): below xl a view-tabs toggle
+  (view-tab-list / view-tab-map) switches between the card grid and the full-width 3D map; xl+ hides tabs and shows
+  both side-by-side. PropertyMap gained a resizeKey prop -> map.resize() when the (initially hidden) map becomes
+  visible, so the canvas sizes correctly (verified 350x574 on mobile after switch).
 - [Jun 2026] Card↔Map sync on /properties (tested iteration_23, 100%, 0 errors): added a sticky 3D PropertyMap sidebar
   (xl screens) beside the flip-card grid. Hovering/focusing a card highlights its map pin (gold glow ring + enlarged
   marker via PropertyMap.setActive/activeSlug, no camera jump); leaving the grid clears it; map markers stay in sync

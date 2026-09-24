@@ -1,0 +1,18 @@
+{
+  "summary": "Frontend-only test of /properties mobile LIST|MAP tab toggle. All acceptance criteria met: mobile shows view-tabs, LIST default with 3 flip cards, MAP tab reveals properly-sized 3D map (350x574 canvas) with 3 markers, LIST tab restores cards. Desktop (1600x1000) hides tabs and shows both card grid + map (400x640 canvas). Zero console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "PropertySearch mobile view-tabs (data-testid=view-tabs, view-tab-list, view-tab-map) working correctly. resizeKey prop causes map.resize() after tab switch; canvas becomes properly sized (~574px height). 3 markers render. results-count shows '3 RESULTS'. Desktop xl:hidden works - tabs hidden on 1600px viewport, both card grid and map visible side-by-side."
+}
