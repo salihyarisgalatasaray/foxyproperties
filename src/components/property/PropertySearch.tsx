@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import { PropertyFlipCard } from "./PropertyFlipCard";
 
 type Item = { id: string; slug: string; title: string; area: string; price: number; bedrooms: number; bathrooms: number; type: string; listingType: string; sizeSqft: number; status: string; image: string | null; prototype: boolean };
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
@@ -68,19 +68,7 @@ export function PropertySearch() {
       {items.length ? (
         <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {items.map((p) => (
-            <Link key={p.id} href={`/properties/${p.slug}`} data-testid={`property-card-${p.slug}`} className="group block overflow-hidden border border-white/10 bg-[#141413] transition-all duration-500 hover:border-[#D4AF37]/70 hover:shadow-[0_0_28px_rgba(212,175,55,.28)]">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_70%_30%,#4b3a22,#1d1d1b_48%,#111)]">
-                {p.image ? <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" /> : <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110 bg-[linear-gradient(135deg,transparent_20%,rgba(212,175,55,.12),transparent_70%)]" />}
-                <span className="absolute left-4 top-4 border border-[#D4AF37]/60 bg-black/60 px-3 py-2 text-[10px] tracking-[.18em] text-[#D4AF37]">{p.status.replaceAll("_", " ")}</span>
-                {p.prototype && <span className="absolute bottom-4 left-4 text-[10px] tracking-[.18em] text-white/60">PROTOTYPE · NOT A LIVE PROPERTY</span>}
-              </div>
-              <div className="p-5">
-                <p className="text-[11px] tracking-[.22em] text-[#D4AF37]">{p.area.toUpperCase()} · {p.listingType.toUpperCase()}</p>
-                <h2 className="display mt-2 text-2xl">{p.title}</h2>
-                <div className="mt-5 flex justify-between gap-4 border-t border-white/10 pt-4 text-sm text-white/65"><span>{p.bedrooms} BED · {p.bathrooms} BATH</span><span className="capitalize">{p.type}</span></div>
-                <div className="mt-4 flex items-end justify-between"><p className="text-lg">{gbp.format(p.price)}</p><span className="text-xs tracking-[.16em] text-[#D4AF37]">VIEW →</span></div>
-              </div>
-            </Link>
+            <PropertyFlipCard key={p.id} p={p} />
           ))}
         </div>
       ) : (

@@ -1,4 +1,5 @@
 type CTA = { label: string; href: string; primary?: boolean };
+import { ParallaxBackground } from "./ParallaxBackground";
 
 export function PageHero({
   eyebrow,
@@ -22,10 +23,7 @@ export function PageHero({
       data-testid="page-hero"
       className="relative flex min-h-[78vh] items-end overflow-hidden pt-[82px]"
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${image})` }}
-      />
+      <ParallaxBackground image={image} />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0A] via-[#0B0B0A]/55 to-[#0B0B0A]/25" />
       {concept && (
         <span className="absolute right-5 top-[100px] border border-white/25 bg-black/40 px-3 py-1 text-[9px] tracking-[.2em] text-white/70 backdrop-blur md:right-12">

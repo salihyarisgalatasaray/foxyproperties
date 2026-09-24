@@ -6,3 +6,5 @@ export const prototypeAreas: Area[] = [
  {name:"Fulham",slug:"fulham",region:"West London",borough:"Hammersmith and Fulham",description:"Prototype area content for the London Intelligence interface.",center:{lat:51.4749,lng:-0.2090}}
 ];
 export const getArea=(slug:string)=>prototypeAreas.find(a=>a.slug===slug);
+export const DEFAULT_CENTER={lat:51.4875,lng:-0.1687};
+export const areaCenter=(name:string)=>prototypeAreas.find(a=>a.name.toLowerCase()===name.toLowerCase())?.center ?? DEFAULT_CENTER;

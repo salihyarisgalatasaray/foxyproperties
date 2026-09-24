@@ -32,6 +32,8 @@ export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,6 +78,10 @@ export function HomeHero() {
           );
         }
         let onMove: ((e: PointerEvent) => void) | null = null;
+        // Multi-layer scroll parallax: headline and search drift up at different speeds for depth.
+        const st = { trigger: section, start: "top top", end: "bottom top" };
+        if (headlineRef.current) gsap.to(headlineRef.current, { y: -110, ease: "none", scrollTrigger: { ...st, scrub: 0.5 } });
+        if (searchRef.current) gsap.to(searchRef.current, { y: -46, ease: "none", scrollTrigger: { ...st, scrub: 1 } });
         if (isDesktop && imgWrapRef.current) {
           const qx = gsap.quickTo(imgWrapRef.current, "x", { duration: 1, ease: "power3.out" });
           const qy = gsap.quickTo(imgWrapRef.current, "y", { duration: 1, ease: "power3.out" });
@@ -124,6 +130,7 @@ export function HomeHero() {
       </div>
 
       <div className="relative z-10 mx-auto flex h-screen max-w-7xl flex-col justify-center px-5 pt-24 md:px-10">
+        <div ref={headlineRef} className="will-change-transform">
         <p className="foxy-fade-up text-[11px] tracking-[.4em] text-[#D4AF37]">LONDON PROPERTY · GLOBAL OPPORTUNITY.</p>
         <h1 className="foxy-fade-up display mt-6 max-w-4xl text-[2.7rem] leading-[1.02] sm:text-6xl lg:text-7xl xl:text-[5.2rem]">
           YOUR NEXT<br />PROPERTY DECISION<br /><span className="text-[#D4AF37]">STARTS HERE.</span>
@@ -139,7 +146,9 @@ export function HomeHero() {
             START YOUR JOURNEY
           </button>
         </div>
+        </div>
 
+        <div ref={searchRef} className="will-change-transform">
         <form onSubmit={submit} data-testid="hero-search" className="foxy-fade-up mt-12 w-full max-w-5xl border border-white/12 bg-black/55 p-3 backdrop-blur-md">
           <div className="flex flex-wrap gap-1 border-b border-white/10 pb-2">
             {TABS.map((t) => (
@@ -164,6 +173,7 @@ export function HomeHero() {
             </button>
           </div>
         </form>
+        </div>
       </div>
 
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5">
