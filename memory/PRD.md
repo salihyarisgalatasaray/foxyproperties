@@ -88,6 +88,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Areas heat layer (tested iteration_25, 100%, 0 errors): added a Mapbox heatmap ('foxy-heat' source+layer,
+  gold ramp) to the /areas 3D map with an OFF / DENSITY / LISTING VALUE control (AreasMapPanel.tsx), legend, and an
+  always-visible "ILLUSTRATIVE — activates when a dated source is connected" note (no fabricated market stats; weights
+  derived from current prototype listings). PropertyMap gained heatPoints + heatVisible props with setHeat/setHeatData
+  controller methods. Wired via propertyMapPoints() on /areas.
 - [Jun 2026] Mobile LIST|MAP tabs on /properties (tested iteration_24, 100%, 0 errors): below xl a view-tabs toggle
   (view-tab-list / view-tab-map) switches between the card grid and the full-width 3D map; xl+ hides tabs and shows
   both side-by-side. PropertyMap gained a resizeKey prop -> map.resize() when the (initially hidden) map becomes

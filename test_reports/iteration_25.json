@@ -1,0 +1,21 @@
+{
+  "summary": "Frontend-only test of /areas 3D map heat layer feature. Verified heat controls (OFF default active), DENSITY and LISTING VALUE toggle the legend on, OFF hides it. Source note always visible. Regression: 3 markers render, popup opens with /properties/<slug> link (/properties/prototype-chelsea-residence), and Chelsea/Kensington/Fulham cards present. Zero console errors across all interactions.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "PropertyMap useEffect dependency array omits heatVisible/heatPoints from init effect intentionally (controller applies via separate effects) — correct. However, since map re-inits on `points` change, this is fine.",
+    "The heatmap uses paint 'heatmap-opacity' curve that fades at zoom>=14 (0.9->0.35); at default areas view zoom this is acceptable but subtle. Non-blocking."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "AreasMapPanel heat feature works end-to-end. Default is OFF; DENSITY/PRICE both toggle 'foxy-heat' layer visibility and setHeatData via controller effects. Legend appears when mode!='off'. Source note always rendered. 3 markers wired with popup links to /properties/<slug>. No global map instance is exposed so layer visibility asserted indirectly via active button style + legend visibility; zero console errors confirmed."
+}
