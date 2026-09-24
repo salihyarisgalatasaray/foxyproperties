@@ -4,7 +4,14 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-pg_ctlcluster 15 main start >/dev/null 2>&1 || true
+pg_ctlcluster 15 main start >/dev/null 2>&1 || sudo -u postgres pg_ctlcluster 15 main start >/dev/null 2>&1 || true
+
+# Wait until Postgres actually accepts connections (avoids a boot race where
+# the runner proceeds before the cluster is ready and seeding silently fails).
+for i in $(seq 1 30); do
+  pg_isready -h localhost -p 5432 -q && break
+  sleep 1
+done
 
 DB_PASS=$(grep -E '^DATABASE_URL=' .env.local | sed -E 's|.*://[^:]+:([^@]+)@.*|\1|')
 
