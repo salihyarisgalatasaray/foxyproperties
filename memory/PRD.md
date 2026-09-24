@@ -88,6 +88,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Landlord Revenue Simulator: added SINGLE / COMPARE SERVICES mode toggle. Compare view shows Let only
+  (6%) vs Fully managed (12%) side-by-side (net/mo, net/yr, mgmt fee, retained %) plus a difference callout
+  (`sim-compare`, `sim-compare-letonly`, `sim-compare-managed`, `sim-compare-diff`). Refactored to a compute(fee)
+  helper; single-mode testids unchanged. Build OK; toggle verified rendering; math consistent (managed keeps ~£2,160
+  less/yr than let-only at default inputs = the extra mgmt fee).
 - [Jun 2026] Back Office pipeline for landlord/valuation leads: new `/backoffice/pipeline` page + client
   `src/components/backoffice/PipelineBoard.tsx` — 6-column kanban (leadStatuses) filtered to
   type IN (VALUATION,LANDLORD,MANAGEMENT,SWITCH,LETTING) OR source ILIKE 'LANDLORD%'; ←/→ move stage via existing
