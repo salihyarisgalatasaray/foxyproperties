@@ -22,7 +22,7 @@ export type FlipItem = {
 
 const isTouch = () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
-export function PropertyFlipCard({ p, hint }: { p: FlipItem; hint?: boolean }) {
+export function PropertyFlipCard({ p, hint, onActivate }: { p: FlipItem; hint?: boolean; onActivate?: (slug: string) => void }) {
   const [flipped, setFlipped] = useState(false);
 
   // On touch devices, the first tap flips the card instead of navigating.
@@ -38,7 +38,7 @@ export function PropertyFlipCard({ p, hint }: { p: FlipItem; hint?: boolean }) {
   };
 
   return (
-    <div data-testid={`property-card-${p.slug}`} className={`flip-card h-[440px] ${flipped ? "is-flipped" : ""}`}>
+    <div data-testid={`property-card-${p.slug}`} onMouseEnter={() => onActivate?.(p.slug)} onFocus={() => onActivate?.(p.slug)} className={`flip-card h-[440px] ${flipped ? "is-flipped" : ""}`}>
       <div className="flip-inner">
         {/* FRONT */}
         <Link href={`/properties/${p.slug}`} onClick={onFront} className="flip-face flip-front block border border-white/10 bg-[#141413]">

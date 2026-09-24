@@ -1,10 +1,26 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { PropertyFlipCard } from "./PropertyFlipCard";
+import { PropertyMap, type MapPoint } from "../map/PropertyMap";
 
 type Item = { id: string; slug: string; title: string; area: string; price: number; bedrooms: number; bathrooms: number; type: string; listingType: string; sizeSqft: number; status: string; image: string | null; prototype: boolean };
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 const PRICE_MAX = 5_000_000;
+
+const AREA_CENTERS: Record<string, { lat: number; lng: number }> = {
+  chelsea: { lat: 51.4875, lng: -0.1687 },
+  kensington: { lat: 51.5009, lng: -0.1938 },
+  fulham: { lat: 51.4749, lng: -0.209 },
+  "notting hill": { lat: 51.5095, lng: -0.2018 },
+  mayfair: { lat: 51.5107, lng: -0.1471 },
+};
+function hash(s: string) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+function pointFor(it: Item): MapPoint | null {
+  const c = AREA_CENTERS[it.area.trim().toLowerCase()];
+  if (!c) return null;
+  const h = hash(it.slug);
+  return { slug: it.slug, title: it.title, area: it.area, price: it.price, lat: c.lat + ((h % 7) - 3) * 0.0009, lng: c.lng + (((h >> 3) % 7) - 3) * 0.0012 };
+}
 
 export function PropertySearch() {
   const [all, setAll] = useState<Item[]>([]);
@@ -40,6 +56,9 @@ export function PropertySearch() {
   const reset = () => { setListing("all"); setArea(""); setBeds(0); setType(""); setMin(0); setMax(PRICE_MAX); };
   const fld = "bg-[#141413] px-4 py-3 text-xs tracking-[.12em] text-white outline-none focus:ring-1 focus:ring-[#D4AF37]";
 
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const mapPoints = useMemo(() => items.map(pointFor).filter((p): p is MapPoint => p !== null), [items]);
+
   return (
     <>
       <div className="mt-10 border-y border-white/10 py-6" data-testid="property-filters">
@@ -66,10 +85,20 @@ export function PropertySearch() {
       <p className="mt-6 text-xs tracking-[.15em] text-white/45" data-testid="results-count">{items.length} RESULT{items.length === 1 ? "" : "S"}</p>
 
       {items.length ? (
-        <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((p, i) => (
-            <PropertyFlipCard key={p.id} p={p} hint={i === 0} />
-          ))}
+        <div className="mt-6 grid gap-8 xl:grid-cols-[1fr_400px]">
+          <div className="grid gap-6 sm:grid-cols-2" onMouseLeave={() => setActiveSlug(null)}>
+            {items.map((p, i) => (
+              <PropertyFlipCard key={p.id} p={p} hint={i === 0} onActivate={setActiveSlug} />
+            ))}
+          </div>
+          {mapPoints.length > 0 && (
+            <div className="hidden xl:block">
+              <div className="sticky top-24">
+                <PropertyMap points={mapPoints} activeSlug={activeSlug} zoom={12} className="h-[640px]" />
+                <p className="mt-3 text-xs tracking-[.14em] text-white/45" data-testid="map-hint">HOVER A PROPERTY TO LOCATE IT · DRAG TO TILT & ROTATE</p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="mt-8 border border-white/10 p-10"><h2 className="display text-3xl">No matching properties.</h2><p className="mt-3 text-[#A7A29A]">Try adjusting the filters or price range.</p></div>
