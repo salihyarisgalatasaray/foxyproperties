@@ -1,0 +1,28 @@
+{
+  "summary": "Full E2E test of Back Office 5 modules: login at /admin-login OK, sidebar shows Dashboard/Appointments/Clients/Offers/Commissions/Leads/Valuations & Landlords. Dashboard KPIs render with all 5 data-testids (appts=1, hot=1, offers=0, commission=£0, leads=5). Appointments: month/week toggle + prev/next update appt-label; creating appointment for today via appt-form places it in appt-day-<today> as appt-item-*; status changes PENDING->CONFIRMED->COMPLETED persist after reload. Clients: create client via form, filter chips (all/hot/warm/cold) filter table and clients-count updates; row status select persists to HOT after reload. Offers: create offer via form, appears in offer-group-* / offer-row-*; offer-status change to NEGOTIATING and offer-counter notes both persist after reload. Commissions: total £, +NEW RECORD creates row (total rises from £0 to £38,250), date filter narrows (today only = £12,000/1 row), Clear resets, EXPORT CSV href=/api/backoffice/commissions?format=csv returns 200 text/csv with header row. Regression: /backoffice/leads and /backoffice/pipeline both 200. Zero console errors across all modules.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Commissions date filter (rapid successive changes)", "issue": "Race condition: filling from then to in quick succession can leave the last displayed total/rows stale (out-of-order fetch responses). Individual filter changes work correctly; API returns correct data (verified via curl). Not blocking. Consider AbortController / request seq guard in load().", "affected_selectors": ["commission-from","commission-to","commission-total"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Optional) Guard against out-of-order fetches in CommissionsManager.load (AbortController or ignore-if-stale flag) to prevent transient wrong totals on rapid date-range edits."
+  ],
+  "critical_code_review_comments": [
+    "AppointmentsBoard/OffersManager/ClientsManager/CommissionsManager all fetch on mount + reload after mutation — fine, but PATCH optimistic updates don't roll back on failure. Consider handling non-ok responses to avoid UI/DB drift.",
+    "commissions API POST computes commission_amount from Math.round(price*pct/100); OK for basic use. Consider persisting numeric currency as cents to avoid FP issues at scale.",
+    "OffersManager PATCH counter_notes triggers only onBlur when value differs — behaviour intentional but silent; no toast/feedback on save failure. Same for setStatus in Appointments/Clients.",
+    "Dashboard KPI queries wrapped in try/catch that swallows errors returning zeros — could hide real DB failures; consider surfacing an error banner instead of zeros."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ at /admin-login",
+  "seed_data_creation": "Created via UI: 1 appointment (client TEST_ClientA, property 'TEST Property 1', today 11:30, status COMPLETED), 1 client (TEST_Alice, status HOT), 1 offer (property 'TEST Property Offer', TEST_Alice, £750,000, NEGOTIATING, counter 'Counter at 760k'), 1 commission (TEST Property Comm, TEST_Alice, £800,000 @ 1.5% = £12,000, today). Safe to delete.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All 5 back office modules pass end-to-end with persistence and zero console errors. Only minor observation: rapid successive date filter edits on Commissions can display a stale total due to out-of-order fetch responses (API itself is correct, verified by curl). Nav gating works (admin sees all)."
+}

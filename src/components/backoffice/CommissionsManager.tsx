@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { type CommissionRow } from "@/lib/backoffice/types";
 
 const gbp = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
@@ -11,12 +11,14 @@ export function CommissionsManager({ propertyOptions }: { propertyOptions: strin
   const [to, setTo] = useState("");
   const [show, setShow] = useState(false);
   const [saving, setSaving] = useState(false);
+  const seq = useRef(0);
 
   const load = useCallback(() => {
     const q = new URLSearchParams();
     if (from) q.set("from", from);
     if (to) q.set("to", to);
-    fetch(`/api/backoffice/commissions?${q}`).then((r) => r.json()).then((d) => { setItems(d.items || []); setTotal(d.total || 0); });
+    const id = ++seq.current;
+    fetch(`/api/backoffice/commissions?${q}`).then((r) => r.json()).then((d) => { if (id === seq.current) { setItems(d.items || []); setTotal(d.total || 0); } });
   }, [from, to]);
   useEffect(() => { load(); }, [load]);
 

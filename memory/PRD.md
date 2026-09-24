@@ -88,6 +88,13 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Back office management system — 5 modules (tested iteration_26, 100% frontend + 100% backend):
+  migration 004 (clients, appointments, offers, commissions). (1) Appointments & Viewings — month/week calendar,
+  add form, status Pending/Confirmed/Completed/Cancelled (WhatsApp intentionally omitted per user). (2) Client CRM —
+  Hot/Warm/Cold, budget/areas/interest, status filters. (3) Offers & Negotiations — grouped per property, status +
+  counter notes. (4) Commission Tracker — date-range filter, running total, CSV export. (5) Dashboard KPI cards.
+  APIs /api/backoffice/{clients,appointments,offers,commissions} gated by leads:read/update & finance:read; nav links
+  added. Fixed a minor commissions date-filter race with a request-seq guard.
 - [Jun 2026] Areas heat layer (tested iteration_25, 100%, 0 errors): added a Mapbox heatmap ('foxy-heat' source+layer,
   gold ramp) to the /areas 3D map with an OFF / DENSITY / LISTING VALUE control (AreasMapPanel.tsx), legend, and an
   always-visible "ILLUSTRATIVE — activates when a dated source is connected" note (no fabricated market stats; weights
