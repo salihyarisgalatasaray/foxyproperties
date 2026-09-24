@@ -1,0 +1,35 @@
+{
+  "summary": "Frontend-only test of /backoffice/pipeline drag-and-drop replacement. Verified: login, board render with 6 columns + DnD hint, all 5 cards draggable=true, old fwd/back arrow buttons removed (0 present), SELECT fallback moves card NEW->CONTACTED with persistence after reload, native HTML5 DnD via dispatched dragstart/dragover/drop events moves card CONTACTED->QUALIFIED and persists after reload, filters/search/clear still function.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/backoffice/pipeline header", "issues": ["Stale copy: subtitle still reads 'Use the arrows to move a lead between stages.' although arrow buttons were removed and replaced by drag-and-drop. Update to reference drag-and-drop (or the existing pipeline-dnd-hint copy)."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Update the pipeline page subtitle copy to reflect drag-and-drop (currently still mentions 'arrows to move a lead between stages')."
+  ],
+  "critical_code_review_comments": [
+    "PipelineBoard.tsx uses HTML5 native DnD correctly (draggable, dragstart sets dataTransfer text/plain and effectAllowed=move, drop calls preventDefault and reads draggingId fallback to dataTransfer). Optimistic update + rollback on !res.ok is implemented. Consider awaiting res.json() and surfacing server error text; currently a generic 'Could not update this lead' is shown.",
+    "Minor: hint text is only shown when canUpdate; ensure non-editing viewers still get context that DnD is disabled (currently nothing shown)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ at /admin-login (from problem statement; /app/memory/test_credentials.md not consulted since same creds worked as prior iterations)",
+  "seed_data_creation": "None - used 5 seeded landlord/valuation leads. Card 6e572e46 (Daniel Weiss) used for move tests; returned to NEW at end.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Native HTML5 DnD in Playwright: locator.drag_to didn't exist on ElementHandle in this harness; used page.evaluate to dispatch DragEvent(dragstart/dragover/drop) with a shared DataTransfer on src+dst. This exercised the app's real onDragStart/onDrop handlers and PATCH persisted after reload. Card testids follow pipeline-card-<uuid>; per-card fallback select is pipeline-select-<uuid>. Columns: pipeline-col-{new,contacted,qualified,viewing,offer,completed}. Hint: pipeline-dnd-hint. Old pipeline-fwd-<id>/pipeline-back-<id> no longer render.",
+  "test_results_detail": {
+    "login": "PASS",
+    "board_render_6_columns_and_hint": "PASS",
+    "cards_draggable_true": "PASS (5/5)",
+    "old_arrow_buttons_removed": "PASS (0 fwd, 0 back)",
+    "select_fallback_move_and_persist": "PASS (NEW->CONTACTED, persisted after reload)",
+    "native_dnd_move_and_persist": "PASS via dispatched HTML5 DragEvent(s) (CONTACTED->QUALIFIED, persisted after reload)",
+    "filters_search_clear": "PASS (amelia -> 1 shown; clear -> 5 shown)"
+  }
+}

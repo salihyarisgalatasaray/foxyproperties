@@ -88,6 +88,11 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Pipeline drag-and-drop: cards now move between status columns via native HTML5 DnD (columns are drop
+  targets with onDragOver/onDrop -> moveTo; cards draggable with onDragStart + dataTransfer). Old ←/→ arrows removed.
+  Kept a per-card "Move to" <select> fallback (pipeline-select-<id>) for touch/keyboard. Column highlights on hover-over,
+  card dims while dragging. Tested (iteration_18): 100% frontend, native DnD + select fallback both persist after reload,
+  arrows gone, filters intact.
 - [Jun 2026] Pipeline quick filters + search added to `PipelineBoard.tsx`: text search (name/email/phone),
   type dropdown, source dropdown, live "N shown" count, Clear button. Filters applied client-side via useMemo;
   stage-move still works and filters persist through a move. Tested (iteration_17): 100% frontend, all filter
