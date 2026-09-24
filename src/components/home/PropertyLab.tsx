@@ -52,7 +52,7 @@ export function PropertyLab() {
                 </button>
               ))}
             </div>
-            <a href="/investment" data-testid="lab-open" className="group mt-8 inline-flex items-center gap-2 text-xs tracking-[.16em] text-[#D4AF37] transition-colors hover:text-white">
+            <a href="/investment#simulator" data-testid="lab-open" className="group mt-8 inline-flex items-center gap-2 text-xs tracking-[.16em] text-[#D4AF37] transition-colors hover:text-white">
               OPEN PROPERTY LAB <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>

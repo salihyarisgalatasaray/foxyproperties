@@ -21,7 +21,7 @@ export default function LandlordsPage() {
         image="https://images.pexels.com/photos/7642004/pexels-photo-7642004.jpeg?auto=compress&cs=tinysrgb&w=2000"
         concept
         ctas={[
-          { label: "GET A RENTAL VALUATION", href: "#valuation", primary: true },
+          { label: "GET A RENTAL VALUATION", href: "/landlords/rental-valuation", primary: true },
           { label: "EXPLORE MANAGEMENT", href: "/property-management" },
         ]}
       />

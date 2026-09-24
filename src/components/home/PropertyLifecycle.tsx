@@ -11,6 +11,7 @@ type Stage = {
   steps: string[];
   cta: string;
   href: string;
+  duration: string;
   Icon: typeof Home;
 };
 
@@ -23,6 +24,7 @@ const STAGES: Stage[] = [
     steps: ["Curated search & private viewings", "Offer strategy & negotiation", "Due diligence & legal coordination"],
     cta: "EXPLORE PROPERTIES",
     href: "/properties",
+    duration: "TYP. 8–12 WEEKS",
     Icon: Home,
   },
   {
@@ -33,6 +35,7 @@ const STAGES: Stage[] = [
     steps: ["Decision in principle", "Mortgage & bridging options", "Completion coordination"],
     cta: "EXPLORE MORTGAGES",
     href: "/mortgages",
+    duration: "TYP. 2–6 WEEKS",
     Icon: Landmark,
   },
   {
@@ -43,6 +46,7 @@ const STAGES: Stage[] = [
     steps: ["Rental valuation & marketing", "Tenant referencing & compliance", "Tenancy setup & move-in"],
     cta: "EXPLORE LETTINGS",
     href: "/lettings",
+    duration: "TYP. 1–3 WEEKS",
     Icon: KeyRound,
   },
   {
@@ -53,6 +57,7 @@ const STAGES: Stage[] = [
     steps: ["Rent collection & statements", "Proactive maintenance", "Inspections & renewals"],
     cta: "EXPLORE MANAGEMENT",
     href: "/property-management",
+    duration: "ONGOING",
     Icon: ShieldCheck,
   },
 ];
@@ -160,6 +165,7 @@ export function PropertyLifecycle() {
                     >
                       {st.label}
                     </span>
+                    <span className="mt-1 block text-[9px] tracking-[.18em] text-white/35">{st.duration}</span>
                   </span>
                 </button>
               );
@@ -170,7 +176,10 @@ export function PropertyLifecycle() {
         {/* Detail panel */}
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
           <div key={s.key} data-testid="lifecycle-detail" className="lifecycle-fade">
-            <h3 className="display text-3xl leading-tight md:text-4xl">{s.title}</h3>
+            <span data-testid="lifecycle-duration" className="inline-flex items-center gap-2 border border-[#D4AF37]/30 px-3 py-1.5 text-[10px] tracking-[.2em] text-[#D4AF37]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" /> {s.duration}
+            </span>
+            <h3 className="display mt-5 text-3xl leading-tight md:text-4xl">{s.title}</h3>
             <p className="mt-5 max-w-lg text-sm leading-7 text-[#C9C4BB] md:text-base">{s.copy}</p>
             <a
               href={s.href}

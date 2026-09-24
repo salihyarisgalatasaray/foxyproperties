@@ -16,7 +16,11 @@ const NAV: Nav[] = [
   { label: "HMO", href: "/#lab" },
   { label: "Sell", href: "/sell" },
   { label: "Let", href: "/lettings" },
-  { label: "Landlords", href: "/landlords" },
+  { label: "Landlords", href: "/landlords", children: [
+    { label: "Landlord Hub", href: "/landlords" },
+    { label: "Rental Valuation", href: "/landlords/rental-valuation" },
+    { label: "Compliance Centre", href: "/landlords/compliance" },
+  ] },
   { label: "Property Lab", href: "/#lab" },
   { label: "Mortgages", href: "/mortgages" },
   { label: "Areas", href: "/areas" },

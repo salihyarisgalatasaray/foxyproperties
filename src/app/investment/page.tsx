@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/navigation/SiteHeader";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PageHero } from "@/components/site/PageHero";
 import { JourneyRail } from "@/components/site/JourneyRail";
+import { LandlordRevenueSimulator } from "@/components/investment/LandlordRevenueSimulator";
 import { LeadForm } from "@/components/lead/LeadForm";
 
 export const metadata = {
@@ -42,7 +43,21 @@ export default function InvestmentPage() {
         ]}
       />
 
-      <section className="mx-auto max-w-6xl px-5 pb-24 md:px-12">
+      <section id="simulator" className="mx-auto max-w-6xl px-5 pb-8 pt-4 md:px-12">
+        <p className="text-xs tracking-[.3em] text-[#D4AF37]">LANDLORD REVENUE SIMULATOR</p>
+        <h2 className="display mt-5 max-w-3xl text-3xl leading-tight md:text-5xl">
+          SEE WHAT YOU COULD TAKE HOME.
+        </h2>
+        <p className="mt-6 max-w-2xl text-sm leading-7 text-[#A7A29A]">
+          Adjust rent, service level, voids and costs to model your estimated net rental income in
+          real time. Every figure is illustrative — confirmed only after a proper valuation.
+        </p>
+        <div className="mt-10">
+          <LandlordRevenueSimulator />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-24 pt-16 md:px-12">
         <div className="border border-[#D4AF37]/30 bg-[#141413] p-8 md:p-12">
           <p className="text-xs tracking-[.3em] text-[#D4AF37]">INVESTMENT CALCULATOR</p>
           <h2 className="display mt-5 text-3xl leading-tight md:text-4xl">
