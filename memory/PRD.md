@@ -88,6 +88,12 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Back Office pipeline for landlord/valuation leads: new `/backoffice/pipeline` page + client
+  `src/components/backoffice/PipelineBoard.tsx` — 6-column kanban (leadStatuses) filtered to
+  type IN (VALUATION,LANDLORD,MANAGEMENT,SWITCH,LETTING) OR source ILIKE 'LANDLORD%'; ←/→ move stage via existing
+  PATCH /api/backoffice/leads/[id]/status (leads:update guarded, optimistic + rollback). Nav link added in
+  backoffice layout (leads:read guarded). Verified: SSR board renders, unrelated leads excluded, PATCH persists
+  (NEW→CONTACTED), leads survive restart. Rental valuation journey feeds this pipeline (source=LANDLORD_VALUATION).
 - [Jun 2026] Phase B batch (4 items):
   (1) Rental Valuation journey `/landlords/rental-valuation` — 7-step interactive wizard
   (`src/components/landlord/RentalValuationJourney.tsx`) + progress bar; submits to /api/leads type=VALUATION,

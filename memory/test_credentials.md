@@ -11,3 +11,8 @@
 - `DATABASE_URL` in `/app/.env.local` → `postgresql://foxy:<pw>@localhost:5432/foxy`
 - Re-provision after a cluster reset: `bash /app/scripts/db-setup.sh`
 - Reset lead rate-limit during testing: `TRUNCATE request_limits;`
+
+## Seeded test leads (for /backoffice/pipeline demo)
+- 5 landlord/valuation leads inserted (Amelia Hartley, James Okoro, Priya Shah, Daniel Weiss, Sofia Marchetti)
+  across types VALUATION/SWITCH/MANAGEMENT/LETTING + 1 non-matching PROPERTY_ENQUIRY. Safe to delete.
+- Login path for Back Office when unauthenticated redirects to `/admin-login`.
