@@ -88,6 +88,10 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Mobile tap-to-flip on property cards (tested iteration_21, 100% 4/4): PropertyFlipCard is now a client
+  component — on touch (matchMedia '(hover:none)') the first tap flips (adds .is-flipped, no navigation), VIEW PROPERTY
+  button navigates, tapping the back unflips. Desktop hover-flip + click-to-navigate unchanged (no regression).
+  CSS '.flip-card.is-flipped .flip-inner' forces the flip regardless of hover.
 - [Jun 2026] Map building highlight + flyTo (tested iteration_20, 100% frontend, 0 console errors): PropertyMap now
   draws a gold ground 'spotlight' glow (foxy-glow source + fill/line layers) at the selected property, tints the
   selected building GOLD via feature-state on the foxy-3d-buildings fill-extrusion (case expression), and animates
