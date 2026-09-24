@@ -88,6 +88,18 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Phase B batch (4 items):
+  (1) Rental Valuation journey `/landlords/rental-valuation` — 7-step interactive wizard
+  (`src/components/landlord/RentalValuationJourney.tsx`) + progress bar; submits to /api/leads type=VALUATION,
+  source=LANDLORD_VALUATION (verified 201); no auto valuation figure (policy).
+  (2) Timeline durations on homepage PropertyLifecycle (per-stage duration label on node + `lifecycle-duration` chip).
+  (3) Landlord Revenue Simulator `src/components/investment/LandlordRevenueSimulator.tsx` on /investment#simulator
+  (sliders: rent/void/maintenance, service fee tabs 6/9/12%); PropertyLab `lab-open` now -> /investment#simulator.
+  Math verified (£3k rent, fully-managed -> £26,215 net/yr, £2,185/mo).
+  (4) Compliance Centre `/landlords/compliance` — Renters' Rights Act 2025 (England PRS), 8 change cards, checklist,
+  GOV.UK/legislation.gov.uk sources, JURISDICTION + SOURCES CHECKED 9 Jun 2026 + not-legal-advice disclaimer.
+  Nav: Landlords now a dropdown (Hub / Rental Valuation / Compliance Centre). NOTE: testing_agent timed out; verified
+  via SSR checks + curl (leads 201) + calc verification + screenshots.
 - [Jun 2026] Added interactive PropertyLifecycle timeline (`src/components/home/PropertyLifecycle.tsx`) between
   LifecycleJourney and FeaturedEditorial: 4 clickable nodes (ACQUIRE→/properties, FINANCE→/mortgages, LET→/lettings,
   MANAGE→/property-management) with lucide icons, gold progress line, per-node auto-advance progress ring (6s,
