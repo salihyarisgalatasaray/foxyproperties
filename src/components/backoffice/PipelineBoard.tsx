@@ -16,13 +16,31 @@ export function PipelineBoard({ initial, canUpdate }: { initial: LeadRow[]; canU
   const [leads, setLeads] = useState<LeadRow[]>(initial);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [q, setQ] = useState("");
+  const [typeFilter, setTypeFilter] = useState("ALL");
+  const [sourceFilter, setSourceFilter] = useState("ALL");
+
+  const types = useMemo(() => Array.from(new Set(initial.map((l) => l.type))).sort(), [initial]);
+  const sources = useMemo(() => Array.from(new Set(initial.map((l) => l.source))).sort(), [initial]);
+
+  const filtered = useMemo(() => {
+    const term = q.trim().toLowerCase();
+    return leads.filter((l) => {
+      if (typeFilter !== "ALL" && l.type !== typeFilter) return false;
+      if (sourceFilter !== "ALL" && l.source !== sourceFilter) return false;
+      if (term && !`${l.name} ${l.email} ${l.phone ?? ""}`.toLowerCase().includes(term)) return false;
+      return true;
+    });
+  }, [leads, q, typeFilter, sourceFilter]);
 
   const byStatus = useMemo(() => {
     const map: Record<string, LeadRow[]> = {};
     for (const s of leadStatuses) map[s] = [];
-    for (const l of leads) (map[l.status] ||= []).push(l);
+    for (const l of filtered) (map[l.status] ||= []).push(l);
     return map;
-  }, [leads]);
+  }, [filtered]);
+
+  const activeFilters = q.trim() !== "" || typeFilter !== "ALL" || sourceFilter !== "ALL";
 
   async function move(lead: LeadRow, dir: -1 | 1) {
     const idx = leadStatuses.indexOf(lead.status);
@@ -51,6 +69,52 @@ export function PipelineBoard({ initial, canUpdate }: { initial: LeadRow[]; canU
           {error}
         </p>
       )}
+
+      {/* Filters */}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search name, email or phone…"
+          data-testid="pipeline-search"
+          className="min-w-[220px] flex-1 rounded-lg border border-black/15 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#d4af37]"
+        />
+        <select
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
+          data-testid="pipeline-filter-type"
+          className="rounded-lg border border-black/15 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#d4af37]"
+        >
+          <option value="ALL">All types</option>
+          {types.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </select>
+        <select
+          value={sourceFilter}
+          onChange={(e) => setSourceFilter(e.target.value)}
+          data-testid="pipeline-filter-source"
+          className="rounded-lg border border-black/15 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#d4af37]"
+        >
+          <option value="ALL">All sources</option>
+          {sources.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+        <span data-testid="pipeline-filtered-count" className="text-xs text-neutral-500">
+          {filtered.length} shown
+        </span>
+        {activeFilters && (
+          <button
+            onClick={() => { setQ(""); setTypeFilter("ALL"); setSourceFilter("ALL"); }}
+            data-testid="pipeline-clear-filters"
+            className="rounded-lg border border-black/15 bg-white px-3 py-2.5 text-xs text-neutral-600 hover:border-[#d4af37]"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
       <div className="grid gap-4 overflow-x-auto pb-4 md:grid-flow-col md:auto-cols-[minmax(220px,1fr)]">
         {leadStatuses.map((s) => (
           <div key={s} data-testid={`pipeline-col-${s.toLowerCase()}`} className="rounded-xl border border-black/10 bg-black/[.02] p-3">
