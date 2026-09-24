@@ -88,6 +88,12 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Map building highlight + flyTo (tested iteration_20, 100% frontend, 0 console errors): PropertyMap now
+  draws a gold ground 'spotlight' glow (foxy-glow source + fill/line layers) at the selected property, tints the
+  selected building GOLD via feature-state on the foxy-3d-buildings fill-extrusion (case expression), and animates
+  camera.flyTo (zoom 16.2, pitch 62, bearing -28, 2.2s) on marker click / on load (selectedSlug or single-point).
+  Property detail passes selectedSlug so it auto-flies+highlights; /areas flies on marker click. LOCATION section
+  given id=location.
 - [Jun 2026] 3D visual features (tested iteration_19, 100% frontend, 0 errors):
   (1) 3D card flip on /properties — `PropertyFlipCard.tsx` + CSS (perspective/preserve-3d/backface, hover rotateY,
   touch+reduced-motion safe). Front: image/area/title/price; back: price, beds/baths/size, VIEW PROPERTY link.
