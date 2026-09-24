@@ -49,6 +49,12 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ WHATSAPP FLOATING BUTTON (2026-06, VERIFIED via screenshot)
+- Global floating WhatsApp button (bottom-right, every page) via `components/site/WhatsAppButton.tsx` mounted in root
+  layout. Green (#25D366), inline WhatsApp SVG icon, subtle `animate-ping` pulse ring, hover scale.
+- Number from env `NEXT_PUBLIC_WHATSAPP_NUMBER=+447751435737` (in .env.local; NEXT_PUBLIC so it inlines at build —
+  rebuild after change). Opens `https://wa.me/447751435737` (non-digits stripped). Hidden gracefully if unset.
+
 ## ✅ EN/TR LANGUAGE TOGGLE — i18n (2026-06, VERIFIED via screenshots + assertions)
 - Navbar EN · TR toggle (top-right, next to LOGIN/GET STARTED; also in mobile panel). `components/i18n/language.tsx`
   (LanguageProvider + useT + useLang + setLang + LanguageToggle). Preference saved to BOTH localStorage and a
