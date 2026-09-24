@@ -1,0 +1,29 @@
+{
+  "summary": "Frontend testing of Back Office pipeline board quick filters (search / type / source) and stage move persistence. All specified filter scenarios pass; count label updates correctly; Clear button appears when any filter is active and resets everything; forward-arrow stage move calls PATCH successfully and persists after reload; filters remain applied after move.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "admin@foxyproperty.co.uk / Sa281616@ at /admin-login",
+  "seed_data_creation": "None - used 5 seeded landlord/valuation leads (Amelia Hartley, James Okoro, Priya Shah, Daniel Weiss, Sofia Marchetti).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Pipeline board at /backoffice/pipeline works fully. Data-testids present: pipeline-board, pipeline-search, pipeline-filter-type, pipeline-filter-source, pipeline-filtered-count, pipeline-clear-filters, pipeline-card-<id>, pipeline-fwd-<id>. Verified: search 'amelia' -> 1 shown; type=VALUATION -> 2 shown (Amelia+James); source=LANDLORD_SWITCH -> 1 shown (Priya); Clear button appears+resets. Moving Amelia forward via pipeline-fwd persisted (NEW->CONTACTED) and filter stayed VALUATION during operation.",
+  "test_results_detail": {
+    "login": "PASS - redirects to /backoffice after login",
+    "board_render": "PASS - 6 columns, 5 cards initial",
+    "search_amelia": "PASS - 1 shown, only Amelia Hartley",
+    "search_clear": "PASS - 5 shown restored",
+    "type_valuation": "PASS - 2 shown (Amelia + James)",
+    "source_landlord_switch": "PASS - 1 shown (Priya)",
+    "clear_button_appearance": "PASS - appears when any filter active, resets all",
+    "stage_move_persist": "PASS - Amelia moved NEW->CONTACTED, filter (VALUATION) stayed applied, persisted after page reload"
+  }
+}

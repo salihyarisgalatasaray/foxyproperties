@@ -88,6 +88,12 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   image-led prototype cards) → Finale (terrace skyline, ABOUT/BOOK CTAs). Components in `src/components/home/`.
 - Diagonal clip-path section dividers; IntersectionObserver `Reveal` fade-ins; hero ken-burns; all reduced-motion safe.
 - `PropertySearch` now consumes intent(hmo/invest→buy)/beds/type from the hero query.
+- [Jun 2026] Pipeline quick filters + search added to `PipelineBoard.tsx`: text search (name/email/phone),
+  type dropdown, source dropdown, live "N shown" count, Clear button. Filters applied client-side via useMemo;
+  stage-move still works and filters persist through a move. Tested (iteration_17): 100% frontend, all filter
+  scenarios PASS (search amelia->1, type VALUATION->2, source LANDLORD_SWITCH->1, Clear resets, move persists).
+  NOTE: preview Postgres is ephemeral (pod recycles wipe leads); production DB is persistent. Re-seed for demo via
+  /app/memory/test_credentials.md instructions.
 - [Jun 2026] Landlord Revenue Simulator: added SINGLE / COMPARE SERVICES mode toggle. Compare view shows Let only
   (6%) vs Fully managed (12%) side-by-side (net/mo, net/yr, mgmt fee, retained %) plus a difference callout
   (`sim-compare`, `sim-compare-letonly`, `sim-compare-managed`, `sim-compare-diff`). Refactored to a compute(fee)
