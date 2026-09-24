@@ -16,3 +16,7 @@
 - 5 landlord/valuation leads inserted (Amelia Hartley, James Okoro, Priya Shah, Daniel Weiss, Sofia Marchetti)
   across types VALUATION/SWITCH/MANAGEMENT/LETTING + 1 non-matching PROPERTY_ENQUIRY. Safe to delete.
 - Login path for Back Office when unauthenticated redirects to `/admin-login`.
+
+## Back office management modules (migration 004)
+- Tables: clients, appointments, offers, commissions. Pages under /backoffice: appointments, clients, offers, commissions + dashboard KPIs. Nav gated: appointments/clients/offers -> leads:read; commissions -> finance:read.
+- Seed data inserted during testing (John Buyer client/appointment/offer/commission). Safe to delete.
