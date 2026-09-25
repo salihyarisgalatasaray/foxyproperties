@@ -361,6 +361,7 @@ export const TR: Record<string, string> = {
   "SEND ENQUIRY": "TALEP GÖNDER",
   "Message us": "Bize yazın",
   "EMAIL US": "BİZE E-POSTA GÖNDERİN",
+  "VISIT US": "BİZİ ZİYARET EDİN",
   "Terms & Conditions": "Şartlar ve Koşullar",
   "Privacy Policy": "Gizlilik Politikası",
   "Complaints Procedure": "Şikayet Prosedürü",

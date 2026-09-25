@@ -17,7 +17,8 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
         <a href="mailto:info@foxyproperties.co.uk" className="text-[#D4AF37] hover:text-white">
           info@foxyproperties.co.uk
         </a>
-        . By accessing or using this website, you agree to be bound by these Terms and Conditions.
+        . Our registered address is Unit 7A/2, West Road, Tottenham, London, N17 0QT. By accessing or
+        using this website, you agree to be bound by these Terms and Conditions.
       </>
     ),
   },

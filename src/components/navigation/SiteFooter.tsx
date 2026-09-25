@@ -60,6 +60,9 @@ export async function SiteFooter() {
             >
               info@foxyproperties.co.uk
             </a>
+            <p data-testid="footer-address" className="mt-4 max-w-xs text-sm leading-6 text-[#A7A29A]">
+              Unit 7A/2, West Road, Tottenham, London, N17 0QT
+            </p>
           </div>
           {COLS.map((col) => (
             <div key={col.title}>

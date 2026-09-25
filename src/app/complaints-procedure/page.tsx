@@ -82,6 +82,8 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
       <>
         <strong className="text-white">FOXY Properties Ltd</strong>
         <br />
+        Unit 7A/2, West Road, Tottenham, London, N17 0QT
+        <br />
         Email:{" "}
         <a href="mailto:info@foxyproperties.co.uk" className="text-[#D4AF37] hover:text-white">
           info@foxyproperties.co.uk
