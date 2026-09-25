@@ -68,3 +68,10 @@ a.bg-\[\#D4AF37\]:hover,button.bg-\[\#D4AF37\]:hover{background-position:92% 0;b
 .foxy-popup-link{display:inline-block;margin-top:10px;font-size:11px;letter-spacing:.14em;color:#0B0B0A;background:#D4AF37;padding:7px 12px;text-decoration:none}
 .mapboxgl-ctrl-group{background:#141413;border:1px solid rgba(212,175,55,.35)}
 .mapboxgl-ctrl-group button+button{border-top:1px solid rgba(212,175,55,.2)}
+
+@keyframes waHintIn {
+  0% { opacity: 0; transform: translateX(10px) scale(.9); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+.wa-hint { animation: waHintIn .4s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .wa-hint { animation: none; } }

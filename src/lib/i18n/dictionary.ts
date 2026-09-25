@@ -359,6 +359,7 @@ export const TR: Record<string, string> = {
   "Please check your details and try again.": "Lütfen bilgilerinizi kontrol edip tekrar deneyin.",
   "MAKE AN ENQUIRY": "TALEP OLUŞTURUN",
   "SEND ENQUIRY": "TALEP GÖNDER",
+  "Message us": "Bize yazın",
 
   // ---- Sell page ----
   "SELL WITH FOXY": "FOXY İLE SATIN",
