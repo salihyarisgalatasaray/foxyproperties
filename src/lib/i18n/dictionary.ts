@@ -362,6 +362,25 @@ export const TR: Record<string, string> = {
   "Message us": "Bize yazın",
   "EMAIL US": "BİZE E-POSTA GÖNDERİN",
   "VISIT US": "BİZİ ZİYARET EDİN",
+  "We value your privacy": "Gizliliğinize değer veriyoruz",
+  "We use necessary cookies to make our website work and we'd like to use other cookies to give you the most relevant experience. Click Accept all to agree to all cookies, or for more options click on Change Settings. For more information see our":
+    "Web sitemizin çalışması için gerekli çerezleri kullanıyoruz ve size en uygun deneyimi sunmak için diğer çerezleri de kullanmak istiyoruz. Tüm çerezleri kabul etmek için Tümünü Kabul Et'e tıklayın veya daha fazla seçenek için Ayarları Değiştir'e tıklayın. Daha fazla bilgi için bkz.",
+  "cookie policy": "çerez politikamız",
+  "ACCEPT ALL": "TÜMÜNÜ KABUL ET",
+  "CHANGE SETTINGS": "AYARLARI DEĞİŞTİR",
+  "Cookie Preferences": "Çerez Tercihleri",
+  "Necessary Cookies": "Gerekli Çerezler",
+  "Required to make the website work. These cannot be disabled.":
+    "Web sitesinin çalışması için gereklidir. Bunlar devre dışı bırakılamaz.",
+  "ALWAYS ON": "HER ZAMAN AÇIK",
+  "Analytics Cookies": "Analitik Çerezler",
+  "Help us understand how visitors use the site so we can improve it.":
+    "Siteyi geliştirebilmemiz için ziyaretçilerin siteyi nasıl kullandığını anlamamıza yardımcı olur.",
+  "Marketing Cookies": "Pazarlama Çerezleri",
+  "Used to show you more relevant property and market updates.":
+    "Size daha alakalı mülk ve piyasa güncellemeleri göstermek için kullanılır.",
+  "SAVE SETTINGS": "AYARLARI KAYDET",
+  "BACK": "GERİ",
   "Terms & Conditions": "Şartlar ve Koşullar",
   "Privacy Policy": "Gizlilik Politikası",
   "Complaints Procedure": "Şikayet Prosedürü",
