@@ -49,6 +49,16 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ LEAD EMAIL NOTIFICATION — Resend via Emergent proxy (2026-06, VERIFIED via curl 201 + proxy 202)
+- Every new website lead (`POST /api/leads`) triggers an email to `info@foxyproperties.co.uk` (env LEAD_NOTIFY_EMAIL).
+  Sender display name "FOXY Properties" (env EMAIL_FROM_NAME). `src/lib/email.ts` (sendEmail + notifyNewLead) POSTs
+  to `https://integrations.emergentagent.com/api/v1/email/send` with header `X-Email-Key` (env EMERGENT_EMAIL_KEY,
+  server-side only). Base URL hardcoded constant (survives deploy).
+- Compliant: recipient is server-side config (not caller input), body is a fixed HTML template with all lead fields
+  escaped, no forms/inputs/links. Non-blocking: email failure is caught+logged, lead still returns 201.
+- Env added to .env.local + frontend/.env + backend/.env: EMERGENT_EMAIL_KEY, EMAIL_FROM_NAME, LEAD_NOTIFY_EMAIL.
+  Note: works in preview now; will also work once the app is deployed on a Next.js-capable template.
+
 ## ✅ REBRAND "Foxy Property" → "Foxy Properties" + EMAIL (2026-06, VERIFIED via screenshots)
 - Site-wide rename of all brand instances (nav/footer/finale wordmarks split as FOXY + PROPERTIES spans, hero,
   every page body, page <title> metadata, legal "FOXY Properties Investors Ltd"). TR dictionary keys+values updated
