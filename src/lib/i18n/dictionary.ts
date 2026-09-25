@@ -363,6 +363,7 @@ export const TR: Record<string, string> = {
   "EMAIL US": "BİZE E-POSTA GÖNDERİN",
   "Terms & Conditions": "Şartlar ve Koşullar",
   "Privacy Policy": "Gizlilik Politikası",
+  "Complaints Procedure": "Şikayet Prosedürü",
 
   // ---- Sell page ----
   "SELL WITH FOXY": "FOXY İLE SATIN",

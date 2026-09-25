@@ -36,6 +36,7 @@ const COLS: { title: string; links: [string, string][] }[] = [
       ["Lettings", "/lettings"],
       ["Terms & Conditions", "/terms-and-conditions"],
       ["Privacy Policy", "/privacy-policy"],
+      ["Complaints Procedure", "/complaints-procedure"],
       ["Back Office", "/backoffice"],
     ],
   },
