@@ -34,6 +34,7 @@ const COLS: { title: string; links: [string, string][] }[] = [
       ["About FOXY", "/about"],
       ["Book a Consultation", "/contact"],
       ["Lettings", "/lettings"],
+      ["Terms & Conditions", "/terms-and-conditions"],
       ["Back Office", "/backoffice"],
     ],
   },

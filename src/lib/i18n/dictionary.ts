@@ -361,6 +361,7 @@ export const TR: Record<string, string> = {
   "SEND ENQUIRY": "TALEP GÖNDER",
   "Message us": "Bize yazın",
   "EMAIL US": "BİZE E-POSTA GÖNDERİN",
+  "Terms & Conditions": "Şartlar ve Koşullar",
 
   // ---- Sell page ----
   "SELL WITH FOXY": "FOXY İLE SATIN",
