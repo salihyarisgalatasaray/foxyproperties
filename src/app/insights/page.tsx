@@ -4,7 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "London Insights | FOXY Property",
+  title: "London Insights | FOXY Properties",
   description:
     "London property intelligence from FOXY. Verified market data is shown with its source, period and last-updated date.",
 };

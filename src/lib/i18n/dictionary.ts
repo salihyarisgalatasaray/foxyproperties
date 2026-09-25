@@ -24,8 +24,8 @@ export const TR: Record<string, string> = {
   "GET STARTED": "BAŞLAYIN",
 
   // ---- Footer ----
-  "FOXY Property Investors Ltd. Premium London property, investment, finance, lettings and management — considered properly.":
-    "FOXY Property Investors Ltd. Premium Londra gayrimenkulü, yatırım, finansman, kiralama ve yönetim — özenle ele alınır.",
+  "FOXY Properties Investors Ltd. Premium London property, investment, finance, lettings and management — considered properly.":
+    "FOXY Properties Investors Ltd. Premium Londra gayrimenkulü, yatırım, finansman, kiralama ve yönetim — özenle ele alınır.",
   "PROPERTY": "GAYRİMENKUL",
   "LANDLORDS": "EV SAHİPLERİ",
   "FINANCE & AREAS": "FİNANSMAN & BÖLGELER",
@@ -41,8 +41,8 @@ export const TR: Record<string, string> = {
   "Book a Consultation": "Danışma Randevusu Alın",
   "Lettings": "Kiralamalar",
   "Back Office": "Yönetim Paneli",
-  "FOXY Property Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.":
-    "FOXY Property Investors Ltd şu anda FCA yetkilendirmesine sahip değildir. Bu web sitesindeki hiçbir içerik finansal, mortgage, vergi veya hukuki tavsiye niteliği taşımaz. Gösterilen tüm yatırım, kira ve finansman rakamları yalnızca örnek tahminlerdir ve garanti edilmez.",
+  "FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.":
+    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir. Bu web sitesindeki hiçbir içerik finansal, mortgage, vergi veya hukuki tavsiye niteliği taşımaz. Gösterilen tüm yatırım, kira ve finansman rakamları yalnızca örnek tahminlerdir ve garanti edilmez.",
   "Prototype and concept imagery is used for demonstration and is clearly labelled; it does not represent live FOXY listings. Regulatory memberships, protection schemes and fees are displayed only once verified.":
     "Prototip ve konsept görseller gösterim amaçlı kullanılır ve açıkça etiketlenmiştir; gerçek FOXY ilanlarını temsil etmez. Düzenleyici üyelikler, koruma programları ve ücretler yalnızca doğrulandıktan sonra gösterilir.",
 
@@ -81,7 +81,7 @@ export const TR: Record<string, string> = {
   "MANAGE": "YÖNET",
 
   // ---- PropertyLab ----
-  "FOXY PROPERTY LAB": "FOXY MÜLK LABORATUVARI",
+  "FOXY PROPERTIES LAB": "FOXY MÜLK LABORATUVARI",
   "ONE PROPERTY.": "TEK MÜLK.",
   "MULTIPLE POSSIBILITIES.": "SAYISIZ OLASILIK.",
   "Compare strategies, explore potential and make informed decisions.":
@@ -247,7 +247,7 @@ export const TR: Record<string, string> = {
   "Try adjusting the filters or price range.": "Filtreleri veya fiyat aralığını değiştirmeyi deneyin.",
 
   // ---- Properties page ----
-  "FOXY PROPERTY": "FOXY GAYRİMENKUL",
+  "FOXY PROPERTIES": "FOXY GAYRİMENKUL",
   "SELECTED PROPERTIES.": "SEÇİLMİŞ MÜLKLER.",
   "Prototype records are clearly labelled; live listings are managed through the FOXY admin.":
     "Prototip kayıtlar açıkça etiketlenmiştir; gerçek ilanlar FOXY yönetim paneli üzerinden yönetilir.",
@@ -261,8 +261,8 @@ export const TR: Record<string, string> = {
 
   // ---- About page ----
   "LONDON PROPERTY, END TO END.": "UÇTAN UCA LONDRA GAYRİMENKULÜ.",
-  "FOXY Property Investors Ltd brings together buying, selling, investment, finance, lettings and management under one considered, premium approach.":
-    "FOXY Property Investors Ltd; alım, satım, yatırım, finansman, kiralama ve yönetimi tek bir özenli, premium yaklaşım altında bir araya getirir.",
+  "FOXY Properties Investors Ltd brings together buying, selling, investment, finance, lettings and management under one considered, premium approach.":
+    "FOXY Properties Investors Ltd; alım, satım, yatırım, finansman, kiralama ve yönetimi tek bir özenli, premium yaklaşım altında bir araya getirir.",
   "OUR APPROACH": "YAKLAŞIMIMIZ",
   "CONSIDERED, NOT GENERIC.": "ÖZENLİ, SIRADAN DEĞİL.",
   "FOXY exists to support every stage of the property journey in London — discover, buy, invest, finance, let, manage, monitor and sell — with one premium visual and service language rather than a set of disconnected products.":
@@ -271,8 +271,8 @@ export const TR: Record<string, string> = {
     "Bir mülkün bir rakamdan fazlası olduğuna inanıyoruz. Müşterilerin harekete geçmeden önce mülkü, konumu ve rakamları anlamalarına yardımcı olur ve rakamları vaat yerine örnek tahminler olarak sunarız.",
   "We do not publish invented statistics, testimonials, awards, partnerships or credentials. Regulatory memberships, protection schemes and fees are shown publicly only once verified details are in place.":
     "Uydurma istatistikler, referanslar, ödüller, ortaklıklar veya kimlik bilgileri yayınlamayız. Düzenleyici üyelikler, koruma programları ve ücretler yalnızca doğrulanmış bilgiler mevcut olduğunda kamuya açık olarak gösterilir.",
-  "FOXY Property Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.":
-    "FOXY Property Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve kendisini bağımsız mortgage danışmanı veya tüm piyasa aracısı olarak sunmaz. Bu sitedeki hiçbir içerik finansal, vergi veya hukuki tavsiye niteliği taşımaz.",
+  "FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.":
+    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve kendisini bağımsız mortgage danışmanı veya tüm piyasa aracısı olarak sunmaz. Bu sitedeki hiçbir içerik finansal, vergi veya hukuki tavsiye niteliği taşımaz.",
 
   // ---- Investment page ----
   "PROPERTY INVESTMENT": "GAYRİMENKUL YATIRIMI",
@@ -321,8 +321,8 @@ export const TR: Record<string, string> = {
   "FINANCE ENQUIRY": "FİNANSMAN TALEBİ",
   "MORTGAGE CALCULATOR": "KONUT KREDİSİ HESAPLAYICI",
   "Important:": "Önemli:",
-  "FOXY Property Investors Ltd is not currently FCA authorised and is not an independent mortgage adviser or a whole-of-market broker. Nothing here is financial advice. We can help you understand your options and, where appropriate, connect you with an authorised adviser.":
-    "FOXY Property Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve bağımsız bir mortgage danışmanı veya tüm piyasa aracısı değildir. Buradaki hiçbir şey finansal tavsiye değildir. Seçeneklerinizi anlamanıza yardımcı olabilir ve uygun olduğunda sizi yetkili bir danışmana yönlendirebiliriz.",
+  "FOXY Properties Investors Ltd is not currently FCA authorised and is not an independent mortgage adviser or a whole-of-market broker. Nothing here is financial advice. We can help you understand your options and, where appropriate, connect you with an authorised adviser.":
+    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve bağımsız bir mortgage danışmanı veya tüm piyasa aracısı değildir. Buradaki hiçbir şey finansal tavsiye değildir. Seçeneklerinizi anlamanıza yardımcı olabilir ve uygun olduğunda sizi yetkili bir danışmana yönlendirebiliriz.",
   "RESIDENTIAL": "KONUT",
   "Finance for the home you intend to live in. We help you understand your options and next steps.":
     "İçinde yaşamayı planladığınız ev için finansman. Seçeneklerinizi ve sonraki adımları anlamanıza yardımcı oluruz.",
@@ -353,13 +353,14 @@ export const TR: Record<string, string> = {
   "How can we help?": "Size nasıl yardımcı olabiliriz?",
   "I have read the privacy information and agree that FOXY may use these details to respond to my enquiry. This is separate from marketing consent.":
     "Gizlilik bilgilerini okudum ve FOXY'nin bu bilgileri talebime yanıt vermek için kullanabileceğini kabul ediyorum. Bu, pazarlama onayından ayrıdır.",
-  "I would also like to receive occasional FOXY property and market updates. I can unsubscribe at any time.":
+  "I would also like to receive occasional FOXY properties and market updates. I can unsubscribe at any time.":
     "Ayrıca zaman zaman FOXY gayrimenkul ve piyasa güncellemeleri almak istiyorum. İstediğim zaman abonelikten çıkabilirim.",
   "SENDING…": "GÖNDERİLİYOR…",
   "Please check your details and try again.": "Lütfen bilgilerinizi kontrol edip tekrar deneyin.",
   "MAKE AN ENQUIRY": "TALEP OLUŞTURUN",
   "SEND ENQUIRY": "TALEP GÖNDER",
   "Message us": "Bize yazın",
+  "EMAIL US": "BİZE E-POSTA GÖNDERİN",
 
   // ---- Sell page ----
   "SELL WITH FOXY": "FOXY İLE SATIN",

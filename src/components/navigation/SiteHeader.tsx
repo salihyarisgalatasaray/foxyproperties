@@ -48,7 +48,7 @@ export function SiteHeader() {
     >
       <a href="/" data-testid="nav-logo" className="leading-none">
         <span className="display block text-lg tracking-[.16em] text-[#D4AF37]">FOXY</span>
-        <span className="block text-[9px] tracking-[.4em] text-white/60">PROPERTY</span>
+        <span className="block text-[9px] tracking-[.4em] text-white/60">PROPERTIES</span>
       </a>
 
       <nav className="hidden items-center gap-5 text-[11px] tracking-[.1em] xl:flex">

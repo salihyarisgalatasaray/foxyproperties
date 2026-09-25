@@ -5,8 +5,8 @@ import { LeadForm } from "@/components/lead/LeadForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "Book a Consultation | FOXY Property",
-  description: "Book a consultation with FOXY Property — London property, investment, finance, lettings and management.",
+  title: "Book a Consultation | FOXY Properties",
+  description: "Book a consultation with FOXY Properties — London property, investment, finance, lettings and management.",
 };
 
 export default async function ContactPage() {
@@ -44,6 +44,16 @@ export default async function ContactPage() {
           <p className="mt-8 max-w-md text-xs leading-6 text-white/40">
             {t("We only request the information needed to respond. No advice, valuation or fee is provided through this form.")}
           </p>
+          <div className="mt-8 border-t border-white/10 pt-6">
+            <p className="text-[11px] tracking-[.2em] text-white/50">{t("EMAIL US")}</p>
+            <a
+              href="mailto:info@foxyproperties.co.uk"
+              data-testid="contact-email"
+              className="mt-2 inline-block text-sm text-[#D4AF37] transition-colors hover:text-white"
+            >
+              info@foxyproperties.co.uk
+            </a>
+          </div>
         </div>
         <LeadForm
           type="CONSULTATION"

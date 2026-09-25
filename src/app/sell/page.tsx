@@ -6,9 +6,9 @@ import { LeadForm } from "@/components/lead/LeadForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "Sell Your Property | FOXY Property",
+  title: "Sell Your Property | FOXY Properties",
   description:
-    "Thinking of selling in London? Understand your property before your next move with FOXY Property.",
+    "Thinking of selling in London? Understand your property before your next move with FOXY Properties.",
 };
 
 export default async function SellPage() {

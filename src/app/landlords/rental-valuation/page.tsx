@@ -4,7 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { RentalValuationJourney } from "@/components/landlord/RentalValuationJourney";
 
 export const metadata = {
-  title: "Rental Valuation | FOXY Property",
+  title: "Rental Valuation | FOXY Properties",
   description:
     "Start your interactive rental valuation journey. Tell us about your London property and a FOXY specialist will arrange a personalised, no-obligation rental valuation.",
 };

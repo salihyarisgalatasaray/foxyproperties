@@ -99,7 +99,7 @@ export function LeadForm({
         <input required type="checkbox" className="mt-1" data-testid={`${testid}-privacy`} />{t("I have read the privacy information and agree that FOXY may use these details to respond to my enquiry. This is separate from marketing consent.")}
       </label>
       <label className="flex gap-3 text-xs leading-5 text-white/45">
-        <input type="checkbox" name="marketing" className="mt-1" />{t("I would also like to receive occasional FOXY property and market updates. I can unsubscribe at any time.")}
+        <input type="checkbox" name="marketing" className="mt-1" />{t("I would also like to receive occasional FOXY properties and market updates. I can unsubscribe at any time.")}
       </label>
       <button
         type="submit"

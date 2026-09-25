@@ -48,8 +48,15 @@ export async function SiteFooter() {
           <div>
             <p className="display text-2xl tracking-[.14em] text-[#D4AF37]">FOXY</p>
             <p className="mt-4 max-w-xs text-sm leading-7 text-[#A7A29A]">
-              {t("FOXY Property Investors Ltd. Premium London property, investment, finance, lettings and management — considered properly.")}
+              {t("FOXY Properties Investors Ltd. Premium London property, investment, finance, lettings and management — considered properly.")}
             </p>
+            <a
+              href="mailto:info@foxyproperties.co.uk"
+              data-testid="footer-email"
+              className="mt-5 inline-block text-sm text-[#D4AF37] transition-colors hover:text-white"
+            >
+              info@foxyproperties.co.uk
+            </a>
           </div>
           {COLS.map((col) => (
             <div key={col.title}>
@@ -72,13 +79,13 @@ export async function SiteFooter() {
 
         <div className="mt-16 space-y-3 border-t border-white/10 pt-8 text-xs leading-6 text-white/40">
           <p>
-            {t("FOXY Property Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.")}
+            {t("FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.")}
           </p>
           <p>
             {t("Prototype and concept imagery is used for demonstration and is clearly labelled; it does not represent live FOXY listings. Regulatory memberships, protection schemes and fees are displayed only once verified.")}
           </p>
           <p className="pt-2 text-white/50">
-            © {new Date().getFullYear()} FOXY Property Investors Ltd · London, England
+            © {new Date().getFullYear()} FOXY Properties Investors Ltd · London, England
           </p>
         </div>
       </div>

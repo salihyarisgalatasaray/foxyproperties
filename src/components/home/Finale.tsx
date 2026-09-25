@@ -12,7 +12,7 @@ export async function Finale() {
         <Reveal>
           <div className="leading-none">
             <span className="display block text-3xl tracking-[.16em] text-[#D4AF37]">FOXY</span>
-            <span className="block text-[10px] tracking-[.42em] text-white/60">PROPERTY</span>
+            <span className="block text-[10px] tracking-[.42em] text-white/60">PROPERTIES</span>
           </div>
           <h2 className="display mt-8 text-4xl leading-[1.05] md:text-6xl">
             {t("MORE THAN A PROPERTY.")}<br />{t("A LONGER VIEW.")}

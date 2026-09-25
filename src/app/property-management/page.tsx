@@ -7,7 +7,7 @@ import { LeadForm } from "@/components/lead/LeadForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "Property Management | FOXY Property",
+  title: "Property Management | FOXY Properties",
   description: "Your property, our attention. Professional London property management with FOXY.",
 };
 

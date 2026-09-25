@@ -31,7 +31,7 @@ export function PropertyLab() {
           {/* Left: intro + strategy tabs */}
           <div>
             <p className="display text-2xl text-[#D4AF37]/70">06</p>
-            <p className="mt-3 text-[11px] tracking-[.4em] text-[#D4AF37]">{t("FOXY PROPERTY LAB")}</p>
+            <p className="mt-3 text-[11px] tracking-[.4em] text-[#D4AF37]">{t("FOXY PROPERTIES LAB")}</p>
             <h2 className="display mt-5 text-4xl leading-[1.05] md:text-5xl">{t("ONE PROPERTY.")}<br />{t("MULTIPLE POSSIBILITIES.")}</h2>
             <p className="mt-6 max-w-sm text-sm leading-7 text-[#A7A29A]">
               {t("Compare strategies, explore potential and make informed decisions.")}

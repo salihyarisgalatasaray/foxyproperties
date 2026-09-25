@@ -49,6 +49,13 @@ LANDLORD, TENANT, VALUATION, MANAGEMENT, SWITCH, MAINTENANCE, LETTING, CONSULTAT
   with drag-and-drop reorder + cover. Public `/properties` filters + slider. `/backoffice` leads/RBAC.
 - Calculators: `/calculators/mortgage`, `/calculators/buy-to-let`. Areas `/areas` + `/areas/[slug]`.
 
+## ✅ REBRAND "Foxy Property" → "Foxy Properties" + EMAIL (2026-06, VERIFIED via screenshots)
+- Site-wide rename of all brand instances (nav/footer/finale wordmarks split as FOXY + PROPERTIES spans, hero,
+  every page body, page <title> metadata, legal "FOXY Properties Investors Ltd"). TR dictionary keys+values updated
+  in lockstep. Back Office CommissionsManager "PROPERTY" table header left as-is (column label, not brand).
+- Company email `info@foxyproperties.co.uk` added (site had none before) as mailto in SiteFooter (footer-email)
+  and Contact page (contact-email). No outbound email templates exist in codebase (LeadForm → /api/leads only).
+
 ## ✅ WHATSAPP FLOATING BUTTON (2026-06, VERIFIED via screenshot)
 - Global floating WhatsApp button (bottom-right, every page) via `components/site/WhatsAppButton.tsx` mounted in root
   layout. Green (#25D366), inline WhatsApp SVG icon, subtle `animate-ping` pulse ring, hover scale.

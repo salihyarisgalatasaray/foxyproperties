@@ -4,9 +4,9 @@ import { PageHero } from "@/components/site/PageHero";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "About FOXY | FOXY Property",
+  title: "About FOXY | FOXY Properties",
   description:
-    "FOXY Property Investors Ltd — premium London property, investment, finance, lettings and management.",
+    "FOXY Properties Investors Ltd — premium London property, investment, finance, lettings and management.",
 };
 
 export default async function AboutPage() {
@@ -17,7 +17,7 @@ export default async function AboutPage() {
       <PageHero
         eyebrow="ABOUT FOXY"
         title="LONDON PROPERTY, END TO END."
-        intro="FOXY Property Investors Ltd brings together buying, selling, investment, finance, lettings and management under one considered, premium approach."
+        intro="FOXY Properties Investors Ltd brings together buying, selling, investment, finance, lettings and management under one considered, premium approach."
         image="https://images.pexels.com/photos/18252853/pexels-photo-18252853.jpeg?auto=compress&cs=tinysrgb&w=2000"
         concept
         ctas={[{ label: "BOOK A CONSULTATION", href: "/contact", primary: true }]}
@@ -41,7 +41,7 @@ export default async function AboutPage() {
         </div>
 
         <div className="mt-10 border border-white/15 bg-[#141413] p-6 text-xs leading-6 text-white/50">
-          {t("FOXY Property Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.")}
+          {t("FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.")}
         </div>
       </section>
 

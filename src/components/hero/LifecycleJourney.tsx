@@ -129,7 +129,7 @@ export function LifecycleJourney() {
     <section
       ref={sectionRef}
       data-testid="lifecycle-journey"
-      aria-label="The FOXY property lifecycle journey"
+      aria-label="The FOXY properties lifecycle journey"
       style={{ height: "760vh" }}
       className="relative bg-[#0B0B0A] text-white"
     >

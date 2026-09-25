@@ -5,7 +5,7 @@ import { LeadForm } from "@/components/lead/LeadForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "Mortgages & Property Finance | FOXY Property",
+  title: "Mortgages & Property Finance | FOXY Properties",
   description:
     "Property finance, properly considered. Residential, buy-to-let, remortgage and portfolio finance enquiries with FOXY.",
 };
@@ -52,7 +52,7 @@ export default async function MortgagesPage() {
 
       <section className="mx-auto max-w-6xl px-5 py-16 md:px-12">
         <div className="border border-white/15 bg-[#141413] p-5 text-xs leading-6 text-white/50">
-          <strong className="text-white/70">{t("Important:")}</strong> {t("FOXY Property Investors Ltd is not currently FCA authorised and is not an independent mortgage adviser or a whole-of-market broker. Nothing here is financial advice. We can help you understand your options and, where appropriate, connect you with an authorised adviser.")}
+          <strong className="text-white/70">{t("Important:")}</strong> {t("FOXY Properties Investors Ltd is not currently FCA authorised and is not an independent mortgage adviser or a whole-of-market broker. Nothing here is financial advice. We can help you understand your options and, where appropriate, connect you with an authorised adviser.")}
         </div>
       </section>
 

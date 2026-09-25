@@ -7,7 +7,7 @@ import { LeadForm } from "@/components/lead/LeadForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
-  title: "Property Investment | FOXY Property",
+  title: "Property Investment | FOXY Properties",
   description:
     "Strategic London property investment. Understand purchase, finance, rent, costs and estimated yield — illustrative, never guaranteed.",
 };

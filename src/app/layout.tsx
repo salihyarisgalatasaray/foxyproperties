@@ -9,7 +9,7 @@ import { LanguageProvider } from "../components/i18n/language";
 import { LANG_COOKIE, type Lang } from "../lib/i18n";
 const inter = Inter({ subsets:["latin"], variable:"--font-inter" });
 const playfair = Playfair_Display({ subsets:["latin"], variable:"--font-display" });
-export const metadata: Metadata = { title:"FOXY PROPERTY INVESTORS LTD", description:"London property. Strategic investment. Long-term thinking." };
+export const metadata: Metadata = { title:"FOXY PROPERTIES INVESTORS LTD", description:"London property. Strategic investment. Long-term thinking." };
 export default async function RootLayout({children}:{children:React.ReactNode}) {
   const lang: Lang = (await cookies()).get(LANG_COOKIE)?.value === "tr" ? "tr" : "en";
   return <html lang={lang}><body className={`${inter.variable} ${playfair.variable}`}><LanguageProvider lang={lang}><RouteTransition>{children}</RouteTransition><ScrollReveal/><WhatsAppButton/></LanguageProvider></body></html>;

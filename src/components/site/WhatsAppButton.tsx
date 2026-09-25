@@ -63,7 +63,7 @@ export function WhatsAppButton() {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with FOXY Property on WhatsApp"
+        aria-label="Chat with FOXY Properties on WhatsApp"
         data-testid="whatsapp-button"
         onClick={dismissHint}
         className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-[0_8px_24px_rgba(37,211,102,.45)] transition-transform duration-300 hover:scale-110"

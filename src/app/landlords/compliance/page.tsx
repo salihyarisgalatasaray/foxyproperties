@@ -3,7 +3,7 @@ import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PageHero } from "@/components/site/PageHero";
 
 export const metadata = {
-  title: "Compliance Centre — Renters' Rights Act 2025 | FOXY Property",
+  title: "Compliance Centre — Renters' Rights Act 2025 | FOXY Properties",
   description:
     "A plain-English landlord guide to the Renters' Rights Act 2025 (England): the end of Section 21, periodic tenancies, rent increases, the pets right, the Decent Homes Standard, the database and the Ombudsman.",
 };
