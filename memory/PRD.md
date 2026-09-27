@@ -1,5 +1,21 @@
 # FOXY Property MASTER PLATFORM V2 — PRD & Working Notes
 
+## ✅ CINEMATIC OPENING — scroll-scrubbed 3-chapter hero (2026-06, VERIFIED via screenshots)
+- Rebuilt HomeHero into a sticky, scroll-position-driven 3-chapter sequence (London → West London → Inside),
+  native scroll (no lock), rAF-throttled, advance/reverse/hold on scroll. Crossfade + restrained scroll-linked scale.
+  Discreet 3-dot chapter indicator (replaced 8-scene rail). One headline group visible at a time. Localized
+  bottom+left gradients only (removed heavy full overlays); smaller headings. Search shortcut in chapter 1; full
+  Buy/Rent/Invest panel moved to a spacious #search section right after. Reduced-motion → static chapter-1 hero.
+  FIX: removed `overflow-x-hidden` on home <main> (was breaking position:sticky, caused black frames).
+- HONEST ASSET STATUS: NOT true video scrubbing / rendered frame-sequence — no genuine 4K footage/frame sequences
+  available in project or via tools. Uses genuine high-res STILL photographs with scroll-scrubbed crossfades.
+  Actual dims: hero.jpg 3840×2339 (true 4K width), west.jpg 2560×1717, interior.jpg 2560×1717.
+  REMAINING FOOTAGE for real scrubbing: 4–6s stabilised 3840×2160 clips (or rendered image sequences) per chapter
+  — (1) slow Thames/skyline, (2) West London period-street reveal, (3) restrained interior push-in — + 1080p +
+  mobile crops. Text stays HTML/SVG overlays.
+- Deferred: editorial re-layout of Property Lab / Invest·Finance·Let·Manage sections (not changed this pass).
+
+
 ## Original problem statement (V2)
 Transform the existing FOXY Property app into a premium end-to-end London property platform:
 DISCOVER → BUY → INVEST → FINANCE → LET → MANAGE → MONITOR → SELL. Serve buyers, sellers,

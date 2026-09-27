@@ -11,7 +11,7 @@ import { Finale } from "../components/home/Finale";
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden bg-[#0B0B0A]">
+    <main className="bg-[#0B0B0A]">
       <SiteHeader />
       <HomeHero />
       <WestLondon />
