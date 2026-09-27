@@ -15,11 +15,15 @@ const PRICE: Record<string, [string, string]> = {
 
 type Chapter = {
   img: string;
+  video?: string;
   alt: string;
   eyebrow: string;
   title: React.ReactNode;
   ctas: React.ReactNode;
 };
+
+// Home clips served from Object Storage through the /api/media read-through.
+const V = (n: string) => `/api/media/foxy-property/home/${n}`;
 
 export function HomeHero() {
   const router = useRouter();
@@ -85,6 +89,7 @@ export function HomeHero() {
   const CHAPTERS: Chapter[] = [
     {
       img: "/home/hero.jpg",
+      video: V("clip-london.mp4"),
       alt: "London skyline and the Thames at late-afternoon light",
       eyebrow: t("LONDON PROPERTY · GLOBAL OPPORTUNITY."),
       title: (
@@ -112,6 +117,7 @@ export function HomeHero() {
     },
     {
       img: "/home/west.jpg",
+      video: V("clip-west.mp4"),
       alt: "Elegant West London period residential street",
       eyebrow: t("WEST LONDON"),
       title: (
@@ -129,6 +135,7 @@ export function HomeHero() {
     },
     {
       img: "/home/interior.jpg",
+      video: V("clip-interior.mp4"),
       alt: "Refined London residence interior in natural daylight",
       eyebrow: t("INSIDE THE PROPERTY"),
       title: (
@@ -154,20 +161,35 @@ export function HomeHero() {
       {CHAPTERS.map((c, i) => {
         const layer = reduced ? (i === 0 ? 1 : 0) : Math.max(0, 1 - Math.abs(s - i));
         const local = reduced ? 0 : Math.min(Math.max(s - i + 0.5, 0), 1); // 0..1 within neighbourhood
+        const objPos = i === 2 ? "50% 55%" : "50% 45%";
+        const transform = reduced ? "scale(1.03)" : `scale(${1.04 + local * 0.05})`;
         return (
           <div key={c.img} className="absolute inset-0 will-change-[opacity]" style={{ opacity: layer }}>
-            <img
-              src={c.img}
-              alt={c.alt}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              loading="eager"
-              decoding="async"
-              className="h-full w-full object-cover"
-              style={{
-                objectPosition: i === 2 ? "50% 55%" : "50% 45%",
-                transform: reduced ? "scale(1.03)" : `scale(${1.04 + local * 0.05})`,
-              }}
-            />
+            {!reduced && c.video ? (
+              <video
+                src={c.video}
+                poster={c.img}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload={i === 0 ? "auto" : "metadata"}
+                aria-label={c.alt}
+                data-testid={`hero-video-${i}`}
+                className="h-full w-full object-cover"
+                style={{ objectPosition: objPos, transform }}
+              />
+            ) : (
+              <img
+                src={c.img}
+                alt={c.alt}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                loading="eager"
+                decoding="async"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: objPos, transform }}
+              />
+            )}
           </div>
         );
       })}
