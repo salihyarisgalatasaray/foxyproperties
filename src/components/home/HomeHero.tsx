@@ -89,7 +89,7 @@ export function HomeHero() {
   const CHAPTERS: Chapter[] = [
     {
       img: "/home/hero.jpg",
-      video: V("clip-london.mp4"),
+      video: V("clip-hero.mp4"),
       alt: "London skyline and the Thames at late-afternoon light",
       eyebrow: t("LONDON PROPERTY · GLOBAL OPPORTUNITY."),
       title: (

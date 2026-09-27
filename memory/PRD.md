@@ -305,6 +305,8 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
   Object Storage under `foxy-property/home/clip-{london,west,interior}.mp4` (one-time uploader:
   `scripts/upload_home_clips.py`).
 - `/api/media/[...path]` now supports HTTP Range (206 Partial Content, Accept-Ranges) so `<video>` can seek.
+- Chapter 0 hero clip swapped to a user-picked Pexels clip (id 3568719, dusk London skyline + Thames),
+  uploaded as `foxy-property/home/clip-hero.mp4` (new filename busts the immutable CDN cache).
 - `HomeHero.tsx`: each chapter now plays its clip as a muted/looping/autoplay background video
   (served via `/api/media/...`), image kept as poster + reduced-motion fallback.
 - Verified: uploads OK; `/api/media` 200 full + 206 range via proxy (8001); hero video renders live on preview.
