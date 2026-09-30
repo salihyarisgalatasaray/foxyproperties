@@ -361,6 +361,7 @@ export const TR: Record<string, string> = {
   "SEND ENQUIRY": "TALEP GÖNDER",
   "Message us": "Bize yazın",
   "EMAIL US": "BİZE E-POSTA GÖNDERİN",
+  "CALL US": "BİZİ ARAYIN",
   "VISIT US": "BİZİ ZİYARET EDİN",
   "We value your privacy": "Gizliliğinize değer veriyoruz",
   "We use necessary cookies to make our website work and we'd like to use other cookies to give you the most relevant experience. Click Accept all to agree to all cookies, or for more options click on Change Settings. For more information see our":

@@ -60,6 +60,13 @@ export async function SiteFooter() {
             >
               info@foxyproperties.co.uk
             </a>
+            <a
+              href="tel:+442080929196"
+              data-testid="footer-phone"
+              className="mt-4 block text-sm text-[#D4AF37] transition-colors hover:text-white"
+            >
+              0208 092 9196
+            </a>
             <p data-testid="footer-address" className="mt-4 max-w-xs text-sm leading-6 text-[#A7A29A]">
               Unit 7A/2, West Road, Tottenham, London, N17 0QT
             </p>

@@ -53,6 +53,14 @@ export default async function ContactPage() {
             >
               info@foxyproperties.co.uk
             </a>
+            <p className="mt-5 text-[11px] tracking-[.2em] text-white/50">{t("CALL US")}</p>
+            <a
+              href="tel:+442080929196"
+              data-testid="contact-phone"
+              className="mt-2 inline-block text-sm text-[#D4AF37] transition-colors hover:text-white"
+            >
+              0208 092 9196
+            </a>
             <p className="mt-5 text-[11px] tracking-[.2em] text-white/50">{t("VISIT US")}</p>
             <p data-testid="contact-address" className="mt-2 text-sm leading-6 text-[#A7A29A]">
               Unit 7A/2, West Road, Tottenham, London, N17 0QT
