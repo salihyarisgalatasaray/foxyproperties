@@ -43,9 +43,6 @@ export const TR: Record<string, string> = {
   "Back Office": "Yönetim Paneli",
   "FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.":
     "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir. Bu web sitesindeki hiçbir içerik finansal, mortgage, vergi veya hukuki tavsiye niteliği taşımaz. Gösterilen tüm yatırım, kira ve finansman rakamları yalnızca örnek tahminlerdir ve garanti edilmez.",
-  "Prototype and concept imagery is used for demonstration and is clearly labelled; it does not represent live FOXY listings. Regulatory memberships, protection schemes and fees are displayed only once verified.":
-    "Prototip ve konsept görseller gösterim amaçlı kullanılır ve açıkça etiketlenmiştir; gerçek FOXY ilanlarını temsil etmez. Düzenleyici üyelikler, koruma programları ve ücretler yalnızca doğrulandıktan sonra gösterilir.",
-
   // ---- Shared UI ----
   "CONCEPT IMAGERY · NOT A LIVE LISTING": "KONSEPT GÖRSEL · GERÇEK BİR İLAN DEĞİLDİR",
   "EXPLORE": "KEŞFET",

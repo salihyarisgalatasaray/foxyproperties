@@ -94,9 +94,6 @@ export async function SiteFooter() {
           <p>
             {t("FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.")}
           </p>
-          <p>
-            {t("Prototype and concept imagery is used for demonstration and is clearly labelled; it does not represent live FOXY listings. Regulatory memberships, protection schemes and fees are displayed only once verified.")}
-          </p>
           <p className="pt-2 text-white/50">
             © {new Date().getFullYear()} FOXY Properties Investors Ltd · London, England
           </p>
