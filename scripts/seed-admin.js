@@ -18,18 +18,28 @@ loadEnv();
 const email = process.env.ADMIN_EMAIL || "admin@foxyproperty.co.uk";
 const password = process.env.ADMIN_PASSWORD || "Sa281616@";
 
+// Additional fixed back-office admins (seeded on every boot so they survive
+// the ephemeral preview DB being rebuilt).
+const extraAdmins = [
+  { email: "yaris@credys.co.uk", name: "Yaris", password: "Sa281616@" },
+];
+
 (async () => {
   const c = new Client({ connectionString: process.env.DATABASE_URL });
   await c.connect();
-  const hash = await bcrypt.hash(password, 12);
-  await c.query(
-    `INSERT INTO backoffice_users(email,name,password_hash,role,active)
-     VALUES($1,$2,$3,'ADMIN',true)
-     ON CONFLICT(email) DO UPDATE
-       SET password_hash=EXCLUDED.password_hash, role='ADMIN', active=true`,
-    [email, "FOXY Admin", hash]
-  );
-  console.log("admin seeded:", email);
+  const seed = async (em, nm, pw) => {
+    const hash = await bcrypt.hash(pw, 12);
+    await c.query(
+      `INSERT INTO backoffice_users(email,name,password_hash,role,active)
+       VALUES($1,$2,$3,'ADMIN',true)
+       ON CONFLICT(email) DO UPDATE
+         SET password_hash=EXCLUDED.password_hash, role='ADMIN', active=true`,
+      [em, nm, hash]
+    );
+    console.log("admin seeded:", em);
+  };
+  await seed(email, "FOXY Admin", password);
+  for (const a of extraAdmins) await seed(a.email, a.name, a.password);
   await c.end();
 })().catch((e) => {
   console.error("seed-admin failed:", e.message);
