@@ -58,7 +58,7 @@ export function EnquiriesManager() {
                   </button>
                 </td>
               </tr>
-              {notesFor === e.id && <tr><td colSpan={8} className="border-t border-black/5 p-0"><EnquiryNotes enquiryId={e.id} onAdded={() => setItems((xs) => xs.map((x) => (x.id === e.id ? { ...x, notes_count: x.notes_count + 1 } : x)))} /></td></tr>}
+              {notesFor === e.id && <tr><td colSpan={8} className="border-t border-black/5 p-0"><EnquiryNotes enquiry={e} onAdded={() => setItems((xs) => xs.map((x) => (x.id === e.id ? { ...x, notes_count: x.notes_count + 1 } : x)))} /></td></tr>}
             </Fragment>))}
             {rows.length === 0 && <tr><td colSpan={8} className="p-8 text-center text-neutral-400">No enquiries yet.</td></tr>}
           </tbody>

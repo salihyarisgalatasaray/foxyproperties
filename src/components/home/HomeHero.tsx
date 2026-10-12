@@ -116,9 +116,9 @@ export function HomeHero() {
       ),
     },
     {
-      img: "/home/west.jpg",
-      video: V("clip-west.mp4"),
-      alt: "Elegant West London period residential street",
+      img: "/home/chapter2.jpg",
+      video: V("clip-chapter2.mp4"),
+      alt: "Busy high street junction at Ealing Broadway, West London",
       eyebrow: t("WEST LONDON"),
       title: (
         <>

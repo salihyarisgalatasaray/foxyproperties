@@ -359,3 +359,9 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - Agents: "My Tasks" page (/backoffice/tasks) with only their tasks/viewings (viewings matched by appointment agent name)
 - Permissions tasks:own / tasks:manage; CountBadge generic component replaces UnreadEnquiriesBadge
 - Tested: iteration_28 all flows pass
+
+## 2026-06 — Follow-up from Enquiry + Home chapter 2 video
+- Enquiry notes panel: "+ CREATE FOLLOW-UP TASK" opens AddTaskForm prefilled (description, customer name/phone/email, due tomorrow); appears in dashboard Upcoming
+- Home chapter 2 (WEST LONDON) now uses user clip (Ealing Broadway) transcoded 4K→1080p H.264 faststart (112MB→27MB) at foxy-property/home/clip-chapter2.mp4; poster public/home/chapter2.jpg
+- ffmpeg is available via `pip install imageio-ffmpeg` (binary under /root/.venv/.../imageio_ffmpeg/binaries/)
+- scripts/upload_home_clips.py now takes args: <local file> <object name> ...

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One-time: push local home clips into Emergent Object Storage."""
+"""Push local home clips into Emergent Object Storage."""
 import os
 import sys
 import urllib.request
@@ -37,10 +37,11 @@ def main():
         storage_key = json.loads(r.read())["storage_key"]
     print("init ok")
 
-    clips = ["clip-london.mp4", "clip-west.mp4", "clip-interior.mp4"]
-    for name in clips:
+    # usage: upload_home_clips.py /local/file.mp4 object-name.mp4 [...]
+    args = sys.argv[1:]
+    for src, name in zip(args[::2], args[1::2]):
         path = f"foxy-property/home/{name}"
-        with open(f"/app/public/home/{name}", "rb") as fh:
+        with open(src, "rb") as fh:
             data = fh.read()
         req = urllib.request.Request(
             storage_url + "/objects/" + path,
