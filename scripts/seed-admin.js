@@ -15,7 +15,7 @@ function loadEnv() {
 
 loadEnv();
 
-const email = process.env.ADMIN_EMAIL || "admin@foxyproperty.co.uk";
+const email = process.env.ADMIN_EMAIL || "info@foxyproperties.co.uk";
 const password = process.env.ADMIN_PASSWORD || "Sa281616@";
 
 // Additional fixed back-office admins (seeded on every boot so they survive
@@ -32,8 +32,7 @@ const extraAdmins = [
     await c.query(
       `INSERT INTO backoffice_users(email,name,password_hash,role,active)
        VALUES($1,$2,$3,'ADMIN',true)
-       ON CONFLICT(email) DO UPDATE
-         SET password_hash=EXCLUDED.password_hash, role='ADMIN', active=true`,
+       ON CONFLICT(email) DO NOTHING`,
       [em, nm, hash]
     );
     console.log("admin seeded:", em);

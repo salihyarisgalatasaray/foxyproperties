@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/components/navigation/SiteHeader";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { PageHero } from "@/components/site/PageHero";
-import { LeadForm } from "@/components/lead/LeadForm";
+import { EnquiryForm } from "@/components/lead/EnquiryForm";
 import { getT } from "@/lib/i18n/server";
 
 export const metadata = {
@@ -67,14 +67,7 @@ export default async function ContactPage() {
             </p>
           </div>
         </div>
-        <LeadForm
-          type="CONSULTATION"
-          source="CONSULTATION"
-          title="BOOK A CONSULTATION"
-          submitLabel="BOOK A CONSULTATION"
-          testid="consultation-form"
-          extraFields={[{ name: "topic", label: "What is this regarding?" }]}
-        />
+        <EnquiryForm />
       </section>
 
       <SiteFooter />

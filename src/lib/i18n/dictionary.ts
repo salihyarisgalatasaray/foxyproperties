@@ -594,5 +594,19 @@ export const TR: Record<string, string> = {
   "Postcode": "Posta kodu",
   "Current status (empty / tenanted)": "Mevcut durum (boş / kiracılı)",
   "Current or expected monthly rent (£)": "Mevcut veya beklenen aylık kira (£)",
+  "THANK YOU.": "TEŞEKKÜRLER.",
+  "Your enquiry has been received. A confirmation email is on its way and our team will be in touch within 24 hours.":
+    "Talebiniz alındı. Onay e-postası yolda; ekibimiz 24 saat içinde sizinle iletişime geçecek.",
+  "SEND AN ENQUIRY": "TALEP GÖNDERİN",
+  "Full Name": "Ad Soyad",
+  "Email Address": "E-posta Adresi",
+  "Phone Number": "Telefon Numarası",
+  "Enquiry Type": "Talep Türü",
+  "Select an enquiry type": "Talep türü seçin",
+  "Buy a Property": "Mülk Satın Al",
+  "Sell a Property": "Mülk Sat",
+  "General Enquiry": "Genel Talep",
+  "Message": "Mesaj",
+  "SUBMIT ENQUIRY": "TALEBİ GÖNDER",
 };
 

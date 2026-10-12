@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { dbQuery } from "@/lib/db";
+import { redirect } from "next/navigation";
+import { requireUser } from "@/lib/auth/session";
+import { can, homeFor } from "@/lib/auth/permissions";
 export const dynamic = "force-dynamic";
 
 async function kpis() {
@@ -19,6 +22,8 @@ async function kpis() {
 const gbp = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 
 export default async function Dashboard() {
+  const me = await requireUser();
+  if (!can(me.role, "dashboard:read")) redirect(homeFor(me.role));
   const k = await kpis();
   return (
     <>
