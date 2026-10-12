@@ -340,3 +340,14 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - FCA disclaimers (footer/About) no longer mention "mortgage"; i18n dictionary cleaned
 - Kept internal CRM lead enum values MORTGAGE/REMORTGAGE in api/leads (not user-facing)
 - Note: after deleting routes, clear .next/dev + .next/types before yarn build
+
+## 2026-06 — User Management + Customer Enquiries
+- Migration 006: AGENT role, enquiries table (NEW/READ/IN_PROGRESS/RESOLVED); primary admin renamed to info@foxyproperties.co.uk (old admin@foxyproperty.co.uk deactivated); seed now ON CONFLICT DO NOTHING so UI edits persist
+- /backoffice/users (ADMIN only, users:manage): add/edit (name, email, password, role Admin/Agent), activate/deactivate; guards: no self-deactivate/demote, ≥1 active admin
+- Session re-checks DB on each request → deactivation/role changes apply instantly
+- AGENT sees only /backoffice/enquiries (other routes redirect)
+- Contact page EnquiryForm → POST /api/enquiries: saves, emails info@foxyproperties.co.uk + customer confirmation (24h)
+- /backoffice/enquiries list + status select; unread badge in sidebar (polls 30s + updates on change)
+- Tested: iteration_27 — 17/17 backend, all frontend flows pass
+## Backlog
+- Claude AI integration (awaiting purpose) · Deployment needs Next.js template job + managed Postgres
