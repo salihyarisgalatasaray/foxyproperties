@@ -24,6 +24,6 @@
 ## User Management + Enquiries (migration 006)
 - Primary admin is now `info@foxyproperties.co.uk` / `Sa281616@` (old admin@foxyproperty.co.uk is auto-renamed/deactivated)
 - Second admin: `yaris@credys.co.uk` (seeded by scripts/seed-admin.js)
-- Test agent (created via UI/API, currently DEACTIVATED): `agent.test@foxyproperties.co.uk` / `Agent12345!` role AGENT
+- Test agent (name "Test Agent", ACTIVE): `agent.test@foxyproperties.co.uk` / `Agent12345!` role AGENT
 - Roles: ADMIN = everything incl. /backoffice/users; AGENT = only /backoffice/enquiries
 - Public form: Contact page -> POST /api/enquiries. Admin: /backoffice/enquiries, /backoffice/users

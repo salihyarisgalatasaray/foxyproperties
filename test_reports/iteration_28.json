@@ -1,0 +1,27 @@
+{
+  "summary": "Frontend-only verification of FOXY Properties Enquiry Notes + Dashboard Calendar & Tasks + Agent scoping. All acceptance criteria pass: Dashboard shows calendar-tasks with widget-viewings/upcoming/overdue (+ -count children); empty states render correctly. task-add-btn opens task-form with all expected fields (task-description, task-related w/ 'No link / type your own' option, task-related-text, task-due-date, task-assignee, task-priority, task-save, task-cancel). Creating a past-due task immediately appears in Overdue widget in red with 'N days overdue' (task-due-{id}) and tasks-overdue-badge='1' appears next to nav-dashboard with NO page reload. Creating a +3 days task appears in Upcoming sorted by date. Clicking task-complete-{id} optimistically removes task, decrements widget-overdue-count 1→0, and removes the tasks-overdue-badge. Enquiry notes: enquiry-notes-btn-{id} opens enquiry-notes-{id} panel with note-kind/note-body/note-save; saving an EMAIL note increments enquiry-notes-count-{id} from (1)→(2) and persists after full page reload. Agent login (Test Agent): sidebar reduced to nav-my-tasks + nav-enquiries only (no nav-dashboard/appointments/clients/users/leads/offers); redirected to /backoffice/enquiries on login; /backoffice/tasks shows only tasks assigned to Test Agent (sees 'Call back about offer' but NOT admin-created unassigned 'TEST upcoming task beta'); can complete own task. Regression: existing enquiries status change and badge still functional. Properties/Clients optgroups did not render — EXPECTED because properties and clients tables are empty in current DB (0 rows each) per task description.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Cookie banner", "issues": ["Pre-existing issue carried from iteration_27: data-testid=cookie-banner is fixed inset-0 full-screen overlay blocking interactions until dismissed. Not blocking this feature but worth revisiting."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "src/components/backoffice/CalendarTasks.tsx task-complete uses <button> with 4x4 rounded border styling — purely visual, no visible checked state after click (optimistic remove hides it). Fine functionally; may want aria-pressed for a11y and clearer affordance.",
+    "src/app/api/backoffice/tasks/route.ts: GET returns 503 with empty arrays on error — swallows error details. Fine for prod but consider logging server-side (likely already is via console).",
+    "AddTaskForm shows 'Clients' and 'Properties' optgroups via tasks/options; when BOTH tables empty, only 'No link / type your own' option renders — acceptable but a tiny caption like 'No clients or properties yet' inside the select could help UX.",
+    "Today's Viewings count shows 0 while top KPI 'Today's appointments' shows 1 — this is because the seed viewing's starts_at (2026-10-12 22:00 UTC = 23:00 BST on Oct 12) is YESTERDAY in London once the clock crosses midnight BST, while the top KPI likely uses a different window. Not a bug per se but the two numbers can look inconsistent during edge-of-day testing. Consider aligning both to the same TZ-aware 'today' definition." 
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100% of planned flows"},
+  "test_credentials": "Admin info@foxyproperties.co.uk / Sa281616@ ; Agent agent.test@foxyproperties.co.uk / Agent12345!",
+  "seed_data_creation": "Added 2 tasks via UI: 'TEST overdue task alpha' (completed during test, overdue 8 days) and 'TEST upcoming task beta' (3 days ahead, unassigned). Also added 1 EMAIL note on enquiry 89816539-3c50-418a-99ec-24c6e2a03ee6 ('TEST emailed customer with brochure'). Safe to delete by TEST_ prefix / description.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Admin dashboard route is /backoffice; agent is redirected to /backoffice/enquiries on login (no dashboard permission). Tasks list page is /backoffice/tasks. Task complete controls are rendered as <button data-testid='task-complete-{id}'> (NOT real checkboxes — use .click() not .check() in Playwright). Related dropdown options use format value='PROPERTY:<uuid>' / 'CLIENT:<uuid>' / '' for No link. Clients + properties tables are currently empty, so Clients/Properties optgroups do not render. Request-limits may need TRUNCATE between runs: `PGPASSWORD=... psql -U foxy -h localhost -d foxy -c 'TRUNCATE request_limits;'`.",
+  "rca of the issue": "No bugs. All acceptance criteria from the review request pass end-to-end via UI (Playwright) against the production preview build at https://dev-foxy-pull.preview.emergentagent.com."
+}

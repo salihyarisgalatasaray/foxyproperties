@@ -351,3 +351,11 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - Tested: iteration_27 — 17/17 backend, all frontend flows pass
 ## Backlog
 - Claude AI integration (awaiting purpose) · Deployment needs Next.js template job + managed Postgres
+
+## 2026-06 — Enquiry Notes + Dashboard Calendar & Tasks
+- Migration 007: enquiry_notes (NOTE/CALL/EMAIL/MEETING, author, time), tasks (description, related CLIENT/PROPERTY/TEXT + label, due_date, assignee, priority, completed_at)
+- Enquiries: per-row Notes panel with timeline + reply log (internal only)
+- Dashboard "Calendar & Tasks": Today's Viewings (appointments, Europe/London), Upcoming 7 days, Overdue (red, days overdue), inline Add Task, complete from widget; red overdue badge on Dashboard nav
+- Agents: "My Tasks" page (/backoffice/tasks) with only their tasks/viewings (viewings matched by appointment agent name)
+- Permissions tasks:own / tasks:manage; CountBadge generic component replaces UnreadEnquiriesBadge
+- Tested: iteration_28 all flows pass
