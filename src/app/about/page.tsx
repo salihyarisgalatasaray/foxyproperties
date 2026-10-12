@@ -41,7 +41,7 @@ export default async function AboutPage() {
         </div>
 
         <div className="mt-10 border border-white/15 bg-[#141413] p-6 text-xs leading-6 text-white/50">
-          {t("FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.")}
+          {t("FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.")}
         </div>
       </section>
 

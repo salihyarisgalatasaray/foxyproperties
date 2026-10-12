@@ -21,7 +21,6 @@ type Stage = {
 const STAGES: Stage[] = [
   { key: "value", index: "08", place: "PROPERTY VALUE", line: "UNDERSTAND THE NUMBER BEHIND THE PROPERTY.", cta: "EXPLORE PROPERTIES", href: "/properties", img: "/journey/value.jpg" },
   { key: "investment", index: "09", place: "INVESTMENT", line: "STRATEGIC RETURNS, ILLUSTRATED HONESTLY.", cta: "ANALYSE AN INVESTMENT", href: "/investment" , img: "/journey/investment.jpg" },
-  { key: "finance", index: "10", place: "FINANCE", line: "PROPERTY FINANCE, PROPERLY CONSIDERED.", cta: "FINANCE ENQUIRY", href: "/mortgages", img: "/journey/finance.jpg" },
   { key: "letting", index: "11", place: "LETTING", line: "FROM AVAILABLE TO LET, CONSIDERED PROPERLY.", cta: "EXPLORE LETTINGS", href: "/lettings", img: "/journey/letting.jpg" },
   { key: "tenant", index: "12", place: "TENANT", line: "THE RIGHT TENANT, THE RIGHT HOME.", cta: "REGISTER AS A TENANT", href: "/lettings#register", img: "/journey/tenant.jpg" },
   { key: "rent", index: "13", place: "RENT", line: "RENT COLLECTED. ARREARS MONITORED.", cta: "EXPLORE MANAGEMENT", href: "/property-management#options", img: "/journey/rent.jpg" },

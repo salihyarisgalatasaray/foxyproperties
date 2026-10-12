@@ -11,13 +11,11 @@ const STRATS: Record<string, Strat> = {
     rows: [["Est. Monthly Rent", "£4,750"], ["Est. Annual Rent", "£57,000"], ["Service", "Fully Managed"], ["Est. Net Income", "£48,400"]] },
   BTL: { title: "BUY-TO-LET SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/calculators/buy-to-let",
     rows: [["Purchase Price", "£1,850,000"], ["Deposit (25%)", "£462,500"], ["Est. Monthly Rent", "£4,750"], ["Est. Gross Yield", "3.1%", true]] },
-  REFINANCE: { title: "REFINANCE SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/mortgages",
-    rows: [["Estimated Value", "£1,850,000"], ["Outstanding Loan", "£900,000"], ["New LTV", "49%"], ["Indicative Rate", "from 5.1%"]] },
   MANAGE: { title: "MANAGEMENT SCENARIO", cta: "ANALYSE THIS PROPERTY", ctaHref: "/property-management",
     rows: [["Monthly Rent", "£4,750"], ["Maintenance Reserve", "£300 pcm"], ["Inspections", "Quarterly"], ["Reporting", "Monthly"]] },
 };
 
-const KEYS = ["SELL", "LET", "BTL", "REFINANCE", "MANAGE"];
+const KEYS = ["SELL", "LET", "BTL", "MANAGE"];
 
 export function PropertyLab() {
   const t = useT();

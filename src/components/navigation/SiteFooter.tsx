@@ -20,10 +20,8 @@ const COLS: { title: string; links: [string, string][] }[] = [
     ],
   },
   {
-    title: "FINANCE & AREAS",
+    title: "AREAS & INSIGHTS",
     links: [
-      ["Mortgages", "/mortgages"],
-      ["Buy-to-Let", "/mortgages#btl"],
       ["Areas", "/areas"],
       ["Insights", "/insights"],
     ],
@@ -92,7 +90,7 @@ export async function SiteFooter() {
 
         <div className="mt-16 space-y-3 border-t border-white/10 pt-8 text-xs leading-6 text-white/40">
           <p>
-            {t("FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.")}
+            {t("FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.")}
           </p>
           <p className="pt-2 text-white/50">
             © {new Date().getFullYear()} FOXY Properties Investors Ltd · London, England

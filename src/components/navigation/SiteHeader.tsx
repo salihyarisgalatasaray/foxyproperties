@@ -22,7 +22,6 @@ const NAV: Nav[] = [
     { label: "Compliance Centre", href: "/landlords/compliance" },
   ] },
   { label: "Property Lab", href: "/#lab" },
-  { label: "Mortgages", href: "/mortgages" },
   { label: "Areas", href: "/areas" },
   { label: "Insights", href: "/insights" },
   { label: "About", href: "/about" },

@@ -377,7 +377,7 @@ export function CinematicHero({
               </a>
               <a
                 data-testid="hero-journey-cta"
-                href="/calculators/mortgage"
+                href="/properties"
                 className="group inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-xs tracking-[.16em] text-white transition-colors duration-300 hover:border-[#D4AF37] hover:text-[#D4AF37]"
               >
                 START YOUR JOURNEY

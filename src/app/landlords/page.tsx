@@ -68,7 +68,7 @@ export default async function LandlordsPage() {
           {t("For multi-property landlords, we are building a portfolio experience connecting occupancy, rent, tenancies, maintenance, documents, finance and reporting. No portfolio statistics are shown until your real data is connected.")}
         </p>
         <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-          {["Portfolio overview", "Occupancy & rent", "Tenancies", "Maintenance", "Documents", "Finance & remortgage"].map(
+          {["Portfolio overview", "Occupancy & rent", "Tenancies", "Maintenance", "Documents", "Finance & reporting"].map(
             (item) => (
               <div key={item} className="bg-[#0E0E0E] p-6 text-sm text-white/70">
                 {t(item)}

@@ -14,7 +14,6 @@ const TOPICS = [
   "Prime & West London",
   "Rental Market & Yields",
   "Buy-to-Let & Investment",
-  "Mortgages & Finance",
   "Regulation & Compliance",
 ];
 

@@ -331,3 +331,12 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - Do not deploy/publish or connect foxyproperty.co.uk (awaiting approval).
 - Do not build HMO anything. Do not invent data/fees/credentials/guarantees.
 - Do not switch to `next dev` (breaks over ingress). Rebuild after code changes.
+
+## 2026-06 — Mortgages section fully removed
+- Deleted /mortgages, /calculators/mortgage pages and MortgageCalculator component
+- Removed Mortgages from header nav; footer column now "AREAS & INSIGHTS" (Mortgages/Buy-to-Let links removed)
+- Removed Finance/EXPLORE MORTGAGES/REFINANCE CTAs & stages from home LifecycleJourney, PropertyLifecycle, PropertyLab (+ dead hero/property components)
+- Insights "Mortgages & Finance" topic removed; landlords chip -> "Finance & reporting"; BTL calculator "Estimated mortgage" -> "Estimated loan"
+- FCA disclaimers (footer/About) no longer mention "mortgage"; i18n dictionary cleaned
+- Kept internal CRM lead enum values MORTGAGE/REMORTGAGE in api/leads (not user-facing)
+- Note: after deleting routes, clear .next/dev + .next/types before yarn build

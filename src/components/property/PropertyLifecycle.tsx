@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const STAGES = [
   { key: "buy", label: "BUY", body: "Find and secure the right London property, with the numbers understood upfront.", href: "/properties" },
-  { key: "finance", label: "FINANCE", body: "Understand your finance options and route to the right next step.", href: "/mortgages" },
   { key: "let", label: "LET", body: "Prepare, market and let your property to the right tenant.", href: "/lettings" },
   { key: "manage", label: "MANAGE", body: "Rent collection, maintenance, inspections and clear reporting.", href: "/property-management" },
   { key: "review", label: "REVIEW", body: "Regular review of rent, strategy and finance across your holding.", href: "/landlords" },

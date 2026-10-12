@@ -9,7 +9,6 @@ export const TR: Record<string, string> = {
   "Let": "Kiraya Ver",
   "Landlords": "Ev Sahipleri",
   "Property Lab": "Mülk Laboratuvarı",
-  "Mortgages": "Konut Kredisi",
   "Areas": "Bölgeler",
   "Insights": "İçgörüler",
   "About": "Hakkımızda",
@@ -28,7 +27,7 @@ export const TR: Record<string, string> = {
     "FOXY Properties Investors Ltd. Premium Londra gayrimenkulü, yatırım, finansman, kiralama ve yönetim — özenle ele alınır.",
   "PROPERTY": "GAYRİMENKUL",
   "LANDLORDS": "EV SAHİPLERİ",
-  "FINANCE & AREAS": "FİNANSMAN & BÖLGELER",
+  "AREAS & INSIGHTS": "BÖLGELER & İÇGÖRÜLER",
   "COMPANY": "ŞİRKET",
   "Properties for Sale": "Satılık Mülkler",
   "Properties to Rent": "Kiralık Mülkler",
@@ -41,8 +40,8 @@ export const TR: Record<string, string> = {
   "Book a Consultation": "Danışma Randevusu Alın",
   "Lettings": "Kiralamalar",
   "Back Office": "Yönetim Paneli",
-  "FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, mortgage, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.":
-    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir. Bu web sitesindeki hiçbir içerik finansal, mortgage, vergi veya hukuki tavsiye niteliği taşımaz. Gösterilen tüm yatırım, kira ve finansman rakamları yalnızca örnek tahminlerdir ve garanti edilmez.",
+  "FOXY Properties Investors Ltd is not currently FCA authorised. Nothing on this website constitutes financial, tax or legal advice. All investment, rental and finance figures shown are illustrative estimates only and are not guaranteed.":
+    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir. Bu web sitesindeki hiçbir içerik finansal, vergi veya hukuki tavsiye niteliği taşımaz. Gösterilen tüm yatırım, kira ve finansman rakamları yalnızca örnek tahminlerdir ve garanti edilmez.",
   // ---- Shared UI ----
   "CONCEPT IMAGERY · NOT A LIVE LISTING": "KONSEPT GÖRSEL · GERÇEK BİR İLAN DEĞİLDİR",
   "EXPLORE": "KEŞFET",
@@ -160,10 +159,6 @@ export const TR: Record<string, string> = {
   "London remains one of the world's most resilient property markets. Explore acquisition strategies designed around yield, growth and legacy.":
     "Londra, dünyanın en dirençli gayrimenkul pazarlarından biri olmaya devam ediyor. Getiri, büyüme ve miras odaklı satın alma stratejilerini keşfedin.",
   "EXPLORE INVESTMENT": "YATIRIMI KEŞFET",
-  "FUND IT INTELLIGENTLY.": "AKILLICA FİNANSE EDİN.",
-  "From first mortgage to complex portfolio refinancing, our finance specialists structure the right facility around your position.":
-    "İlk mortgage'dan karmaşık portföy yeniden finansmanına kadar, finans uzmanlarımız durumunuza uygun doğru çözümü yapılandırır.",
-  "EXPLORE MORTGAGES": "KONUT KREDİSİNİ KEŞFET",
   "LET WITH CONFIDENCE.": "GÜVENLE KİRAYA VERİN.",
   "Qualified tenants, seamless referencing and full compliance — so your property performs from the very first day.":
     "Nitelikli kiracılar, sorunsuz referans süreci ve tam uyum — böylece mülkünüz ilk günden itibaren performans gösterir.",
@@ -197,10 +192,7 @@ export const TR: Record<string, string> = {
   "Due diligence & legal coordination": "Durum tespiti ve hukuki koordinasyon",
   "TYP. 8–12 WEEKS": "TİPİK 8–12 HAFTA",
   "Structure the right funding": "Doğru finansmanı yapılandırın",
-  "Our specialists shape mortgage, bridging and portfolio finance around your position and timeline.":
-    "Uzmanlarımız mortgage, köprü kredisi ve portföy finansmanını durumunuza ve zaman çizelgenize göre şekillendirir.",
   "Decision in principle": "Prensip onayı",
-  "Mortgage & bridging options": "Mortgage ve köprü kredisi seçenekleri",
   "Completion coordination": "Tamamlama koordinasyonu",
   "TYP. 2–6 WEEKS": "TİPİK 2–6 HAFTA",
   "Bring it to market": "Piyasaya sunun",
@@ -268,8 +260,8 @@ export const TR: Record<string, string> = {
     "Bir mülkün bir rakamdan fazlası olduğuna inanıyoruz. Müşterilerin harekete geçmeden önce mülkü, konumu ve rakamları anlamalarına yardımcı olur ve rakamları vaat yerine örnek tahminler olarak sunarız.",
   "We do not publish invented statistics, testimonials, awards, partnerships or credentials. Regulatory memberships, protection schemes and fees are shown publicly only once verified details are in place.":
     "Uydurma istatistikler, referanslar, ödüller, ortaklıklar veya kimlik bilgileri yayınlamayız. Düzenleyici üyelikler, koruma programları ve ücretler yalnızca doğrulanmış bilgiler mevcut olduğunda kamuya açık olarak gösterilir.",
-  "FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent mortgage adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.":
-    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve kendisini bağımsız mortgage danışmanı veya tüm piyasa aracısı olarak sunmaz. Bu sitedeki hiçbir içerik finansal, vergi veya hukuki tavsiye niteliği taşımaz.",
+  "FOXY Properties Investors Ltd is not currently FCA authorised and does not present itself as an independent adviser or whole-of-market broker. Nothing on this site constitutes financial, tax or legal advice.":
+    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve kendisini bağımsız danışman veya tüm piyasa aracısı olarak sunmaz. Bu sitedeki hiçbir içerik finansal, vergi veya hukuki tavsiye niteliği taşımaz.",
 
   // ---- Investment page ----
   "PROPERTY INVESTMENT": "GAYRİMENKUL YATIRIMI",
@@ -310,25 +302,19 @@ export const TR: Record<string, string> = {
   "Approximate budget (£)": "Yaklaşık bütçe (£)",
   "Areas of interest": "İlgilendiğiniz bölgeler",
 
-  // ---- Mortgages page ----
+  // ---- Finance enquiry ----
   "PROPERTY FINANCE": "GAYRİMENKUL FİNANSMANI",
   "PROPERTY FINANCE, PROPERLY CONSIDERED.": "GAYRİMENKUL FİNANSMANI, ÖZENLE ELE ALINMIŞ.",
   "Connect your property, rent and management with a clear view of finance. We help you understand your options and route you to the right next step.":
     "Mülkünüzü, kiranızı ve yönetiminizi finansmana dair net bir bakışla birleştirin. Seçeneklerinizi anlamanıza yardımcı olur ve sizi doğru sonraki adıma yönlendiririz.",
   "FINANCE ENQUIRY": "FİNANSMAN TALEBİ",
-  "MORTGAGE CALCULATOR": "KONUT KREDİSİ HESAPLAYICI",
   "Important:": "Önemli:",
-  "FOXY Properties Investors Ltd is not currently FCA authorised and is not an independent mortgage adviser or a whole-of-market broker. Nothing here is financial advice. We can help you understand your options and, where appropriate, connect you with an authorised adviser.":
-    "FOXY Properties Investors Ltd şu anda FCA yetkilendirmesine sahip değildir ve bağımsız bir mortgage danışmanı veya tüm piyasa aracısı değildir. Buradaki hiçbir şey finansal tavsiye değildir. Seçeneklerinizi anlamanıza yardımcı olabilir ve uygun olduğunda sizi yetkili bir danışmana yönlendirebiliriz.",
   "RESIDENTIAL": "KONUT",
   "Finance for the home you intend to live in. We help you understand your options and next steps.":
     "İçinde yaşamayı planladığınız ev için finansman. Seçeneklerinizi ve sonraki adımları anlamanıza yardımcı oluruz.",
   "BUY-TO-LET": "KİRALIK YATIRIM",
   "Finance structured around an investment property and its expected rental income.":
     "Bir yatırım mülkü ve beklenen kira geliri etrafında yapılandırılmış finansman.",
-  "REMORTGAGE": "YENİDEN MORTGAGE",
-  "Reviewing an existing mortgage as a rate or circumstances change.":
-    "Oran veya koşullar değiştiğinde mevcut bir mortgage'ın gözden geçirilmesi.",
   "PORTFOLIO": "PORTFÖY",
   "Finance considerations for landlords holding multiple properties.":
     "Birden fazla mülke sahip ev sahipleri için finansman değerlendirmeleri.",
@@ -337,7 +323,6 @@ export const TR: Record<string, string> = {
   "Tell us what you need and we will explain the next step. This is an enquiry only — no regulated advice is provided through this form.":
     "İhtiyacınızı bize bildirin, sonraki adımı açıklayalım. Bu yalnızca bir taleptir — bu form aracılığıyla düzenlemeye tabi tavsiye sağlanmaz.",
   "SEND FINANCE ENQUIRY": "FİNANSMAN TALEBİ GÖNDER",
-  "Type (residential / BTL / remortgage / portfolio)": "Tür (konut / BTL / yeniden mortgage / portföy)",
   "Approximate amount (£)": "Yaklaşık tutar (£)",
 
   // ---- LeadForm ----
@@ -486,7 +471,7 @@ export const TR: Record<string, string> = {
   "Prime & West London": "Prime ve Batı Londra",
   "Rental Market & Yields": "Kira Piyasası ve Getiriler",
   "Buy-to-Let & Investment": "Kiralık Yatırım ve Yatırım",
-  "Mortgages & Finance": "Konut Kredisi ve Finansman",
+
   "Regulation & Compliance": "Düzenleme ve Uyum",
   "Verified analysis coming soon.": "Doğrulanmış analiz yakında.",
   "SOURCE · PERIOD · LAST UPDATED — TO BE PUBLISHED": "KAYNAK · DÖNEM · SON GÜNCELLEME — YAYINLANACAK",
@@ -544,7 +529,7 @@ export const TR: Record<string, string> = {
   "Tenancies": "Kiracılıklar",
   "Maintenance": "Bakım",
   "Documents": "Belgeler",
-  "Finance & remortgage": "Finansman ve yeniden mortgage",
+  "Finance & reporting": "Finansman ve raporlama",
   "DEMO · AWAITING DATA": "DEMO · VERİ BEKLENİYOR",
   "SWITCH TO FOXY": "FOXY'YE GEÇİN",
   "ALREADY WITH ANOTHER AGENT?": "BAŞKA BİR ACENTEYLE Mİ ÇALIŞIYORSUNUZ?",

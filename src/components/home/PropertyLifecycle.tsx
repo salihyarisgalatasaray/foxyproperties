@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Home, Landmark, KeyRound, ShieldCheck } from "lucide-react";
+import { Home, KeyRound, ShieldCheck } from "lucide-react";
 import { useT } from "@/components/i18n/language";
 import { Reveal } from "./Reveal";
 
@@ -27,17 +27,6 @@ const STAGES: Stage[] = [
     href: "/properties",
     duration: "TYP. 8–12 WEEKS",
     Icon: Home,
-  },
-  {
-    key: "finance",
-    label: "FINANCE",
-    title: "Structure the right funding",
-    copy: "Our specialists shape mortgage, bridging and portfolio finance around your position and timeline.",
-    steps: ["Decision in principle", "Mortgage & bridging options", "Completion coordination"],
-    cta: "EXPLORE MORTGAGES",
-    href: "/mortgages",
-    duration: "TYP. 2–6 WEEKS",
-    Icon: Landmark,
   },
   {
     key: "let",
@@ -122,7 +111,7 @@ export function PropertyLifecycle() {
             className="absolute left-0 top-6 hidden h-px bg-[#D4AF37] transition-[width] duration-500 ease-out md:block"
             style={{ width: `${(active / (STAGES.length - 1)) * 100}%` }}
           />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-4">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-4">
             {STAGES.map((st, i) => {
               const done = i <= active;
               const isActive = i === active;
