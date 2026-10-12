@@ -1,12 +1,12 @@
 export const roles=["ADMIN","AGENT","PROPERTY","FINANCE","MARKETING","CONTENT"] as const;
 export type Role=(typeof roles)[number];
 export const assignableRoles=["ADMIN","AGENT"] as const;
-export type Permission="dashboard:read"|"leads:read"|"leads:update"|"finance:read"|"content:edit"|"properties:edit"|"audit:read"|"enquiries:read"|"enquiries:update"|"users:manage";
+export type Permission="dashboard:read"|"leads:read"|"leads:update"|"finance:read"|"content:edit"|"properties:edit"|"audit:read"|"enquiries:read"|"enquiries:update"|"users:manage"|"tasks:own"|"tasks:manage";
 const matrix:Record<Role,Permission[]>={
- ADMIN:["dashboard:read","leads:read","leads:update","finance:read","content:edit","properties:edit","audit:read","enquiries:read","enquiries:update","users:manage"],
- AGENT:["enquiries:read","enquiries:update"],
- PROPERTY:["dashboard:read","leads:read","leads:update","properties:edit","enquiries:read","enquiries:update"],
- FINANCE:["dashboard:read","leads:read","leads:update","finance:read","enquiries:read","enquiries:update"],
+ ADMIN:["dashboard:read","leads:read","leads:update","finance:read","content:edit","properties:edit","audit:read","enquiries:read","enquiries:update","users:manage","tasks:own","tasks:manage"],
+ AGENT:["enquiries:read","enquiries:update","tasks:own"],
+ PROPERTY:["dashboard:read","leads:read","leads:update","properties:edit","enquiries:read","enquiries:update","tasks:own","tasks:manage"],
+ FINANCE:["dashboard:read","leads:read","leads:update","finance:read","enquiries:read","enquiries:update","tasks:own","tasks:manage"],
  MARKETING:["dashboard:read","content:edit"],
  CONTENT:["dashboard:read","content:edit"]
 };

@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { enquiryStatuses, enquiryTypes, type EnquiryRow } from "@/lib/backoffice/types";
-import { ENQUIRIES_CHANGED } from "./UnreadEnquiriesBadge";
+import { ENQUIRIES_CHANGED } from "./CountBadge";
+import { EnquiryNotes } from "./EnquiryNotes";
 
 const PILL: Record<string, string> = { NEW: "bg-[#d4af37] text-black", READ: "bg-neutral-200 text-neutral-700", IN_PROGRESS: "bg-sky-100 text-sky-800", RESOLVED: "bg-emerald-100 text-emerald-800" };
 const fmt = (d: string) => new Date(d).toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
@@ -10,6 +11,7 @@ export function EnquiriesManager() {
   const [items, setItems] = useState<EnquiryRow[]>([]);
   const [filter, setFilter] = useState("ALL");
   const [open, setOpen] = useState<string | null>(null);
+  const [notesFor, setNotesFor] = useState<string | null>(null);
   useEffect(() => { fetch("/api/backoffice/enquiries").then((r) => r.json()).then((d) => setItems(d.items || [])); }, []);
 
   async function setStatus(id: string, status: string) {
@@ -32,10 +34,10 @@ export function EnquiriesManager() {
       </div>
       <div className="overflow-x-auto rounded-xl border border-black/10 bg-white">
         <table className="w-full text-sm">
-          <thead className="bg-black/[.03] text-left text-[10px] tracking-[.12em] text-neutral-500"><tr><th className="p-3">DATE</th><th className="p-3">NAME</th><th className="p-3">EMAIL</th><th className="p-3">PHONE</th><th className="p-3">TYPE</th><th className="p-3">MESSAGE</th><th className="p-3">STATUS</th></tr></thead>
+          <thead className="bg-black/[.03] text-left text-[10px] tracking-[.12em] text-neutral-500"><tr><th className="p-3">DATE</th><th className="p-3">NAME</th><th className="p-3">EMAIL</th><th className="p-3">PHONE</th><th className="p-3">TYPE</th><th className="p-3">MESSAGE</th><th className="p-3">STATUS</th><th className="p-3">NOTES</th></tr></thead>
           <tbody>
-            {rows.map((e) => (
-              <tr key={e.id} data-testid={`enquiry-row-${e.id}`} className={`border-t border-black/5 align-top ${e.status === "NEW" ? "bg-[#d4af37]/[.06] font-medium" : ""}`}>
+            {rows.map((e) => (<Fragment key={e.id}>
+              <tr data-testid={`enquiry-row-${e.id}`} className={`border-t border-black/5 align-top ${e.status === "NEW" ? "bg-[#d4af37]/[.06] font-medium" : ""}`}>
                 <td className="whitespace-nowrap p-3 text-xs text-neutral-500">{fmt(e.created_at)}</td>
                 <td className="p-3">{e.full_name}</td>
                 <td className="p-3 text-xs"><a href={`mailto:${e.email}`} className="text-[#8a6d12] underline-offset-2 hover:underline">{e.email}</a></td>
@@ -50,9 +52,15 @@ export function EnquiriesManager() {
                     {Object.entries(enquiryStatuses).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
                   </select>
                 </td>
+                <td className="p-3">
+                  <button onClick={() => setNotesFor(notesFor === e.id ? null : e.id)} data-testid={`enquiry-notes-btn-${e.id}`} className={`whitespace-nowrap rounded-full border px-3 py-1 text-[11px] transition-colors ${notesFor === e.id ? "border-[#11110f] bg-[#11110f] text-[#d4af37]" : "border-black/15 hover:border-[#d4af37]"}`}>
+                    Notes{e.notes_count > 0 && <span data-testid={`enquiry-notes-count-${e.id}`} className="ml-1 font-semibold">({e.notes_count})</span>}
+                  </button>
+                </td>
               </tr>
-            ))}
-            {rows.length === 0 && <tr><td colSpan={7} className="p-8 text-center text-neutral-400">No enquiries yet.</td></tr>}
+              {notesFor === e.id && <tr><td colSpan={8} className="border-t border-black/5 p-0"><EnquiryNotes enquiryId={e.id} onAdded={() => setItems((xs) => xs.map((x) => (x.id === e.id ? { ...x, notes_count: x.notes_count + 1 } : x)))} /></td></tr>}
+            </Fragment>))}
+            {rows.length === 0 && <tr><td colSpan={8} className="p-8 text-center text-neutral-400">No enquiries yet.</td></tr>}
           </tbody>
         </table>
       </div>

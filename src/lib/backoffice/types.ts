@@ -4,10 +4,17 @@ export const offerStatuses = ["PENDING", "ACCEPTED", "REJECTED", "NEGOTIATING"] 
 export const enquiryTypes = { BUY: "Buy a Property", SELL: "Sell a Property", INVESTMENT: "Investment", LETTINGS: "Lettings", PROPERTY_MANAGEMENT: "Property Management", GENERAL: "General Enquiry" } as const;
 export type EnquiryType = keyof typeof enquiryTypes;
 export const enquiryStatuses = { NEW: "Unread", READ: "Read", IN_PROGRESS: "In Progress", RESOLVED: "Resolved" } as const;
-export type EnquiryRow = { id: string; full_name: string; email: string; phone: string; enquiry_type: EnquiryType; message: string; status: keyof typeof enquiryStatuses; created_at: string };
+export type EnquiryRow = { id: string; full_name: string; email: string; phone: string; enquiry_type: EnquiryType; message: string; status: keyof typeof enquiryStatuses; created_at: string; notes_count: number };
 export type UserRow = { id: string; name: string; email: string; role: string; active: boolean; created_at: string };
+export const noteKinds = { NOTE: "Internal note", CALL: "Called customer", EMAIL: "Emailed customer", MEETING: "Meeting / viewing" } as const;
+export type NoteKind = keyof typeof noteKinds;
+export type NoteRow = { id: string; kind: NoteKind; body: string; author_name: string; created_at: string };
+export const taskPriorities = ["HIGH", "MEDIUM", "LOW"] as const;
+export type TaskRow = { id: string; description: string; related_type: string; related_label: string; due_date: string; assigned_user_id: string | null; assignee: string | null; priority: (typeof taskPriorities)[number]; days_overdue: number };
+export type ViewingRow = { id: string; client_name: string; property_label: string; starts_at: string; agent: string | null };
 
 export type ClientRow = { id: string; full_name: string; phone: string | null; email: string | null; budget: string | null; preferred_areas: string | null; interest: string; status: string; notes: string | null; last_contact_at: string | null; created_at: string };
 export type AppointmentRow = { id: string; client_name: string; phone: string | null; email: string | null; property_label: string; starts_at: string; agent: string | null; notes: string | null; status: string };
 export type OfferRow = { id: string; property_label: string; client_name: string; amount: string; submitted_at: string; status: string; counter_notes: string | null };
 export type CommissionRow = { id: string; property_label: string; client_name: string; deal_type: string; price: string; commission_pct: string; commission_amount: string; agent: string | null; completed_on: string };
+export const pgDate = (s: string) => new Date(s.replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00"));

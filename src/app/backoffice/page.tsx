@@ -3,6 +3,7 @@ import { dbQuery } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth/session";
 import { can, homeFor } from "@/lib/auth/permissions";
+import { CalendarTasks } from "@/components/backoffice/CalendarTasks";
 export const dynamic = "force-dynamic";
 
 async function kpis() {
@@ -38,6 +39,7 @@ export default async function Dashboard() {
       <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card testid="kpi-leads" label="Total website leads" value={String(k.leads)} href="/backoffice/leads" />
       </div>
+      <CalendarTasks />
     </>
   );
 }
