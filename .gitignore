@@ -24,3 +24,6 @@ yarn-error.log*
 # Emergent preview run-glue (not part of the FOXY application)
 /frontend/
 /backend/
+
+# Local test credentials (never deploy)
+/memory/test_credentials.md
