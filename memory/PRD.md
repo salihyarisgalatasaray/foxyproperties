@@ -370,3 +370,9 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - Secrets moved out of test files into backend/tests/config.py (env / tests/.env, .env.example template); random throwaway passwords for test users
 - `is True/False` → `==`; property CRUD test split into fixture + 5 focused tests
 - Stale tests updated: mortgage pages now asserted 404; compliance check allows the negative "not currently FCA authorised" disclaimer
+
+## 2026-06 — Deployment prep (path A: new Next.js job + external Postgres)
+- scripts/db-migrate.js: tracked migrations (schema_migrations), baselines existing preview DB, verified on empty DB (7/7 applied, idempotent)
+- package.json: `start` = migrate; seed; next start · `db:migrate` script
+- seed-admin.js: passwords from ADMIN_PASSWORD / EXTRA_ADMIN_PASSWORD env (no hardcoded secrets)
+- Checklist: memory/MIGRATION_TO_NEXTJS_JOB.md

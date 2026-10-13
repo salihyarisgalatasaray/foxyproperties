@@ -16,12 +16,11 @@ function loadEnv() {
 loadEnv();
 
 const email = process.env.ADMIN_EMAIL || "info@foxyproperties.co.uk";
-const password = process.env.ADMIN_PASSWORD || "Sa281616@";
+const password = process.env.ADMIN_PASSWORD;
 
-// Additional fixed back-office admins (seeded on every boot so they survive
-// the ephemeral preview DB being rebuilt).
+// Extra back-office admins, seeded only when their password env var is set.
 const extraAdmins = [
-  { email: "yaris@credys.co.uk", name: "Yaris", password: "Sa281616@" },
+  { email: "yaris@credys.co.uk", name: "Yaris", password: process.env.EXTRA_ADMIN_PASSWORD },
 ];
 
 (async () => {
@@ -37,8 +36,9 @@ const extraAdmins = [
     );
     console.log("admin seeded:", em);
   };
-  await seed(email, "FOXY Admin", password);
-  for (const a of extraAdmins) await seed(a.email, a.name, a.password);
+  if (password) await seed(email, "FOXY Admin", password);
+  else console.warn("seed-admin: ADMIN_PASSWORD not set, skipping primary admin");
+  for (const a of extraAdmins) if (a.password) await seed(a.email, a.name, a.password);
   await c.end();
 })().catch((e) => {
   console.error("seed-admin failed:", e.message);

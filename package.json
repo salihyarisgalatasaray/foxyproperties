@@ -4,8 +4,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "start": "node scripts/db-migrate.js; node scripts/seed-admin.js; next start",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node scripts/db-migrate.js && node scripts/seed-admin.js"
   },
   "dependencies": {
     "@gsap/react": "latest",
