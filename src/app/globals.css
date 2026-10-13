@@ -74,4 +74,6 @@ a.bg-\[\#D4AF37\]:hover,button.bg-\[\#D4AF37\]:hover{background-position:92% 0;b
   100% { opacity: 1; transform: translateX(0) scale(1); }
 }
 .wa-hint { animation: waHintIn .4s ease-out both; }
-@media (prefers-reduced-motion: reduce) { .wa-hint { animation: none; } }
+@keyframes waModalIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+.wa-modal { animation: waModalIn .28s cubic-bezier(.2,.8,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .wa-hint, .wa-modal { animation: none; } }

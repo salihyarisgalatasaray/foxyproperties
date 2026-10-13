@@ -1,7 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { useT } from "@/components/i18n/language";
-import { enquiryTypes } from "@/lib/backoffice/types";
+import { publicEnquiryTypes } from "@/lib/backoffice/types";
 
 const field = "mt-2 w-full border border-white/15 bg-[#0B0B0A] px-4 py-3 text-white outline-none transition-colors focus:border-[#D4AF37]";
 
@@ -40,7 +40,7 @@ export function EnquiryForm() {
         <Label text={t("Enquiry Type")}>
           <select name="enquiry_type" required defaultValue="" data-testid="enquiry-type" className={field}>
             <option value="" disabled>{t("Select an enquiry type")}</option>
-            {Object.entries(enquiryTypes).map(([k, v]) => <option key={k} value={k}>{t(v)}</option>)}
+            {Object.entries(publicEnquiryTypes).map(([k, v]) => <option key={k} value={k}>{t(v)}</option>)}
           </select>
         </Label>
       </div>

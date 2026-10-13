@@ -1,7 +1,8 @@
 export const clientStatuses = ["HOT", "WARM", "COLD"] as const;
 export const appointmentStatuses = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"] as const;
 export const offerStatuses = ["PENDING", "ACCEPTED", "REJECTED", "NEGOTIATING"] as const;
-export const enquiryTypes = { BUY: "Buy a Property", SELL: "Sell a Property", INVESTMENT: "Investment", LETTINGS: "Lettings", PROPERTY_MANAGEMENT: "Property Management", GENERAL: "General Enquiry" } as const;
+export const enquiryTypes = { BUY: "Buy a Property", SELL: "Sell a Property", INVESTMENT: "Investment", LETTINGS: "Lettings", PROPERTY_MANAGEMENT: "Property Management", GENERAL: "General Enquiry", WHATSAPP: "WhatsApp" } as const;
+export const publicEnquiryTypes = Object.fromEntries(Object.entries(enquiryTypes).filter(([k]) => k !== "WHATSAPP")) as Record<string, string>;
 export type EnquiryType = keyof typeof enquiryTypes;
 export const enquiryStatuses = { NEW: "Unread", READ: "Read", IN_PROGRESS: "In Progress", RESOLVED: "Resolved" } as const;
 export type EnquiryRow = { id: string; full_name: string; email: string; phone: string; enquiry_type: EnquiryType; message: string; status: keyof typeof enquiryStatuses; created_at: string; notes_count: number };

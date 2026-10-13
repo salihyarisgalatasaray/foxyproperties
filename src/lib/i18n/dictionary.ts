@@ -608,5 +608,13 @@ export const TR: Record<string, string> = {
   "General Enquiry": "Genel Talep",
   "Message": "Mesaj",
   "SUBMIT ENQUIRY": "TALEBİ GÖNDER",
+  "WHATSAPP": "WHATSAPP",
+  "Before we chat": "Sohbetten önce",
+  "Share your details so our team knows who they are speaking to.": "Ekibimizin kiminle konuştuğunu bilmesi için bilgilerinizi paylaşın.",
+  "First Name": "Ad",
+  "Last Name": "Soyad",
+  "Mobile Number": "Cep Telefonu",
+  "Continue to WhatsApp": "WhatsApp'a Devam Et",
+  "By continuing you agree that FOXY may contact you about your enquiry.": "Devam ederek FOXY'nin talebinizle ilgili sizinle iletişime geçebileceğini kabul edersiniz.",
 };
 

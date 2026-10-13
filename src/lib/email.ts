@@ -131,3 +131,19 @@ export async function sendEnquiryConfirmation(e: EnquiryInfo): Promise<void> {
     `<p style="margin:16px 0 0;font-size:13px;color:#8a8a8a">Your reference: ${esc(e.id)}</p>`;
   await sendEmail({ to: e.email, subject: `Thank you for your enquiry — ${brand}`, html: shell(brand, inner) });
 }
+
+type WhatsAppLead = { id: string; firstName: string; lastName: string; phone: string; email: string };
+
+export async function notifyWhatsAppLead(l: WhatsAppLead): Promise<void> {
+  const brand = process.env.EMAIL_FROM_NAME || "FOXY Properties";
+  const rows: [string, string][] = [["First Name", l.firstName], ["Last Name", l.lastName], ["Mobile Number", l.phone], ["Email Address", l.email]];
+  const rowsHtml = rows
+    .map(([k, v]) => `<tr><td style="padding:8px 12px;color:#8a8a8a;font-size:13px;white-space:nowrap;border-bottom:1px solid #f0f0f0">${esc(k)}</td><td style="padding:8px 12px;color:#111;font-size:14px;border-bottom:1px solid #f0f0f0"><strong>${esc(v)}</strong></td></tr>`)
+    .join("");
+  const inner =
+    `<p style="margin:0 0 4px;font-size:18px;color:#111"><strong>New WhatsApp contact</strong></p>` +
+    `<p style="margin:0 0 18px;font-size:13px;color:#8a8a8a">This visitor filled in the WhatsApp form and is being redirected to WhatsApp now.</p>` +
+    `<table role="presentation" width="100%" style="border-collapse:collapse">${rowsHtml}</table>` +
+    `<p style="margin:16px 0 0;font-size:12px;color:#8a8a8a">Reference: ${esc(l.id)} · also listed in Back Office → Enquiries</p>`;
+  await sendEmail({ to: "info@foxyproperties.co.uk", subject: `WhatsApp contact: ${l.firstName} ${l.lastName}`, html: shell(brand, inner) });
+}

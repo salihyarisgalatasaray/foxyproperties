@@ -9,7 +9,7 @@ const schema = z.object({
   full_name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(254),
   phone: z.string().trim().min(6).max(40),
-  enquiry_type: z.enum(Object.keys(enquiryTypes) as [EnquiryType, ...EnquiryType[]]),
+  enquiry_type: z.enum(Object.keys(enquiryTypes).filter((k) => k !== "WHATSAPP") as [EnquiryType, ...EnquiryType[]]),
   message: z.string().trim().min(2).max(3000),
   company: z.string().max(0).optional(),
 });

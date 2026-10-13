@@ -384,3 +384,8 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - New: scripts/db-check.js (`yarn db:check`), scripts/neon-e2e-check.js (HTTP flow → verifies rows in Neon)
 - Verified: npm run build OK; pytest 28/28 + 30/30 via preview URL; neon-e2e-check 8/8 PASS
 - Preview data from local Postgres was NOT copied (only test data). Neon API key kept outside repo at /root/.neon_api_key (pod-local)
+
+## 2026-06 — WhatsApp pre-chat form
+- WhatsApp button opens modal (First/Last Name, Mobile, Email, all required) → "Continue to WhatsApp" opens wa.me with prefilled message immediately (sync window.open, fetch keepalive)
+- POST /api/whatsapp-lead: saves to enquiries (type WHATSAPP, migration 008) + emails info@foxyproperties.co.uk listing the 4 fields; email/DB failure never blocks WhatsApp
+- Public contact form cannot submit WHATSAPP type; TR translations added
