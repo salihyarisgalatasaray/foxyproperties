@@ -1,6 +1,9 @@
 # Move FOXY to a Next.js job + external PostgreSQL
 
-## 1. Create the database (Neon or Supabase, Postgres 15+)
+## 1. Database — DONE: Neon project `foxy` (morning-dust-07708297), branch production, db foxydb, London
+- Schema + admins already applied. In the new job: copy DATABASE_URL + DATABASE_URL_UNPOOLED from this job's .env.local (or `neon link --project-id morning-dust-07708297 --branch production` + `neon env pull`)
+
+### (original instructions)
 - Neon: neon.tech → New project → region **London / EU West** → copy the connection string
   (`postgresql://USER:PASS@HOST/DB?sslmode=require`)
 - Supabase: supabase.com → New project → Settings → Database → Connection string (URI, "Session" pooler)
@@ -17,7 +20,8 @@
 ## 4. Deployment secrets / env vars (values: copy from this job's /app/.env.local)
 | Key | Notes |
 |---|---|
-| DATABASE_URL | **New** external Postgres URL from step 1 |
+| DATABASE_URL | Neon pooled URL (app traffic) |
+| DATABASE_URL_UNPOOLED | Neon direct URL (migrations/seed) |
 | BACKOFFICE_SESSION_SECRET | Use a NEW long random value in production |
 | RATE_LIMIT_SECRET | Use a NEW long random value in production |
 | ADMIN_EMAIL | optional, default info@foxyproperties.co.uk |

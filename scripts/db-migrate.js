@@ -8,7 +8,7 @@ const envPath = path.join(__dirname, "..", ".env.local");
 if (!process.env.DATABASE_URL && fs.existsSync(envPath)) {
   for (const line of fs.readFileSync(envPath, "utf8").split("\n")) {
     const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"(.*)"$/, "$1");
   }
 }
 
@@ -16,7 +16,7 @@ const dir = path.join(__dirname, "..", "database", "migrations");
 
 (async () => {
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is not set");
-  const c = new Client({ connectionString: process.env.DATABASE_URL });
+  const c = new Client({ connectionString: process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL });
   await c.connect();
   const fresh = !(await c.query(`SELECT to_regclass('public.schema_migrations') t`)).rows[0].t;
   await c.query(`CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`);

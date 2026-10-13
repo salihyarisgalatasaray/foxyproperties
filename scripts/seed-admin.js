@@ -8,7 +8,7 @@ function loadEnv() {
   if (!process.env.DATABASE_URL && fs.existsSync(p)) {
     for (const line of fs.readFileSync(p, "utf8").split("\n")) {
       const m = line.match(/^([A-Z_]+)=(.*)$/);
-      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"(.*)"$/, "$1");
     }
   }
 }
@@ -24,7 +24,7 @@ const extraAdmins = [
 ];
 
 (async () => {
-  const c = new Client({ connectionString: process.env.DATABASE_URL });
+  const c = new Client({ connectionString: process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL });
   await c.connect();
   const seed = async (em, nm, pw) => {
     const hash = await bcrypt.hash(pw, 12);

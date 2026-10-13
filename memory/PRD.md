@@ -376,3 +376,11 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - package.json: `start` = migrate; seed; next start · `db:migrate` script
 - seed-admin.js: passwords from ADMIN_PASSWORD / EXTRA_ADMIN_PASSWORD env (no hardcoded secrets)
 - Checklist: memory/MIGRATION_TO_NEXTJS_JOB.md
+
+## 2026-06 — Neon Postgres wired (project foxy / morning-dust-07708297, branch production, aws-eu-west-2, PG 17, db foxydb)
+- Neon CLI 8.4.3 (needs Node 22 → /opt/node22, app still runs on Node 20), skills in .claude/skills, `neon init` → .neon + neon.ts (postgres only), `neon deploy` pulled DATABASE_URL (pooled), DATABASE_URL_UNPOOLED, NEON_BRANCH into .env.local
+- App queries: node-postgres Pool on pooled DATABASE_URL (long-running next start). Migrations/seed: direct DATABASE_URL_UNPOOLED
+- db-setup.sh: external DB → only db-migrate + seed (local Postgres skipped); env loaders strip quotes
+- New: scripts/db-check.js (`yarn db:check`), scripts/neon-e2e-check.js (HTTP flow → verifies rows in Neon)
+- Verified: npm run build OK; pytest 28/28 + 30/30 via preview URL; neon-e2e-check 8/8 PASS
+- Preview data from local Postgres was NOT copied (only test data). Neon API key kept outside repo at /root/.neon_api_key (pod-local)

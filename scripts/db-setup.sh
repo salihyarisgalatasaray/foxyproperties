@@ -4,6 +4,13 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
+# External database (e.g. Neon): only run tracked migrations + seed.
+if ! grep -qE '^DATABASE_URL="?postgres(ql)?://[^@]+@localhost' .env.local; then
+  node scripts/db-migrate.js && node scripts/seed-admin.js || true
+  echo "db-setup complete (external database)"
+  exit 0
+fi
+
 pg_ctlcluster 15 main start >/dev/null 2>&1 || sudo -u postgres pg_ctlcluster 15 main start >/dev/null 2>&1 || true
 
 # Wait until Postgres actually accepts connections (avoids a boot race where

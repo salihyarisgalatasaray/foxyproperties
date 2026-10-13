@@ -6,10 +6,13 @@
     "build": "next build",
     "start": "node scripts/db-migrate.js; node scripts/seed-admin.js; next start",
     "typecheck": "tsc --noEmit",
-    "db:migrate": "node scripts/db-migrate.js && node scripts/seed-admin.js"
+    "db:migrate": "node scripts/db-migrate.js && node scripts/seed-admin.js",
+    "db:check": "node scripts/db-check.js"
   },
   "dependencies": {
     "@gsap/react": "latest",
+    "@neon/config": "^1.9.1",
+    "@neon/env": "^1.6.1",
     "@sanity/image-url": "latest",
     "bcryptjs": "^3.0.2",
     "gsap": "latest",

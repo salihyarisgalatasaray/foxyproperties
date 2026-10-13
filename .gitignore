@@ -27,3 +27,4 @@ yarn-error.log*
 
 # Local test credentials (never deploy)
 /memory/test_credentials.md
+.neon
