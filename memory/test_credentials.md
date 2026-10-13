@@ -27,3 +27,7 @@
 - Test agent (name "Test Agent", ACTIVE): `agent.test@foxyproperties.co.uk` / `Agent12345!` role AGENT
 - Roles: ADMIN = everything incl. /backoffice/users; AGENT = only /backoffice/enquiries
 - Public form: Contact page -> POST /api/enquiries. Admin: /backoffice/enquiries, /backoffice/users
+
+## Pytest config (backend/tests)
+- Tests read TEST_BASE_URL / TEST_ADMIN_EMAIL / TEST_ADMIN_PASSWORD from env or backend/tests/.env (gitignored; template in backend/tests/.env.example). Users created by tests get random passwords.
+- Login rate limit is 6/15min per IP: run suites separately or `TRUNCATE request_limits;` between runs.

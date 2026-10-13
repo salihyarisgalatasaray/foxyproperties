@@ -365,3 +365,8 @@ lead forms persist (curl 201 for LANDLORD/CONSULTATION), admin login 200 / bad 4
 - Home chapter 2 (WEST LONDON) now uses user clip (Ealing Broadway) transcoded 4K→1080p H.264 faststart (112MB→27MB) at foxy-property/home/clip-chapter2.mp4; poster public/home/chapter2.jpg
 - ffmpeg is available via `pip install imageio-ffmpeg` (binary under /root/.venv/.../imageio_ffmpeg/binaries/)
 - scripts/upload_home_clips.py now takes args: <local file> <object name> ...
+
+## 2026-06 — Code review fixes (backend/tests)
+- Secrets moved out of test files into backend/tests/config.py (env / tests/.env, .env.example template); random throwaway passwords for test users
+- `is True/False` → `==`; property CRUD test split into fixture + 5 focused tests
+- Stale tests updated: mortgage pages now asserted 404; compliance check allows the negative "not currently FCA authorised" disclaimer
