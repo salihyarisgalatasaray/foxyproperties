@@ -45,3 +45,15 @@
 
 ## Optional: copy existing preview data
 `pg_dump --data-only --exclude-table=schema_migrations --exclude-table=request_limits "$OLD_URL" | psql "$NEW_URL"` (after step 5 created the tables)
+
+
+## Ready-to-paste prompt for the NEW job (choose "Full Stack App", mention Next.js)
+> Bu GitHub reposundaki FOXY Properties uygulamasını taşıyoruz: Next.js 16 App Router SSR uygulaması repo kökünde (`yarn build` = next build, `yarn start` = migrations + admin seed + next start, port 3000). Veritabanı harici Neon PostgreSQL (node-postgres; app DATABASE_URL pooled, migrations DATABASE_URL_UNPOOLED). Lütfen Next.js şablonunu kullan, `memory/MIGRATION_TO_NEXTJS_JOB.md` ve `memory/PRD.md` dosyalarını oku, .env.local'ı birlikte oluşturalım, ön izlemeyi çalıştır, test et ve yayına al.
+
+## Secrets to enter (Publish → Manage Publishes → Secrets → Custom keys)
+DATABASE_URL, DATABASE_URL_UNPOOLED, NEON_BRANCH, BACKOFFICE_SESSION_SECRET (new), RATE_LIMIT_SECRET (new),
+ADMIN_EMAIL, ADMIN_PASSWORD, EXTRA_ADMIN_PASSWORD, EMERGENT_EMAIL_KEY, EMAIL_FROM_NAME, LEAD_NOTIFY_EMAIL,
+EMERGENT_LLM_KEY, INTEGRATION_PROXY_URL, NEXT_PUBLIC_MAPBOX_TOKEN, NEXT_PUBLIC_SANITY_PROJECT_ID,
+NEXT_PUBLIC_SANITY_DATASET, NEXT_PUBLIC_SANITY_API_VERSION, SANITY_API_READ_TOKEN, NEXT_PUBLIC_WHATSAPP_NUMBER
+Note: NEXT_PUBLIC_* values are baked in at build time — they must also be in the new job's .env.local before building.
+Note: Object Storage media (homepage videos/property photos) live under the old job's storage namespace; verify /api/media works in the new job, else re-upload with scripts/upload_home_clips.py.
